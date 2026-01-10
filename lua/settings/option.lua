@@ -1,5 +1,5 @@
-vim.opt.updatetime = 120
-vim.opt.timeoutlen = 240
+vim.opt.updatetime = 60
+vim.opt.timeoutlen = 120
 
 vim.opt.showmode = false
 vim.opt.number = false
