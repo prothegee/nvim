@@ -1,4 +1,4 @@
-# neovim-prothegee
+# nvim - config
 
 __*NOTE:*__
 - using vim.pack
@@ -11,10 +11,8 @@ __*NOTE:*__
 ## note
 
 - configured for:
-    - c, c++, cmake
-    - ^rust, ^go, ^zig, ^js, ^ts, ^python
-    - ^markdown, ^sql
-    - ^html, ^css, ^scss, ^htmx
+    - c, c++, cmake, go, js, ts, python, rust, zig
+    <!-- - markdown, sql, html, css, scss, htmx, vue, svelte -->
 - check [this file](./lua/settings/lsp.lua) for lsp/s
 - check [this file](./lua/settings/treesitter.lua) for treesitters
 
@@ -32,7 +30,7 @@ see [this file](./lua/plugins/init.lua) for more information
 
 - [xplrr](lua/nvim-prt/xplrr.lua)
 
-- [snppts](lua/nvim-prt/snppts.lua)
+<!-- - [snppts](lua/nvim-prt/snppts.lua) -->
 
 <br>
 

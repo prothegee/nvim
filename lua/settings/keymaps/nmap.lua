@@ -101,4 +101,3 @@ vim.keymap.set("n", "<C-S-p>",
     silent = true,
     noremap = true
 })
-

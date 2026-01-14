@@ -1,7 +1,5 @@
-vim.schedule(function()
-    require"settings.keymaps.tab"
-    require"settings.keymaps.terminal"
-    require"settings.keymaps.imap"
-    require"settings.keymaps.nmap"
-end)
-
+require"settings.keymaps.tab"
+require"settings.keymaps.imap"
+require"settings.keymaps.nmap"
+require"settings.keymaps.terminal"
+require"settings.keymaps.scrollwheel"

@@ -1,6 +1,5 @@
-local _onedarkpro = require"onedarkpro"
+local _this = require"onedarkpro"
 
-_onedarkpro.setup({
+_this.setup({
     transparency = true
 })
-

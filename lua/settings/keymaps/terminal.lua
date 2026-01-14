@@ -73,4 +73,3 @@ vim.keymap.set(
         desc = "terminal horizontal (mode: n, i, v, t)"
     }
 )
-
