@@ -45,4 +45,3 @@ _prt.cmdc.setup({
 _prt.slr.setup()
 _prt.xplrr.setup()
 _prt.snppts.setup()
-

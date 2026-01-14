@@ -47,4 +47,3 @@ vim.api.nvim_create_user_command(_cmd.diagnostic_toggle_virt_text_and_line, func
         virtual_lines = not virt_line
     })
 end, { desc = "Toggle diagnostic virtual text and line" })
-

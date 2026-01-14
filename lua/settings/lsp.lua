@@ -1,6 +1,4 @@
-local _cap = require"settings.capabilities"
-
----
+local _cap = require"settings.capability"
 
 -- default LSP/s
 local LSPS = {
@@ -82,4 +80,3 @@ vim.lsp.config("*", {
 })
 
 vim.lsp.enable(LSPS)
-

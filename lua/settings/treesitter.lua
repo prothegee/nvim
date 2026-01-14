@@ -1,4 +1,4 @@
-local _nvim_treesitter_config = require"nvim-treesitter.configs"
+local _this = require"nvim-treesitter.config"
 
 local TREESITTERS = {
     "lua",
@@ -18,14 +18,10 @@ local TREESITTERS = {
     "sql",
 }
 
----
-
--- not sure this will be recalled or what
 for _, treesitter in pairs(TREESITTERS) do
     vim.treesitter.language.add(treesitter)
 end
-
-_nvim_treesitter_config.setup{
+_this.setup({
     ensure_installed = TREESITTERS,
     auto_install = true,
     sync_install = false,
@@ -33,9 +29,7 @@ _nvim_treesitter_config.setup{
         enable = true,
         additional_vim_regex_highlighting = false
     }
-}
-
----
+})
 
 vim.api.nvim_create_autocmd("FileType", {
     pattern = "*",
@@ -49,12 +43,11 @@ vim.api.nvim_create_autocmd("FileType", {
                     vim.treesitter.start(buffer, treesitter)
                     vim.bo[buffer].syntax = "ON"
 
-                    local cmd = "TSBufEnable " .. treesitter
-                    vim.cmd(cmd)
+                    -- local cmd = "TSBufEnable " .. treesitter
+                    -- vim.cmd(cmd)
                 end
                 break
             end
         end
     end,
 })
-

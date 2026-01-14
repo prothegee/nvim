@@ -6,4 +6,3 @@ vim.api.nvim_set_keymap("i", "<Esc>",
   silent = true,
   desc = "Exit insert mode without moving cursor left"
 })
-

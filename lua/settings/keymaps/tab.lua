@@ -32,4 +32,3 @@ vim.keymap.set(
         desc = "toggle next tab (mode: n, i, v, t)"
     }
 )
-
