@@ -46,4 +46,3 @@ NVIM_PRT.version = {
 ---
 
 return NVIM_PRT
-

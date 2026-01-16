@@ -3,7 +3,6 @@ vim.g.maplocalleader = "\\"
 vim.g.netrw_list_hide = ""
 vim.g.netew_liststyle = 1
 
--- get active lsp
 _G.get_active_lsp = function()
     local clients = {}
     for _, client in ipairs(vim.lsp.get_clients({ bufnr = 0 })) do
@@ -15,7 +14,6 @@ _G.get_active_lsp = function()
     return "n/a "
 end
 
--- get active mode
 _G.get_active_current_mode = function()
     local mode_map = {
         n = "NORMAL",
@@ -36,7 +34,6 @@ _G.get_active_current_mode = function()
     return mode_map[mode_code] or string.upper(mode_code)
 end
 
--- get trim current file buffer
 _G.get_trim_path_current_buffer = function(max_segments)
     max_segments = max_segments or 2 -- limit
     local fullpath = vim.api.nvim_buf_get_name(0)
@@ -61,7 +58,6 @@ _G.get_trim_path_current_buffer = function(max_segments)
     return trimmed
 end
 
--- get dianostic hint
 _G.get_diagnostic_hint = function ()
     local diags = vim.diagnostic.get(0)
 
@@ -76,7 +72,6 @@ _G.get_diagnostic_hint = function ()
     return total
 end
 
--- get dianostic info
 _G.get_diagnostic_info = function ()
     local diags = vim.diagnostic.get(0)
 
@@ -91,7 +86,6 @@ _G.get_diagnostic_info = function ()
     return total
 end
 
--- get dianostic warn
 _G.get_diagnostic_warn = function ()
     local diags = vim.diagnostic.get(0)
 
@@ -106,7 +100,6 @@ _G.get_diagnostic_warn = function ()
     return total
 end
 
--- get dianostic error
 _G.get_diagnostic_error = function ()
     local diags = vim.diagnostic.get(0)
 
@@ -121,9 +114,6 @@ _G.get_diagnostic_error = function ()
     return total
 end
 
---  
-
--- get current work dir with the file buffer
 _G.get_cwd_and_file_buffer = function()
     local buf_name = vim.api.nvim_buf_get_name(0)
 
@@ -140,4 +130,3 @@ _G.get_cwd_and_file_buffer = function()
 
     return relative_path
 end
-

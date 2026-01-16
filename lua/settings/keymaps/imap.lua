@@ -1,4 +1,3 @@
--- esc when insert mode will be place as current position
 vim.api.nvim_set_keymap("i", "<Esc>",
     "<Esc>l",
 {

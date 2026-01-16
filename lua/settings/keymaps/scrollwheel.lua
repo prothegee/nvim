@@ -1,6 +1,3 @@
---[[
-move each scroll by n
---]]
 local N = 1
 local _k = N .. "k"
 local _j = N .. "j"

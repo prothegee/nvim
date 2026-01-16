@@ -1,4 +1,3 @@
--- # open horizontal terminal
 local function open_terminal_horizontal()
     -- check if we're currently in a terminal buffer
     if vim.api.nvim_get_option_value("buftype", { buf = 0 }) == "terminal" then
@@ -61,10 +60,6 @@ local function open_terminal_horizontal()
     end
 end
 
----
-
--- integrated terminal
---- horizontal
 vim.keymap.set(
     { "n", "i", "v", "t" },
     "<C-A-t>",

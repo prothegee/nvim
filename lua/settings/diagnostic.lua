@@ -36,5 +36,4 @@ vim.diagnostic.config({
 -- markdown
 --- error:
 --- - for some reason _ treated as error
-vim.cmd("hi link markdownError Normal")
-
+-- vim.cmd("hi link markdownError Normal")

@@ -1,9 +1,13 @@
 vim.opt.updatetime = 60
 vim.opt.timeoutlen = 600
 
+vim.opt.mouse = "a"
+
 vim.opt.number = true
 
-vim.opt.mouse = "a"
+vim.opt.termguicolors = true
+vim.cmd("syntax enable")
+vim.cmd("syntax on")
 
 vim.opt.tabstop = 4
 vim.opt.expandtab = true
@@ -11,10 +15,9 @@ vim.opt.shiftwidth = 4
 vim.opt.smartindent = true
 vim.opt.softtabstop = 4
 
-vim.opt.fillchars = { eob = " " }
-
-vim.opt.winborder = "rounded"
-
 vim.opt.clipboard = "unnamedplus"
 
-vim.opt.virtualedit = "onemore"
+vim.wildmode = "longest:full, full"
+vim.opt.shortmess:append("c")
+vim.opt.completeopt = { "menu", "menuone", "noinsert", "noselect" }
+vim.opt.wildignorecase = true
