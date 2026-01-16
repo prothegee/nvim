@@ -40,6 +40,9 @@ vim.pack.add({
     },
     {
         src = "git@github.com:chomosuke/typst-preview.nvim.git"
+    },
+    {
+        src = "git@github.com:sphamba/smear-cursor.nvim.git"
     }
 })
 
@@ -69,4 +72,5 @@ require"plugins.onedarkpro"
 require"plugins.render-markdown"
 require"plugins.cmp"
 require"plugins.typst-preview"
+require"plugins.smear-cursor"
 require"plugins.nvim-prt"
