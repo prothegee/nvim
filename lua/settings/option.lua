@@ -16,8 +16,3 @@ vim.opt.smartindent = true
 vim.opt.softtabstop = 4
 
 vim.opt.clipboard = "unnamedplus"
-
-vim.wildmode = "longest:full, full"
-vim.opt.shortmess:append("c")
-vim.opt.completeopt = { "menu", "menuone", "noinsert", "noselect" }
-vim.opt.wildignorecase = true
