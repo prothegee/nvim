@@ -2,17 +2,12 @@
 
 __*NOTE:*__
 - using vim.pack
-- minimalism attempt
-- most keymap are default [except](#configured keymap or shortcut])
 - meant to use for 0.12.* or above
 
 <br>
 
 ## note
 
-- configured for:
-    - c, c++, cmake, go, js, ts, python, rust, zig
-    <!-- - markdown, sql, html, css, scss, htmx, vue, svelte -->
 - check [this file](./lua/settings/lsp.lua) for lsp/s
 - check [this file](./lua/settings/treesitter.lua) for treesitters
 
@@ -24,13 +19,12 @@ see [this file](./lua/plugins/init.lua) for more information
 
 <br>
 
-## internal modules
+## internal plugins
 
-- [slr](lua/nvim-prt/slr.lua)
+- [slr](lua/plugins/slr.lua)
 
-- [xplrr](lua/nvim-prt/xplrr.lua)
+- [xplrr](lua/plugins/xplrr.lua)
 
-<!-- - [snppts](lua/nvim-prt/snppts.lua) -->
 
 <br>
 

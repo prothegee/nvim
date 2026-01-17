@@ -1,78 +1,3 @@
-vim.pack.add({
-    {
-        src = "git@github.com:neovim/nvim-lspconfig.git"
-    },
-    {
-        src = "git@github.com:nvim-treesitter/nvim-treesitter.git"
-    },
-    {
-        src = "git@github.com:olimorris/onedarkpro.nvim.git"
-    },
-    {
-        src = "git@github.com:shellRaining/hlchunk.nvim.git"
-    },
-    {
-        src = "git@github.com:lewis6991/gitsigns.nvim.git"
-    },
-    {
-        src = "git@github.com:MeanderingProgrammer/render-markdown.nvim.git"
-    },
-    {
-        src = "git@github.com:hrsh7th/cmp-nvim-lsp.git"
-    },
-    {
-        src = "git@github.com:hrsh7th/cmp-buffer.git"
-    },
-    {
-        src = "git@github.com:hrsh7th/cmp-path.git"
-    },
-    {
-        src = "git@github.com:hrsh7th/cmp-cmdline.git"
-    },
-    {
-        src = "git@github.com:hrsh7th/nvim-cmp.git"
-    },
-    {
-        src = "git@github.com:hrsh7th/cmp-vsnip.git"
-    },
-    {
-        src = "git@github.com:hrsh7th/vim-vsnip.git"
-    },
-    {
-        src = "git@github.com:hrsh7th/vim-vsnip-integ.git"
-    },
-    {
-        src = "git@github.com:chomosuke/typst-preview.nvim.git"
-    },
-    {
-        src = "git@github.com:sphamba/smear-cursor.nvim.git"
-    },
-})
-
----
-
-local path_opt = vim.fn.stdpath"data" .. "/site/pack/core/opt"
-for _, path in ipairs(vim.fn.glob(path_opt .. "/*", true, true)) do
-    if vim.fn.isdirectory(path) then
-        vim.opt.rtp:append(path)
-
-        local luadir = path .. "/lua"
-
-        if vim.fn.isdirectory(luadir) then
-            vim.opt.rtp:append(luadir)
-        end
-    end
-end
-
-local path_nvim_prt = vim.fn.stdpath"config" .. "/lua/nvim-prt"
-for _, path in ipairs(vim.fn.glob(path_nvim_prt .. "/*", true, true)) do
-    if vim.fn.isdirectory(path) then
-        vim.opt.rtp:append(path)
-    end
-end
-
----
-
 local _gitsigns = require"gitsigns"
 
 _gitsigns.setup()
@@ -148,6 +73,8 @@ _cmp.setup({
     })
 })
 
+---
+
 vim.g.vsnip_highlight_match = 0
 
 vim.g.vsnip_snippet_dir = "~/.config/nvim/data/vsnip"
@@ -178,27 +105,28 @@ _smear_cursor.setup()
 
 ---
 
-local _prt = {
-    -- slr = require"nvim-prt.slr",
-    cmdc = require"nvim-prt.cmdc",
-    xplrr = require"nvim-prt.xplrr",
-    -- snppts = require"nvim-prt.snppts"
-}
+local _xplrr = require"plugins.xplrr"
 
-_prt.cmdc.setup({
+_xplrr.setup()
+
+---
+
+local _cmdc = require"plugins.cmdc"
+
+_cmdc.setup({
     commands = {
         ["Markdown: Toggle Render"] = function()
             vim.cmd("RenderMarkdown toggle")
         end,
         --
         ["XPLRR"] = function()
-            _prt.xplrr.toggle()
+            _xplrr.toggle()
         end,
         ["XPLRR: All"] = function()
-            _prt.xplrr.toggle_all()
+            _xplrr.toggle_all()
         end,
         ["XPLRR: Buffer"] = function()
-            _prt.xplrr.toggle_buffers()
+            _xplrr.toggle_buffers()
         end,
         --
         ["Typst Preview: Run"] = function()
@@ -216,10 +144,3 @@ _prt.cmdc.setup({
         end,
     }
 })
-
-
--- _prt.slr.setup()
-
-_prt.xplrr.setup()
-
--- _prt.snppts.setup()

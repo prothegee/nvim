@@ -1,3 +1,5 @@
+local _ts = require"nvim-treesitter"
+
 local TREESITTERS = {
     "lua",
     "c", "cpp", "cmake",
@@ -15,38 +17,18 @@ local TREESITTERS = {
     "bash",
     "sql",
 }
+
 for _, ts in pairs(TREESITTERS) do
     vim.treesitter.language.add(ts)
 end
-require"nvim-treesitter.config".setup({
+
+_ts.setup{
     ensure_installed = TREESITTERS,
     auto_install = true,
-    sync_install = false,
-    highlight = {
+    sync_install = true,
+    hightlight = {
         enable = true,
-        -- additional_vim_regex_highlighting = TREESITTERS,
-        disable = {"go"}
+        additional_vim_regex_highlighting = true,
     }
-})
+}
 
-vim.api.nvim_create_autocmd("FileType", {
-    pattern = "*",
-    callback = function(args)
-        local buffer = args.buf
-        local filetype = vim.bo[buffer].filetype
-
-        for _, treesitter in pairs(TREESITTERS) do
-            if treesitter == filetype then
-                if vim.treesitter.language.add(treesitter) then
-                    vim.treesitter.start(buffer, treesitter)
-                    -- vim.bo[buffer].syntax = "enable"
-                    vim.bo[buffer].syntax = "ON"
-
-                    -- local cmd = "TSBufEnable " .. treesitter
-                    -- vim.cmd(cmd)
-                end
-                break
-            end
-        end
-    end,
-})
