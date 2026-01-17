@@ -1,10 +1,37 @@
+--[[
+note:
+* only vim pack related
+--]]
+
 local _cmd = {
+    nvim_pack_add = "NvimPackAdd",
+    nvim_pack_list = "NvimPackList",
+    nvim_pack_update = "NvimPackUpdate",
+    nvim_pack_remove = "NvimPackRemove",
+
     diagnostic_show_all = "DiagnosticShowAll",
     diagnostic_show_float_window = "DiagnosticShowFloatWindow",
     diagnostic_toggle_virt_text = "DiagnosticToggleVirtText",
     diagnostic_toggle_virt_line = "DiagnosticToggleVirtLine",
     diagnostic_toggle_virt_text_and_line = "DiagnosticToggleVirtTextAndLine",
 }
+
+
+vim.api.nvim_create_user_command(_cmd.nvim_pack_add, function(opts)
+    vim.notify("TODO: NvimPackAdd " .. tostring(#opts.fargs) .. " args")
+end, { nargs = "*" })
+
+vim.api.nvim_create_user_command(_cmd.nvim_pack_list, function()
+    vim.notify("TODO: NvimPackList")
+end, {})
+
+vim.api.nvim_create_user_command(_cmd.nvim_pack_update, function()
+    vim.pack.update()
+end, {})
+
+vim.api.nvim_create_user_command(_cmd.nvim_pack_remove, function(opts)
+    vim.notify("TODO: NvimPackRemove " .. tostring(#opts.fargs) .. " args")
+end, { nargs = "*" })
 
 -- show all diagnostics in quickfix list
 vim.api.nvim_create_user_command(_cmd.diagnostic_show_all, function()

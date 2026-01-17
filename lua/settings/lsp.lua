@@ -1,6 +1,5 @@
 local _cap = require"settings.capability"
 
--- default LSP/s
 local LSPS = {
     "lua_ls",
     "clangd", "neocmake",
@@ -20,9 +19,6 @@ local LSPS = {
     "sqls",
 }
 
----
-
--- init default
 for _, lsp in pairs(LSPS) do
     -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md
     local opts = {}
@@ -70,8 +66,6 @@ for _, lsp in pairs(LSPS) do
 
     if vim.lsp.config then vim.lsp.config(lsp, ocap) end
 end
-
----
 
 vim.lsp.config("*", {
     on_init = _cap.on_init,
