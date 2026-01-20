@@ -17,6 +17,7 @@ local LSPS = {
     "yamlls",
     "bashls",
     "sqls",
+    "docker_language_server",
 }
 
 for _, lsp in pairs(LSPS) do
