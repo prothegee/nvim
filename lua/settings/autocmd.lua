@@ -68,6 +68,17 @@ vim.api.nvim_create_autocmd("FileType", {
     pattern = "*",
     callback = function(args)
         local buffer = args.buf
+        local filetype = vim.bo[buffer].filetype
+
+        for _, ts in pairs(TREESITTERS) do
+            if ts == filetype then
+                if vim.treesitter.language.add(ts) then
+                    vim.treesitter.start(buffer, ts)
+                end
+                break
+            end
+        end
+
         if not vim.api.nvim_buf_is_valid(buffer) then return end
 
         CAPABILITY.default_completion(buffer)
@@ -82,21 +93,4 @@ vim.api.nvim_create_autocmd({"BufNewFile", "BufRead"}, {
             vim.bo.filetype = "c"
         end
     end
-})
-
-vim.api.nvim_create_autocmd("FileType", {
-    pattern = "*",
-    callback = function(args)
-        local buffer = args.buf
-        local filetype = vim.bo[buffer].filetype
-
-        for _, treesitter in pairs(TREESITTERS) do
-            if treesitter == filetype then
-                if vim.treesitter.language.add(treesitter) then
-                    vim.treesitter.start(buffer, treesitter)
-                end
-                break
-            end
-        end
-    end,
 })

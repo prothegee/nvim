@@ -16,6 +16,7 @@ local TREESITTERS = {
     "yaml", "toml",
     "bash",
     "sql",
+    "dockerfile",
 }
 
 for _, ts in pairs(TREESITTERS) do
