@@ -7,6 +7,7 @@ local LSPS = {
     "gopls",
     "ts_ls",
     "zls",
+    "jdtls", "kotlin_lsp",
     "protols",
     "svelte", "vue_ls",
     "gdscript", "gdshader_lsp",
@@ -66,6 +67,8 @@ for _, lsp in pairs(LSPS) do
     end
 
     if vim.lsp.config then vim.lsp.config(lsp, ocap) end
+
+    vim.lsp.enable(lsp)
 end
 
 vim.lsp.config("*", {
