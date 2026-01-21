@@ -21,9 +21,9 @@ see [this file](./lua/plugins/init.lua) for more information
 
 ## internal plugins
 
-- [slr](lua/plugins/slr.lua)
+- [cmdc](./lua/plugins/cmdc.lua)
 
-- [xplrr](lua/plugins/xplrr.lua)
+- [xplrr](./lua/plugins/xplrr.lua)
 
 
 <br>
@@ -39,15 +39,6 @@ see [this file](./lua/plugins/init.lua) for more information
 - `<C-A-t>` e.q. `ctrl+alt+t`:
     - open/close common terminal
     - *any open terminal will be closed
-
-- `<C-A-S-t>` e.q. `ctrl+alt+shift+t`:
-    - create empty new tab
-
-<!-- - `<C-x><C-p>`:
-    - global fuzzy completion
-
-- `<C-x><C-[>`:
-    - global snippet from snppts -->
 
 <br>
 
