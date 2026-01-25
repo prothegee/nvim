@@ -1,10 +1,10 @@
-local _gitsigns = require"gitsigns"
+local _gitsigns = require("gitsigns")
 
 _gitsigns.setup()
 
 ---
 
-local _hlchunk = require"hlchunk"
+local _hlchunk = require("hlchunk")
 
 local _hlchunk_delay = 90
 
@@ -34,7 +34,13 @@ _hlchunk.setup({
 
 ---
 
-local _cmp = require"cmp"
+local _cmp = require("cmp")
+
+local _cmp_win_opts = {
+    border = "rounded",
+    -- winhighlight = "Normal:Normal,FloatBorder:FloatBorder",
+    winhighlight = "Normal:Normal,FloatBorder:FloatBorder,CursorLine:Visual,Search:None",
+}
 
 _cmp.setup({
     enabled = function()
@@ -44,7 +50,7 @@ _cmp.setup({
         end
         local is_floating = vim.api.nvim_win_get_config(0).relative ~= ""
         if is_floating then
-        return false
+            return false
         end
         return true
     end,
@@ -54,8 +60,8 @@ _cmp.setup({
         end,
     },
     window = {
-        completion = _cmp.config.window.bordered(),
-        documentation = _cmp.config.window.bordered(),
+        completion = _cmp.config.window.bordered(_cmp_win_opts),
+        documentation = _cmp.config.window.bordered(_cmp_win_opts),
     },
     mapping = _cmp.mapping.preset.insert({
         -- ["<C-b>"] = _cmp.mapping.scroll_docs(-4),
@@ -81,7 +87,7 @@ vim.g.vsnip_snippet_dir = "~/.config/nvim/data/vsnip"
 
 ---
 
-local _render_markdown = require"render-markdown"
+local _render_markdown = require("render-markdown")
 
 _render_markdown.setup()
 
@@ -89,7 +95,7 @@ _render_markdown.disable()
 
 ---
 
-local _typst_preview = require"typst-preview"
+local _typst_preview = require("typst-preview")
 
 _typst_preview.setup({
     -- debug = false,
@@ -99,19 +105,19 @@ _typst_preview.setup({
 
 ---
 
-local _smear_cursor = require"smear_cursor"
+local _smear_cursor = require("smear_cursor")
 
 _smear_cursor.setup()
 
 ---
 
-local _xplrr = require"plugins.xplrr"
+local _xplrr = require("plugins.xplrr")
 
 _xplrr.setup()
 
 ---
 
-local _cmdc = require"plugins.cmdc"
+local _cmdc = require("plugins.cmdc")
 
 _cmdc.setup({
     commands = {
