@@ -1,22 +1,5 @@
+local TS = require"settings.treesitter"
 local CAPABILITY = require"settings.capability"
-
-local TREESITTERS = {
-    "lua",
-    "c", "cpp", "cmake",
-    "rust",
-    "go",
-    "ziggy", "ziggy_schema",
-    "javascript", "typescript",
-    "svelte", "vue",
-    "gdscript", "gdshader",
-    "python",
-    "html", "css", "scss", -- "drogon-csp",
-    "json", "jsonc", "json5",
-    "markdown", "typst",
-    "yaml", "toml",
-    "bash",
-    "sql",
-}
 
 -- BufEnter
 vim.api.nvim_create_autocmd("BufEnter", {
@@ -27,11 +10,6 @@ vim.api.nvim_create_autocmd("BufEnter", {
         if not vim.api.nvim_buf_is_valid(buffer) then return end
 
         CAPABILITY.default_completion(buffer)
-
-        -- cmake: syntax case
-        if vim.bo.filetype == "cmake" then
-           vim.cmd("syntax off")
-        end
     end
 })
 -- BufEnter
@@ -41,11 +19,6 @@ vim.api.nvim_create_autocmd("BufLeave", {
         local buffer = args.buf
 
         if not vim.api.nvim_buf_is_valid(buffer) then return end
-
-        -- cmake: syntax case
-        if vim.bo.filetype == "cmake" then
-           vim.cmd("syntax on")
-        end
     end
 })
 -- LspAttach
@@ -63,23 +36,34 @@ vim.api.nvim_create_autocmd("LspAttach", {
         CAPABILITY.on_attach(client, buffer)
     end
 })
+-- LspAttach
+vim.api.nvim_create_autocmd("LspDetach", {
+    callback = function(args)
+        local client = vim.lsp.get_client_by_id(args.data.client_id)
+        local buffer = args.buf
+        local buffer_name = vim.api.nvim_buf_get_name(buffer)
+
+        if not vim.api.nvim_buf_is_valid(buffer) then return end
+        if not client then return end
+        if buffer_name == "" then return end
+    end
+})
 -- FileType
 vim.api.nvim_create_autocmd("FileType", {
     pattern = "*",
     callback = function(args)
         local buffer = args.buf
+
+        if not vim.api.nvim_buf_is_valid(buffer) then return end
+
         local filetype = vim.bo[buffer].filetype
 
-        for _, ts in pairs(TREESITTERS) do
+        for _, ts in pairs(TS.TREESITTERS) do
             if ts == filetype then
-                if vim.treesitter.language.add(ts) then
-                    vim.treesitter.start(buffer, ts)
-                end
+                vim.treesitter.start(buffer, ts)
                 break
             end
         end
-
-        if not vim.api.nvim_buf_is_valid(buffer) then return end
 
         CAPABILITY.default_completion(buffer)
     end
