@@ -20,11 +20,7 @@ local TREESITTERS = {
     "dockerfile",
 }
 
-for _, ts in pairs(TREESITTERS) do
-    vim.treesitter.language.add(ts)
-end
-
-_ts.setup{
+_ts.setup({
     ensure_installed = TREESITTERS,
     auto_install = true,
     sync_install = true,
@@ -32,5 +28,14 @@ _ts.setup{
         enable = true,
         additional_vim_regex_highlighting = true,
     }
-}
+})
 
+for _, ts in pairs(TREESITTERS) do
+    vim.treesitter.language.add(ts)
+end
+
+local TS = {}
+
+TS.TREESITTERS = TREESITTERS
+
+return TS
