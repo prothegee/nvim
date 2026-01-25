@@ -41,7 +41,7 @@ for _, lsp in pairs(LSPS) do
                     path = {
                         "lua/?.lua",
                         "lua/?/init.lua",
-                        vim.fn.stdpath"config" .. "/lua"
+                        vim.fn.stdpath("config") .. "/lua"
                     }
                 },
                 workspace = {
@@ -50,7 +50,7 @@ for _, lsp in pairs(LSPS) do
                         vim.env.VIMRUNTIME,
                         "${3rd}/luv/library",
                         vim.fn.expand "$VIMRUNTIME/lua",
-                        vim.fn.stdpath"config" .. "/lua"
+                        vim.fn.stdpath("config") .. "/lua"
                     },
                     checkThirdParty = true
                 },
@@ -66,7 +66,9 @@ for _, lsp in pairs(LSPS) do
         ocap = vim.tbl_deep_extend("force", ocap, opts)
     end
 
-    if vim.lsp.config then vim.lsp.config(lsp, ocap) end
+    if vim.lsp.config then
+        vim.lsp.config(lsp, ocap)
+    end
 
     vim.lsp.enable(lsp)
 end
@@ -78,3 +80,5 @@ vim.lsp.config("*", {
 })
 
 vim.lsp.enable(LSPS)
+
+_cap.default_completion()
