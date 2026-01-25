@@ -1,7 +1,7 @@
 vim.opt.updatetime = 60
 vim.opt.timeoutlen = 600
 
-vim .opt.mouse = "a"
+vim.opt.mouse = "a"
 
 vim.opt.number = true
 
@@ -15,6 +15,6 @@ vim.opt.fillchars = { eob = " " }
 
 vim.opt.winborder = "rounded"
 
-vim.opt.winborder = "rounded"
-
 vim.opt.clipboard = "unnamedplus"
+
+vim.opt.laststatus = 3

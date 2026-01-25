@@ -1,25 +1,34 @@
 local CAPABILITY = {}
 
+local _default_completion = function(buffer)
+    vim.wildmode = "longest:full, full"
+    vim.opt.shortmess:append("c")
+    vim.opt.completeopt = { "menu", "menuone", "noinsert", "noselect" }
+    vim.opt.wildignorecase = true
+
+    vim.bo.omnifunc = "v:lua.vim.lsp.omnifunc"
+end
+
 CAPABILITY.capabilities = require("cmp_nvim_lsp").default_capabilities()
 CAPABILITY.capabilities.textDocument = {
     completion = {
-        contextsupport = true,
-        dynamicregistration = true,
-        completionitem = {
-            tagsupport = { valueset = { 1 } },
-            snippetsupport = true,
-            resolvesupport = {
+        contextSupport = true,
+        dynamicRegistration = true,
+        completionItem = {
+            tagSupport = { valueset = { 1 } },
+            snippetSupport = true,
+            resolveSupport = {
                 properties = { "detail", "documentation", "additionalTextEdits", "snippets" }
             },
-            preselectsupport = true,
-            deprecatedsupport = true,
-            labeldetailssupport = true,
-            documentationformat = { "markdown", "plaintext" },
-            insertreplacesupport = true,
-            inserttextmodesupport = {
-                valueset = { 1, 2 }
+            preselectSupport = true,
+            deprecatedSupport = true,
+            labeldetailsSupport = true,
+            documentationFormat = { "markdown", "plaintext" },
+            insertReplaceSupport = true,
+            insertTextModeSupport = {
+                valueSet = { 1, 2 }
             },
-            commitcharacterssupport = true,
+            commitCharactersSupport = true,
             enable_completions = true
         }
     },
@@ -34,13 +43,6 @@ CAPABILITY.capabilities.textDocument = {
 CAPABILITY.capabilities.workspace = {
     diagnostics = { refreshSupport = true }
 }
-
-local _default_completion = function(buffer)
-    vim.wildmode = "longest:full, full"
-    vim.opt.shortmess:append("c")
-    vim.opt.completeopt = { "menu", "menuone", "noinsert", "noselect" }
-    vim.opt.wildignorecase = true
-end
 
 function CAPABILITY.default_completion(client, buffer)
     _default_completion(buffer)

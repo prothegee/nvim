@@ -6,9 +6,13 @@ vim.cmd([[
         autocmd ColorScheme * highlight LineNr guibg=none guifg=none
 
         autocmd ColorScheme * highlight NormalFloat guibg=none
-        autocmd ColorScheme * highlight FloatBorder guibg=none
+
+        autocmd ColorScheme * highlight FloatBorder guibg=none guifg=#1a8712
 
         autocmd ColorScheme * highlight WinSeparator guibg=none guifg=#1a8712
+
+    "" cmp
+        autocmd colorscheme * highlight CmpItemAbbrDeprecatedDefault guibg=#6d6600
     augroup END
 
     colorscheme retrobox

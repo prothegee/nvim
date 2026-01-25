@@ -54,8 +54,9 @@ _G.get_trim_path_current_buffer = function(max_segments)
         return rel
     end
 
-    local trimmed = parts[1] .. "/../" .. parts[#parts]
-    return trimmed
+    -- local trimmed = parts[1] .. "/../" .. parts[#parts]
+    -- return trimmed
+    return rel
 end
 
 _G.get_diagnostic_hint = function ()
