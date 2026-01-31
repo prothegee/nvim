@@ -4,6 +4,54 @@
 		"body": [
 			"// --------------------------------------------------------- //"
 		]
-	}
+	},
+    "random int math v1": {
+        "prefix": "_random_int_math_v1",
+        "body": [
+            "// math/rand",
+            "rand.Intn($1) + $2"
+        ]
+    },
+    "random int math v2": {
+        "prefix": "_random_int_math_v2",
+        "body": [
+            "// math/rand/v2",
+            "rand.IntN($1) + $2"
+        ]
+    },
+    "generate generic random signed number": {
+        "prefix": "_gen_generic_random_signed_number",
+        "body": [
+            "type SignedNumber interface {",
+            "    ~int8|~int16|~int|~int32|~int64",
+            "}",
+            "",
+            "// @brief generate random signed number",
+            "//",
+            "// @note safe for seed concurrency",
+            "// @note if minRange larger than maxRange, it will be swapp",
+            "//",
+            "// @param r *rand.Rand - from new random, e.g. `rand.New(rand.NewSource(time.Now().UnixNano()))`",
+            "// @param minRange int - min range",
+            "// @param maxRange int - max range",
+            "//",
+            "// @return T SignedNumber",
+            "func RandomSignedNumber[T SignedNumber](r *rand.Rand, minRange, maxRange T) T {",
+            "    if minRange > maxRange {",
+            "        // force swap number if minRange larger",
+            "        minRange, maxRange = maxRange, minRange",
+            "    }",
+            "",
+            "    minval := int64(minRange)",
+            "    maxVal := int64(maxRange)",
+            "",
+            "    // safeguard even after swap and return minRange instead",
+            "    if minVal > maxVal {",
+            "        return minRange",
+            "    }",
+            "    return T(minVal+r.Int63n(maxVal-minVal+1))",
+            "}"
+        ]
+    }
 }
 
