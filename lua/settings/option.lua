@@ -1,7 +1,7 @@
 vim.opt.updatetime = 60
 vim.opt.timeoutlen = 600
 
-vim.opt.mouse = "a"
+-- vim.opt.mouse = "nvi"
 
 vim.opt.number = true
 
