@@ -8,6 +8,7 @@ local LSPS = {
     "ts_ls",
     "zls",
     "jdtls", "kotlin_lsp",
+    "ruby_lsp",
     "protols",
     "svelte", "vue_ls",
     "gdscript", "gdshader_lsp",
@@ -60,6 +61,12 @@ for _, lsp in pairs(LSPS) do
             }
         }
     end
+
+    -- if lsp == "ruby_lsp" then
+    --     opts.settings ={
+    --         cmd = {"ruby-lsp"}
+    --     }
+    -- end
 
     -- check opts before extend ocap
     if next(opts) ~= nil then
