@@ -7,6 +7,7 @@ local TREESITTERS = {
     "go",
     "ziggy", "ziggy_schema",
     "java", "kotlin",
+    "ruby",
     "javascript", "typescript",
     "svelte", "vue",
     "gdscript", "gdshader",
