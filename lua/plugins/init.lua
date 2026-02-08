@@ -1,3 +1,47 @@
+local _uv = vim.uv
+
+local function _copy_file(src, dst)
+    vim.schedule(function()
+        local src_fd, open_err = _uv.fs_open(src, "r", 420) -- 420 = 0o644
+        if not src_fd then
+            vim.notify("fail to open source file: " .. open_err, vim.log.levels.ERROR)
+            return
+        end
+
+        local stat, stat_err = _uv.fs_fstat(src_fd)
+        if not stat then
+            _uv.fs_close(src_fd)
+            vim.notify("fail to read file metadata: " .. stat_err, vim.log.levels.ERROR)
+            return
+        end
+
+        local dst_fd, create_err = _uv.fs_open(dst, "w", 420)
+        if not dst_fd then
+            _uv.fs_close(src_fd)
+            vim.notify("fail to create file destination: " .. create_err, vim.log.levels.ERROR)
+            return
+        end
+
+        local buf = _uv.fs_read(src_fd, stat.size, 0)
+        if not buf then
+            _uv.fs_close(src_fd)
+            _uv.fs_close(dst_fd)
+            vim.notify("failed to read file", vim.log.levels.ERROR)
+            return
+        end
+
+        local written = _uv.fs_write(dst_fd, buf, 0)
+        if not written or written ~= #buf then
+            vim.notify("fail to write file", vim.log.levels.WARN)
+        end
+
+        _uv.fs_close(src_fd)
+        _uv.fs_close(dst_fd)
+    end)
+end
+
+---
+
 local _gitsigns = require("gitsigns")
 
 _gitsigns.setup()
@@ -147,6 +191,63 @@ _cmdc.setup({
         end,
         ["TAB: New Term"] = function()
             vim.cmd("tabnew +term")
+        end,
+        --
+        ["INIT: .clangd"] = function()
+            local file = ".clangd"
+            local source = vim.fn.stdpath("config") .. "/data/init/" .. file
+            local target = vim.loop.cwd() .. "/" .. file
+
+            _copy_file(source, target)
+        end,
+        ["INIT: .clang-format"] = function()
+            local file = ".clang-format"
+            local source = vim.fn.stdpath("config") .. "/data/init/" .. file
+            local target = vim.loop.cwd() .. "/" .. file
+
+            _copy_file(source, target)
+        end,
+        ["INIT: .rustfmt.toml"] = function()
+            local file = ".rustfmt.toml"
+            local source = vim.fn.stdpath("config") .. "/data/init/" .. file
+            local target = vim.loop.cwd() .. "/" .. file
+
+            _copy_file(source, target)
+        end,
+        ["INIT: .gitignore"] = function()
+            local file = ".gitignore"
+            local source = vim.fn.stdpath("config") .. "/data/init/" .. file
+            local target = vim.loop.cwd() .. "/" .. file
+
+            _copy_file(source, target)
+        end,
+        ["INIT: .nvimignore"] = function()
+            local file = ".nvimignore"
+            local source = vim.fn.stdpath("config") .. "/data/init/" .. file
+            local target = vim.loop.cwd() .. "/" .. file
+
+            _copy_file(source, target)
+        end,
+        ["INIT: License MIT (expat)"] = function()
+            local file = "LICENSE-MIT"
+            local source = vim.fn.stdpath("config") .. "/data/init/" .. file
+            local target = vim.loop.cwd() .. "/" .. file
+
+            _copy_file(source, target)
+        end,
+        ["INIT: License BSD 3 Clause (expat)"] = function()
+            local file = "LICENSE-BSD-3-CLAUSE"
+            local source = vim.fn.stdpath("config") .. "/data/init/" .. file
+            local target = vim.loop.cwd() .. "/" .. file
+
+            _copy_file(source, target)
+        end,
+        ["INIT: README.md"] = function()
+            local file = "README.md"
+            local source = vim.fn.stdpath("config") .. "/data/init/" .. file
+            local target = vim.loop.cwd() .. "/" .. file
+
+            _copy_file(source, target)
         end,
     }
 })
