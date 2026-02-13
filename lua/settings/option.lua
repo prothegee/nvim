@@ -18,3 +18,6 @@ vim.opt.winborder = "rounded"
 vim.opt.clipboard = "unnamedplus"
 
 vim.opt.laststatus = 3
+
+vim.opt.whichwrap:append "<>[]hl"
+vim.opt.whichwrap:append "b,s"
