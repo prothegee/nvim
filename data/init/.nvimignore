@@ -3,23 +3,23 @@
 ##
 .git
 .bin
+.tmp
 .out
 .log
 .logs
 .build
 .cache
-.config
 .target
 .svelte-kit
 .node_modules
 
 bin
+tmp
 out
 log
 logs
 build
 cache
-config
 target
 svelte-kit
 node_modules
