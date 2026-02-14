@@ -40,6 +40,9 @@ see [this file](./lua/plugins/init.lua) for more information
     - open/close common terminal
     - *any open terminal will be closed
 
+- `<C-A-S-t>` e.q. `ctrl+alt+t`:
+    - create empty new tab
+
 <br>
 
 ---
