@@ -5,12 +5,12 @@ local LSPS = {
     "clangd", "neocmake",
     "rust_analyzer", "taplo",
     "gopls",
-    "ts_ls",
+    "vtsls", -- "ts_ls",
     "zls",
     "jdtls", "kotlin_lsp",
     "ruby_lsp",
     "protols",
-    "svelte", "vue_ls",
+    "svelte","vue_ls",
     "gdscript", "gdshader_lsp",
     "basedpyright",
     "html", "cssls", -- "htmx-lsp",
@@ -62,30 +62,38 @@ for _, lsp in pairs(LSPS) do
         }
     end
 
-    -- if lsp == "ruby_lsp" then
-    --     opts.settings ={
-    --         cmd = {"ruby-lsp"}
-    --     }
-    -- end
+    if lsp == "vtsls" then
+        opts = {
+            filetypes = {
+                "javascript", "javascriptreact",
+                "typescript", "typescriptreact",
+                "vue"
+            },
+            settings = {
+                vtsls = {
+                    tsserver = {
+                        globalPlugins = {
+                            {
+                                cmd = {"vue-language-server", "--stdio"},
+                                name = '@vue/typescript-plugin',
+                                languages = { 'vue' },
+                                configNamespace = 'typescript',
+                            }
+                        },
+                    },
+                },
+            },
+        }
+    end
 
     -- check opts before extend ocap
     if next(opts) ~= nil then
         ocap = vim.tbl_deep_extend("force", ocap, opts)
     end
 
-    if vim.lsp.config then
-        vim.lsp.config(lsp, ocap)
-    end
+    vim.lsp.config(lsp, ocap)
 
     vim.lsp.enable(lsp)
 end
-
-vim.lsp.config("*", {
-    on_init = _cap.on_init,
-    on_attach = _cap.on_attach,
-    capabilities = _cap.capabilities
-})
-
-vim.lsp.enable(LSPS)
 
 _cap.default_completion()
