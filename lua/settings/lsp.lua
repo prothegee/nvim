@@ -5,21 +5,23 @@ local LSPS = {
     "clangd", "neocmake",
     "rust_analyzer", "taplo",
     "gopls",
-    "vtsls", -- "ts_ls",
+    "vtsls",
+    "ts_ls",
     "zls",
     "jdtls", "kotlin_lsp",
     "ruby_lsp",
     "protols",
-    "svelte","vue_ls",
+    "svelte", "vue_ls",
     "gdscript", "gdshader_lsp",
     "basedpyright",
-    "html", "cssls", -- "htmx-lsp",
+    "html", "tailwindcss", "cssls", -- "htmx-lsp",
     "jsonls",
     "markdown_oxide",
     "yamlls",
     "bashls",
     "sqls",
     "docker_language_server",
+    "eslint",
 }
 
 for _, lsp in pairs(LSPS) do
@@ -75,10 +77,14 @@ for _, lsp in pairs(LSPS) do
                         globalPlugins = {
                             {
                                 cmd = {"vue-language-server", "--stdio"},
-                                name = '@vue/typescript-plugin',
-                                languages = { 'vue' },
-                                configNamespace = 'typescript',
-                            }
+                                -- install this globally, using:
+                                -- - npm i -g @vue/typescript-plugin
+                                -- or
+                                -- - bun i -g @vue/typescript-plugin
+                                name = "@vue/typescript-plugin",
+                                languages = { "vue" },
+                                configNamespace = "typescript",
+                            },
                         },
                     },
                 },
