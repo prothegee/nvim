@@ -155,6 +155,16 @@ _smear_cursor.setup()
 
 ---
 
+local _markdown_preview = require("markdown_preview")
+
+_markdown_preview.setup({
+    port = 5555,
+    debounce_ms = 300,
+    open_browser = true
+})
+
+---
+
 local _xplrr = require("plugins.xplrr")
 
 _xplrr.setup()
@@ -165,7 +175,7 @@ local _cmdc = require("plugins.cmdc")
 
 _cmdc.setup({
     commands = {
-        ["Markdown: Toggle Render"] = function()
+        ["Markdown: Toggle Render (NVIM BUFFER)"] = function()
             vim.cmd("RenderMarkdown toggle")
         end,
         --
@@ -248,6 +258,16 @@ _cmdc.setup({
             local target = vim.loop.cwd() .. "/" .. file
 
             _copy_file(source, target)
+        end,
+        --
+        ["Markdown Preview: Start"] = function()
+            vim.cmd("MarkdownPreview")
+        end,
+        ["Markdown Preview: Refresh"] = function()
+            vim.cmd("MarkdownPreviewRefresh")
+        end,
+        ["Markdown Preview: Stop"] = function()
+            vim.cmd("MarkdownPreviewStop")
         end,
     }
 })
