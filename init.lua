@@ -44,6 +44,12 @@ vim.pack.add({
     {
         src = "git@github.com:sphamba/smear-cursor.nvim.git"
     },
+    {
+        src = "git@github.com:selimacerbas/live-server.nvim.git"
+    },
+    {
+        src = "git@github.com:selimacerbas/markdown-preview.nvim.git"
+    },
 })
 
 local path_opt = vim.fn.stdpath("data") .. "/site/pack/core/opt"
