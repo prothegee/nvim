@@ -13,7 +13,7 @@ local TREESITTERS = {
     "gdscript", "gdshader",
     "python",
     "html", "css", "scss", -- "drogon-csp",
-    "json", "jsonc", "json5",
+    "json", -- "jsonc", "json5",
     "markdown", "typst",
     "yaml", "toml",
     "bash",
