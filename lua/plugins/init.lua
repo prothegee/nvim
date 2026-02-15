@@ -269,5 +269,12 @@ _cmdc.setup({
         ["Markdown Preview: Stop"] = function()
             vim.cmd("MarkdownPreviewStop")
         end,
+        --
+        ["JSON: json"] = function()
+            vim.cmd("set filetype=json")
+        end,
+        ["JSON: json5"] = function()
+            vim.cmd("set filetype=json5")
+        end,
     }
 })
