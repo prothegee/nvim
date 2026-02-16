@@ -13,7 +13,7 @@ local LSPS = {
     "protols",
     "svelte", "vue_ls",
     "gdscript", "gdshader_lsp",
-    "basedpyright",
+    "ruff", "basedpyright",
     "html", "tailwindcss", "cssls", -- "htmx-lsp",
     "jsonls",
     "markdown_oxide",
