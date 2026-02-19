@@ -6,7 +6,7 @@ local LSPS = {
     "rust_analyzer", "taplo",
     "gopls",
     "vtsls",
-    "ts_ls",
+    -- "ts_ls",
     "zls",
     "jdtls", "kotlin_lsp",
     "ruby_lsp",
