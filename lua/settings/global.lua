@@ -132,6 +132,28 @@ _G.get_cwd_and_file_buffer = function()
     return relative_path
 end
 
+_G.get_git_branch = function()
+    vim.fn.system("git rev-parse --show-toplevel 2>/dev/null"):gsub("\n$", "")
+    if vim.v.shell_error ~= 0 then return "n/a" end
+
+    local ret = vim.fn.system("git rev-parse --abbrev-ref HEAD"):gsub("\n$", "")
+
+    if not ret or ret == "" then return "n/a" end
+
+    return ret
+end
+
+_G.get_git_short = function()
+    vim.fn.system("git rev-parse --show-toplevel 2>/dev/null"):gsub("\n$", "")
+    if vim.v.shell_error ~= 0 then return "n/a" end
+
+    local ret = vim.fn.system("git rev-parse --short HEAD"):gsub("\n$", "")
+
+    if not ret or ret == "" then return "n/a" end
+
+    return ret
+end
+
 ---
 
 --[[
