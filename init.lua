@@ -72,5 +72,23 @@ for _, path in ipairs(vim.fn.glob(path_cfg .. "/lua", true, true)) do
     end
 end
 
+---
+
+-- check ~/.config/nvim/option.json exists
+local option_json = vim.fn.stdpath("config") .. "/option.json"
+local option_json_template = vim.fn.stdpath("config") .. "/option.json.template"
+
+if vim.fn.filereadable(option_json) == 0 then
+    if vim.fn.filereadable(option_json_template) == 1 then
+        local content = vim.fn.readfile(option_json_template)
+        vim.fn.writefile(content, option_json)
+        vim.notify("NOTE: created option.json from template", vim.log.levels.INFO)
+    else
+        vim.notify("ERROR: option.json.template not found!", vim.log.levels.ERROR)
+    end
+end
+
+---
+
 require("plugins")
 require("settings")
