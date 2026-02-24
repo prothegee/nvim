@@ -238,6 +238,13 @@ _cmdc.setup({
 
             _copy_file(source, target)
         end,
+        ["INIT: License APACHE 2.0"] = function()
+            local file = "LICENSE-APACHE"
+            local source = vim.fn.stdpath("config") .. "/data/init/" .. file
+            local target = vim.loop.cwd() .. "/" .. file
+
+            _copy_file(source, target)
+        end,
         ["INIT: License MIT (expat)"] = function()
             local file = "LICENSE-MIT"
             local source = vim.fn.stdpath("config") .. "/data/init/" .. file
