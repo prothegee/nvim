@@ -151,7 +151,17 @@ _typst_preview.setup({
 
 local _smear_cursor = require("smear_cursor")
 
-_smear_cursor.setup()
+_smear_cursor.setup({                     -- Default  Range
+    -- stiffness = 0.5,                      -- 0.6      [0, 1]
+    -- trailing_stiffness = 0.5,             -- 0.45     [0, 1]
+    -- stiffness_insert_mode = 0.5,          -- 0.5      [0, 1]
+    -- trailing_stiffness_insert_mode = 0.5, -- 0.5      [0, 1]
+    -- damping = 0.95,                       -- 0.85     [0, 1]
+    -- damping_insert_mode = 0.95,           -- 0.9      [0, 1]
+    -- distance_stop_animating = 0.5,        -- 0.1      > 0
+    time_interval = 6,                     -- 15       > 0
+    smear_between_buffers = false,
+})
 
 ---
 
