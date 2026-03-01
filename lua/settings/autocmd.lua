@@ -56,14 +56,13 @@ vim.api.nvim_create_autocmd("FileType", {
 
         if not vim.api.nvim_buf_is_valid(buffer) then return end
 
-        -- -- ERROR: since v0.12.0-dev-2442+g4747975754
-        -- local filetype = vim.bo[buffer].filetype
-        -- for _, ts in pairs(TS.TREESITTERS) do
-        --     if ts == filetype then
-        --         vim.treesitter.start(buffer, ts)
-        --         break
-        --     end
-        -- end
+        local filetype = vim.bo[buffer].filetype
+        for _, ts in pairs(TS.TREESITTERS) do
+            if ts == filetype then
+                vim.treesitter.start(buffer, ts)
+                break
+            end
+        end
 
         CAPABILITY.default_completion(buffer)
     end
