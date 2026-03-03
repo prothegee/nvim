@@ -13,7 +13,7 @@
             "<head>",
             "    <meta charset=\"utf-8\">",
             "    <meta name=\"viewport\" content=\"width=device-width,initial-scale=1\">",
-            "    <title>$2</title>",
+            "    <title>${2:REPLACE_THE_TITLE}</title>",
             "</head>",
             "<body>",
             "    <!-- ??? -->",

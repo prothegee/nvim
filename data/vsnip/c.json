@@ -8,9 +8,9 @@
     "struct": {
         "prefix": "_struct",
         "body": [
-            "struct $1 {",
+            "struct ${1:Struct_s} {",
             "    // data",
-            "}; // $1"
+            "}; // ${1:Struct_s}"
         ]
     },
     "struct typedef 1": {
@@ -18,23 +18,24 @@
         "body": [
             "typedef struct {",
             "    // data",
-            "} $1;"
+            "} ${1:Struct_typedef_1};"
         ]
     },
 	"struct typedef 2": {
         "prefix": "_struct_typedef_2",
         "body": [
-            "typedef struct $1 {",
+            "typedef struct ${1:_Struct_typedef_2} {",
             "    // data",
-            "} $2;"
+            "} ${2:Struct_typedef_2};"
         ]
     },
+
 	"if not define define": {
 		"prefix": "_ifndef_def_endif",
 		"body": [
-			"#ifndef $1",
-			"#define $1",
-			"#endif // $1"
+			"#ifndef ${1:REPLACE_ME}",
+			"#define ${1:REPLACE_ME}",
+			"#endif // ${1:REPLACE_ME}"
 		]
 	},
 	"int main": {
@@ -58,7 +59,7 @@
 		"body": [
 			"/// ### file: $TM_FILENAME_BASE",
             "/// ",
-            "/// ### author: $1",
+            "/// ### author: ${1:FULL_NAME}",
             "/// ",
             "/// ---------------------------------------------------------",
             "/// ",
@@ -72,11 +73,12 @@
             "/// ",
             "/// ### copyright:",
             "/// ",
-            "/// - (c) $2 $3 // $4 // $5",
+            "/// - (c) ${2:YYYYMMDD} ${3:HOLDER} // ${4:USERNAME} // ${5:EMAIL}",
             "/// ",
             "/// ### contributors:",
             "/// ",
-            "/// - $3 // $4 // $5"
+            "/// - ${3:HOLDER} // ${4:USERNAME} // ${5:EMAIL}",
+            "///"
 		]
 	}
 }
