@@ -8,6 +8,7 @@ local LSPS = {
     "vtsls",
     -- "ts_ls",
     "zls",
+    "roslyn_ls",
     "jdtls", "kotlin_lsp",
     "ruby_lsp",
     "protols",
@@ -60,6 +61,25 @@ for _, lsp in pairs(LSPS) do
                 diagnostics = {
                     globals = { "vim" }
                 }
+            }
+        }
+    end
+
+    -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md#roslyn_ls
+    if lsp == "roslyn_ls" then
+        opts = {
+            cmd = {
+                "dotnet",
+                -- please adjust bellow
+                os.getenv("DOTNET_ROOT") .. "/.nuget/content/LanguageServer/linux-x64/Microsoft.CodeAnalysis.LanguageServer.dll",
+                "--logLevel",
+                "Information",
+                "--extensionLogDirectory",
+                vim.fs.joinpath(vim.uv.os_tmpdir(), "roslyn_ls/logs"),
+                "--stdio",
+            },
+            filetypes = {
+                "cs", "vb"
             }
         }
     end
