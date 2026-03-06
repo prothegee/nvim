@@ -8,7 +8,8 @@ this.setup({
     },
     files = {
         hidden = true,
-        rg_opts = [[--no-ignore --hidden --files -g "!*.git"]],
-        fd_opts = [[--no-ignore --hidden --type f --type l --exclude .git]],
+        rg_opts = [[--no-ignore --hidden --files -g "!*.git" --sort-files]],
+        fd_opts = [[--no-ignore --hidden --type f --type l --exclude .git --sort=name]],
+        cwd_prompt = false,
     }
 })
