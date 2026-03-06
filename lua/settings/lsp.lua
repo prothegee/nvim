@@ -1,6 +1,10 @@
-local _cap = require"settings.capability"
+local M = {}
 
-local LSPS = {
+---
+
+local cap = require"settings.capability"
+
+M.LSPS = {
     "lua_ls",
     "clangd", "neocmake",
     "rust_analyzer", "taplo",
@@ -25,15 +29,17 @@ local LSPS = {
     "eslint",
 }
 
-for _, lsp in pairs(LSPS) do
+---
+
+for _, lsp in pairs(M.LSPS) do
     -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md
     local opts = {}
 
     -- use this instead since will be extended
     local ocap = {
-        on_init = _cap.on_init,
-        on_attach = _cap.on_attach,
-        capabilities = _cap.capabilities
+        on_init = cap.on_init,
+        on_attach = cap.on_attach,
+        capabilities = cap.capabilities
     }
 
     if lsp == "lua_ls" then
@@ -122,4 +128,10 @@ for _, lsp in pairs(LSPS) do
     vim.lsp.enable(lsp)
 end
 
-_cap.default_completion()
+---
+
+cap.default_completion()
+
+---
+
+return M
