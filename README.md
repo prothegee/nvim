@@ -1,40 +1,45 @@
-# nvim - config
+# Nvim, Personal Config
 
 __*NOTE:*__
 - using vim.pack
+- no package manager
 - meant to use for 0.12.* or above
+- completion is handled manually (using <C-x><C-o> mostly)
 
 <br>
-
-## note
 
 - check [this file](./lua/settings/lsp.lua) for lsp/s
 - check [this file](./lua/settings/treesitter.lua) for treesitters
 
 <br>
 
-## used plugins
+## Installed Plugins
 
-see [this file](./lua/plugins/init.lua) for more information
+- [fzf-lua](./lua/plugins/fzf-lua.lua)
+- [gitsigns](./lua/plugins/gitsigns.lua)
+- [hlchunk](./lua/plugins/hlchunk.lua)
+- [smear-cursor](./lua/plugins/smear-cursor.lua)
+- [typst-preview](./lua/plugins/typst-preview.lua)
+- [markdown-render](./lua/plugins/markdown-render.lua)
+- [markdown-preview](./lua/plugins/markdown-preview.lua)
+- [nvim-lspconfig](./lua/plugins/nvim-lspconfig.lua)
+- [nvim-treesitter](./lua/plugins/nvim-treesitter.lua)
+- [nvim-web-devicons](./lua/plugins/nvim-web-devicons.lua)
+
+see `./lua/plugins` directory for more details.
 
 <br>
 
-## internal plugins
+## [internal plugins](./lua/prt/README.md)
 
-- [cmdc](./lua/plugins/cmdc.lua)
-
-- [xplrr](./lua/plugins/xplrr.lua)
-
+- [cmdp](./lua/prt/cmdp.lua)
 
 <br>
 
-## configured keymap or shortcut
-
-- `<C-p>` e.q. `ctrl+p`:
-    - open [xplrr](./lua/nvim-prt/xplrr.lua)
+## Configured Keymap/Shortcut
 
 - `<C-S-p>` e.q. `ctrl+shift+p`:
-    - open [cmdc](./lua/nvim-prt/cmdc.lua)
+    - open [cmdc](./lua/prt/cmdp.lua)
 
 - `<C-A-t>` e.q. `ctrl+alt+t`:
     - open/close common terminal
@@ -42,6 +47,8 @@ see [this file](./lua/plugins/init.lua) for more information
 
 - `<C-A-S-t>` e.q. `ctrl+alt+t`:
     - create empty new tab
+
+read [this file](./lua/settings/keymaps.lua) for more information
 
 <br>
 
