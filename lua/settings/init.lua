@@ -1,11 +1,7 @@
-require("settings.lsp")
-require("settings.treesitter")
+local this_dir = vim.fn.stdpath("config") .. "/lua/settings"
 
-require("settings.global")
-require("settings.option")
-require("settings.diagnostic")
-require("settings.commands")
-require("settings.keymaps")
-require("settings.theme")
-
-require("settings.autocmd")
+for _, file in ipairs(vim.fn.readdir(this_dir)) do
+    if file ~= "init.lua" and file:match("%.lua$") then
+        require("settings." .. file:gsub("%.lua$", ""))
+    end
+end
