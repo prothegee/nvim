@@ -1,6 +1,12 @@
-local _ts = require"nvim-treesitter"
+local M = {}
 
-local TREESITTERS = {
+local ts = require"nvim-treesitter.config"
+
+local path_parser = vim.fn.stdpath("data") .. "/site/parser"
+
+---
+
+M.TS = {
     "lua",
     "c", "cpp", "cmake",
     "rust",
@@ -22,22 +28,30 @@ local TREESITTERS = {
     "dockerfile",
 }
 
-_ts.setup({
-    ensure_installed = TREESITTERS,
+ts.setup({
+    ensure_installed = M.TS,
     auto_install = true,
-    sync_install = true,
-    hightlight = {
+    sync_install = true, -- ensured install all first
+    highlight = {
         enable = true,
         additional_vim_regex_highlighting = true,
-    }
+    },
 })
 
-for _, ts in pairs(TREESITTERS) do
-    vim.treesitter.language.add(ts)
+---
+
+vim.filetype.add(M.TS)
+for _, lang in ipairs(M.TS) do
+    vim.treesitter.language.add(lang)
+
+    local parser = path_parser .. "/" .. lang .. ".so"
+    -- since ts.setup not installing the lang parser,
+    -- force add the parser if not exists
+    if vim.fn.filereadable(parser) == 0 then
+        vim.cmd("TSInstall " .. lang)
+    end
 end
 
-local TS = {}
+---
 
-TS.TREESITTERS = TREESITTERS
-
-return TS
+return M

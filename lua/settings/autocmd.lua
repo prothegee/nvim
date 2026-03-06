@@ -1,5 +1,5 @@
-local TS = require"settings.treesitter"
-local CAPABILITY = require"settings.capability"
+local ts = require("settings.treesitter")
+local cap = require("settings.capability")
 
 -- BufEnter
 vim.api.nvim_create_autocmd("BufEnter", {
@@ -9,10 +9,11 @@ vim.api.nvim_create_autocmd("BufEnter", {
 
         if not vim.api.nvim_buf_is_valid(buffer) then return end
 
-        CAPABILITY.default_completion(buffer)
+        cap.default_completion(buffer)
     end
 })
--- BufEnter
+
+-- BufLeave
 vim.api.nvim_create_autocmd("BufLeave", {
     pattern = "*",
     callback = function(args)
@@ -21,6 +22,7 @@ vim.api.nvim_create_autocmd("BufLeave", {
         if not vim.api.nvim_buf_is_valid(buffer) then return end
     end
 })
+
 -- LspAttach
 vim.api.nvim_create_autocmd("LspAttach", {
     callback = function(args)
@@ -32,11 +34,12 @@ vim.api.nvim_create_autocmd("LspAttach", {
         if not client then return end
         if buffer_name == "" then return end
 
-        CAPABILITY.default_completion(buffer)
-        CAPABILITY.on_attach(client, buffer)
+        cap.default_completion(buffer)
+        cap.on_attach(client, buffer)
     end
 })
--- LspAttach
+
+-- LspDetach
 vim.api.nvim_create_autocmd("LspDetach", {
     callback = function(args)
         local client = vim.lsp.get_client_by_id(args.data.client_id)
@@ -48,6 +51,7 @@ vim.api.nvim_create_autocmd("LspDetach", {
         if buffer_name == "" then return end
     end
 })
+
 -- FileType
 vim.api.nvim_create_autocmd("FileType", {
     pattern = "*",
@@ -57,16 +61,17 @@ vim.api.nvim_create_autocmd("FileType", {
         if not vim.api.nvim_buf_is_valid(buffer) then return end
 
         local filetype = vim.bo[buffer].filetype
-        for _, ts in pairs(TS.TREESITTERS) do
-            if ts == filetype then
-                vim.treesitter.start(buffer, ts)
+        for _, lang in ipairs(ts.TS) do
+            if lang == filetype then
+                vim.treesitter.start(buffer, lang)
                 break
             end
         end
 
-        CAPABILITY.default_completion(buffer)
+        cap.default_completion(buffer)
     end
 })
+
 -- BufNewFile & BufRead
 vim.api.nvim_create_autocmd({"BufNewFile", "BufRead"}, {
     -- force file .h to c ad not c++
@@ -75,5 +80,13 @@ vim.api.nvim_create_autocmd({"BufNewFile", "BufRead"}, {
         if vim.bo.filetype == "" or vim.bo.filetype == "cpp" then
             vim.bo.filetype = "c"
         end
+    end
+})
+
+-- BufWrite
+vim.api.nvim_create_autocmd("BufWrite", {
+    pattern = "*",
+    callback = function()
+        -- TODO: bffrwrt
     end
 })
