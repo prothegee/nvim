@@ -1,9 +1,0 @@
-local SWTCH = {}
-
----
-
--- ?
-
----
-
-return SWTCH
