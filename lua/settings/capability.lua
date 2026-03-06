@@ -1,16 +1,25 @@
-local CAPABILITY = {}
+local M = {}
 
-local _default_completion = function(buffer)
-    vim.wildmode = "longest:full, full"
+---
+
+--[[
+-- params:
+-- _ - buffer
+--]]
+local _default_completion = function(_)
+    vim.wildmode = "longest:full,full"
+
     vim.opt.shortmess:append("c")
-    vim.opt.completeopt = { "menu", "menuone", "noinsert", "noselect" }
+    vim.opt.completeopt = {"menu", "menuone", "noinsert", "noselect"}
     vim.opt.wildignorecase = true
 
     vim.bo.omnifunc = "v:lua.vim.lsp.omnifunc"
 end
 
-CAPABILITY.capabilities = require("cmp_nvim_lsp").default_capabilities()
-CAPABILITY.capabilities.textDocument = {
+---
+
+M.capabilities = vim.lsp.protocol.make_client_capabilities()
+M.capabilities.textDocument = {
     completion = {
         contextSupport = true,
         dynamicRegistration = true,
@@ -40,22 +49,25 @@ CAPABILITY.capabilities.textDocument = {
         multilineTokenSupport = true,
     }
 }
-CAPABILITY.capabilities.workspace = {
+M.capabilities.workspace = {
     diagnostics = { refreshSupport = true }
 }
 
-function CAPABILITY.default_completion(client, buffer)
+function M.default_completion(client, buffer)
     _default_completion(buffer)
 end
 
-function CAPABILITY.on_init(client, buffer)
+function M.on_init(client, buffer)
     if client:supports_method("textDocument/semanticTokens") then
         client.server_capabilities.semanticTokensProvider = nil
     end
 end
 
-function CAPABILITY.on_attach(client, buffer)
+function M.on_attach(client, buffer)
     _default_completion(buffer)
 end
 
-return CAPABILITY
+---
+
+return M
+
