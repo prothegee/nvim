@@ -4,7 +4,6 @@ __*NOTE:*__
 - using vim.pack
 - no package manager
 - meant to use for 0.12.* or above
-- completion is handled manually (using <C-x><C-o> mostly)
 
 <br>
 
@@ -47,6 +46,12 @@ see `./lua/plugins` directory for more details.
 
 - `<C-A-S-t>` e.q. `ctrl+alt+t`:
     - create empty new tab
+
+- `<C-x><C-o>` e.q. `ctrl+x ctrl+o`:
+    - default completion
+
+- `<C-x><C-s>` e.q. `ctrl+x ctrl+s`:
+    - default snippet
 
 read [this file](./lua/settings/keymaps.lua) for more information
 
