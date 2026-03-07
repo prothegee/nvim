@@ -75,6 +75,9 @@ end
 
 ---
 
+-- consistent copy paste; kinda miss the position where it should be
+vim.keymap.set('x', 'p', '"_d"0P', { silent = true })
+
 -- open new tab
 -- mode:
 -- - normal

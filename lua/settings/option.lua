@@ -26,7 +26,7 @@ vim.opt.fillchars = { eob = " " }
 
 vim.opt.winborder = "rounded"
 
-vim.opt.clipboard = "unnamedplus"
+vim.opt.clipboard = "unnamedplus" -- check keymaps: "_d"0P
 
 vim.opt.laststatus = 3
 
