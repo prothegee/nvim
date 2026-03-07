@@ -186,16 +186,28 @@ vim.keymap.set("n", "[d",
     noremap = true
 })
 
--- vim.keymap.set("n", "<C-p>",
---     function()
---         vim.cmd("Xplrr")
---     end,
--- {
---     desc = "XPLRR init",
---     silent = true,
---     noremap = true
--- })
---
+-- search file
+vim.keymap.set("n", "<C-p>",
+    function()
+        vim.cmd("FzfLua files")
+    end,
+{
+    desc = "FZF files",
+    silent = true,
+    noremap = true
+})
+-- search buffer
+vim.keymap.set("n", "<C-A-p>",
+    function()
+        vim.cmd("FzfLua buffers")
+    end,
+{
+    desc = "FZF buffers",
+    silent = true,
+    noremap = true
+})
+
+-- command palette
 vim.keymap.set("n", "<C-S-p>",
     function()
         vim.cmd("Cmdp")

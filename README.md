@@ -38,7 +38,7 @@ see `./lua/plugins` directory for more details.
 ## Configured Keymap/Shortcut
 
 - `<C-S-p>` e.q. `ctrl+shift+p`:
-    - open [cmdc](./lua/prt/cmdp.lua)
+    - open [cmdp](./lua/prt/cmdp.lua)
 
 - `<C-A-t>` e.q. `ctrl+alt+t`:
     - open/close common terminal

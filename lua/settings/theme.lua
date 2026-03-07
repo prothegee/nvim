@@ -2,6 +2,8 @@ vim.cmd([[
     augroup InternalTheme
         autocmd ColorScheme * highlight Normal guibg=none guifg=none
         autocmd ColorScheme * highlight NormalNC guibg=none guifg=none
+        "autocmd ColorScheme * highlight Normal guibg=none guifg=#646464 gui=NONE
+        "autocmd ColorScheme * highlight NormalNC guibg=none guifg=#121212 gui=underdotted
 
         autocmd ColorScheme * highlight LineNr guibg=none guifg=none
 
@@ -16,9 +18,14 @@ vim.cmd([[
         autocmd ColorScheme * highlight LineNrBelow guibg=none guifg=#464646
         autocmd ColorScheme * highlight SignColumn guibg=none
 
-    "" cmp
-        autocmd colorscheme * highlight CmpItemAbbrDeprecatedDefault guibg=#6d6600
+        autocmd ColorScheme * highlight CursorLineNr guibg=none
+        autocmd ColorScheme * highlight CursorLineSign guibg=none
+
+    "" cmp: legacy (deprecated completion bg color)
+    "    autocmd colorscheme * highlight CmpItemAbbrDeprecatedDefault guibg=#6d6600
     augroup END
+
+    set cursorline
 
     colorscheme retrobox
 ]])
