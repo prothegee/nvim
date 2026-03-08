@@ -76,7 +76,13 @@ end
 ---
 
 -- consistent copy paste; kinda miss the position where it should be
-vim.keymap.set('x', 'p', '"_d"0P', { silent = true })
+-- vim.keymap.set('x', 'p', '"_d"0P', { silent = true })
+vim.keymap.set('x', 'p', function()
+    local saved = vim.fn.getreg('+')
+
+    vim.cmd("normal! pgvy")
+    vim.fn.setreg('+', saved)
+end, {silent=true})
 
 -- open new tab
 -- mode:
@@ -192,20 +198,20 @@ vim.keymap.set("n", "[d",
 -- search file
 vim.keymap.set("n", "<C-p>",
     function()
-        vim.cmd("FzfLua files")
+        vim.cmd("Xplrr")
     end,
 {
-    desc = "FZF files",
+    desc = "Search files; include .nvimignore",
     silent = true,
     noremap = true
 })
 -- search buffer
 vim.keymap.set("n", "<C-A-p>",
     function()
-        vim.cmd("FzfLua buffers")
+        vim.cmd("XplrrBuffers")
     end,
 {
-    desc = "FZF buffers",
+    desc = "Search opened buffers",
     silent = true,
     noremap = true
 })
@@ -225,7 +231,7 @@ vim.keymap.set("n", "<C-S-p>",
 --- horizontal
 vim.keymap.set(
     { "n", "i", "v", "t" },
-    "<C-A-t>",
+    "<C-`>",
     open_terminal_horizontal,
     {
         desc = "terminal horizontal (mode: n, i, v, t)"
