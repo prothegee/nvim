@@ -37,21 +37,25 @@ see `./lua/plugins` directory for more details.
 
 ## Configured Keymap/Shortcut
 
-- `<C-S-p>` e.q. `ctrl+shift+p`:
-    - open [cmdp](./lua/prt/cmdp.lua)
 
-- `<C-A-t>` e.q. `ctrl+alt+t`:
+- <C-p> e.q. ctrl+p:
+    - open [xplrr](./lua/prt/xplrr.lua)
+
+- <C-`> e.q. ctrl+alt+t:
     - open/close common terminal
     - *any open terminal will be closed
 
-- `<C-A-S-t>` e.q. `ctrl+alt+t`:
+- <C-S-p> e.q. ctrl+shift+p:
+    - open [cmdp](./lua/prt/cmdp.lua)
+
+- <C-A-S-t> e.q. ctrl+alt+t:
     - create empty new tab
 
-- `<C-x><C-o>` e.q. `ctrl+x ctrl+o`:
+- <C-x><C-o> e.q. ctrl+x ctrl+o:
     - default completion
 
-- `<C-x><C-s>` e.q. `ctrl+x ctrl+s`:
-    - default snippet
+- <C-x><C-s> e.q. ctrl+x ctrl+s:
+    - internal snippet
 
 read [this file](./lua/settings/keymaps.lua) for more information
 

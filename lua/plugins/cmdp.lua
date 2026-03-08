@@ -101,18 +101,22 @@ local commands = {
         _G.copy_file(source, target)
     end,
     --
-    ["FZF"] = function()
-        vim.cmd("FzfLua files")
-    end,
-    ["FZF: Buffers"] = function()
-        vim.cmd("FzfLua buffers")
-    end,
-    ["FZF: Quickfix"] = function()
-        vim.cmd("FzfLua quickfix")
-    end,
-    ["FZF: Quickfix Stack"] = function()
-        vim.cmd("FzfLua quickfix_stack")
-    end,
+    -- ["FZF"] = function()
+    --     vim.cmd("FzfLua files")
+    -- end,
+    -- ["FZF: Buffers"] = function()
+    --     vim.cmd("FzfLua buffers")
+    -- end,
+    -- ["FZF: Quickfix"] = function()
+    --     vim.cmd("FzfLua quickfix")
+    -- end,
+    -- ["FZF: Quickfix Stack"] = function()
+    --     vim.cmd("FzfLua quickfix_stack")
+    -- end,
+    --
+    ["XPLRR"] = function() vim.cmd("Xplrr") end,
+    ["XPLRR: All"] = function() vim.cmd("XplrrAll") end,
+    ["XPLRR: Buffers"] = function() vim.cmd("XplrrBuffers") end,
 }
 
 this.setup({
