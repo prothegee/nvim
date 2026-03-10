@@ -10,6 +10,6 @@ this.setup({                     	      -- Default  Range
     -- damping = 0.95,                       -- 0.85     [0, 1]
     -- damping_insert_mode = 0.95,           -- 0.9      [0, 1]
     -- distance_stop_animating = 0.5,        -- 0.1      > 0
-    time_interval = 3,                    -- 15       > 0
+    time_interval = 9,                    -- 15       > 0
     smear_between_buffers = false,
 })
