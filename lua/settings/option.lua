@@ -1,5 +1,5 @@
-vim.opt.updatetime = 60
-vim.opt.timeoutlen = 600
+vim.opt.updatetime = 30
+vim.opt.timeoutlen = 150
 
 -- vim.opt.mouse = "nvi"
 

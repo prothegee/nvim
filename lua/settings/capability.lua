@@ -24,7 +24,7 @@ M.capabilities.textDocument = {
         contextSupport = true,
         dynamicRegistration = true,
         completionItem = {
-            tagSupport = { valueset = { 1 } },
+            tagSupport = { valueSet = { 1 } },
             snippetSupport = true,
             resolveSupport = {
                 properties = { "detail", "documentation", "additionalTextEdits", "snippets" }
@@ -45,9 +45,9 @@ M.capabilities.textDocument = {
         dynamicRegistration = true
     },
     inlineCompletion = { dynamicRegistration = true },
-    semanticTokens = {
-        multilineTokenSupport = true,
-    }
+    -- semanticTokens = {
+    --     multilineTokenSupport = true,
+    -- }
 }
 M.capabilities.workspace = {
     diagnostics = { refreshSupport = true }
