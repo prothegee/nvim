@@ -7,6 +7,8 @@ local M = {}
 M.snippet_store = {}
 M.completion_start_col = {}
 
+M.SNIPPET_TRIGGER = "<C-x><C-i>"
+
 ---
 
 local function get_available_snippet_files()
@@ -94,7 +96,6 @@ function M.load_filetype(filetype)
     end
 end
 
--- Manual snippet trigger (for <C-x><C-s>)
 function M.trigger_snippet_completion()
     if vim.fn.mode() ~= "i" then return end
 
@@ -176,18 +177,17 @@ function M.setup()
         end,
     })
 
-    -- Keymap: <C-x><C-s> for snippet completion
     vim.api.nvim_create_autocmd("FileType", {
         pattern = "*",
         group = vim.api.nvim_create_augroup("SnpptsKeymap", { clear = true }),
         callback = function(ev)
-            vim.keymap.set("i", "<C-x><C-s>", function()
+            vim.keymap.set("i", M.SNIPPET_TRIGGER, function()
                 M.trigger_snippet_completion()
             end, { buffer = ev.buf, desc = "Snippet completion" })
         end,
     })
 
-    -- Expand snippet on CompleteDone
+    -- expand snippet on CompleteDone
     vim.api.nvim_create_autocmd("CompleteDone", {
         group = vim.api.nvim_create_augroup("SnpptsComplete", { clear = true }),
         callback = function()
@@ -195,7 +195,7 @@ function M.setup()
         end,
     })
 
-    -- Tabstop navigation
+    -- tabstop navigation
     vim.keymap.set("i", "<Tab>", function()
         if vim.snippet.active({ direction = 1 }) then
             vim.snippet.jump(1)
@@ -203,7 +203,6 @@ function M.setup()
         end
         return "<Tab>"
     end, { expr = true, desc = "Snippet jump forward" })
-
     vim.keymap.set("i", "<S-Tab>", function()
         if vim.snippet.active({ direction = -1 }) then
             vim.snippet.jump(-1)
