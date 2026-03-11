@@ -37,7 +37,7 @@ see `./lua/plugins` directory for more details.
 
 <br>
 
-## Configured Keymap/Shortcut
+## Configured/Default Keymap/Shortcut
 
 
 - __*<C-p>*__ e.q. __*ctrl+p*__:
@@ -56,7 +56,7 @@ see `./lua/plugins` directory for more details.
 - __*<C-x><C-o>*__ e.q. __*ctrl+x ctrl+o*__:
     - default completion
 
-- __*<C-x><C-s>*__ e.q. __*ctrl+x ctrl+s*__:
+- __*<C-x><C-i>*__ e.q. __*ctrl+x ctrl+i*__:
     - internal snippet
 
 read [this file](./lua/settings/keymaps.lua) for more information
