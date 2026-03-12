@@ -10,10 +10,13 @@ eXPLoReR
 
 ## Note
 - Some behaviour is restricted due typing protection
+
+## Dependencies
+- optional:
+    - nvim-web-devicons:
+       - https://github.com/nvim-tree/nvim-web-devicons 
 --]]
 local M = {}
-
----
 
 local config = {
     hidden = true,
@@ -22,8 +25,11 @@ local config = {
     max_display = 50,
     border = "rounded",
     highlight_ns = vim.api.nvim_create_namespace("XPLRR_HL"),
+    icon_ns = vim.api.nvim_create_namespace("XPLRR_ICONS"),
+    match_ns = vim.api.nvim_create_namespace("XPLRR_MATCH"),
     debounce_ms = 100,
     update_interval = 50,
+    enable_icons = true,
 }
 
 local state = {
@@ -45,9 +51,9 @@ local state = {
     debounce_timer = nil,
     ignore_patterns = nil,
     files_discovered = 0,
+    devicons = nil,
+    devicons_get_icon = nil,
 }
-
----
 
 local function is_windows()
     return package.config:sub(1,1) == "\\"
@@ -69,8 +75,87 @@ local function is_valid_buf(buf)
     return buf and vim.api.nvim_buf_is_valid(buf)
 end
 
+local function get_file_icon(filepath)
+    if not config.enable_icons or not state.devicons_get_icon then
+        return ""
+    end
+
+    local filename = filepath:match("([^/]+)$") or filepath
+    local icon = state.devicons_get_icon(filename, nil, { default = true })
+
+    if icon then
+        return icon .. " "
+    end
+
+    return ""
+end
+
+local function get_file_icon_color(filepath)
+    if not config.enable_icons or not state.devicons_get_icon then
+        return nil
+    end
+
+    local filename = filepath:match("([^/]+)$") or filepath
+    local _, color = state.devicons_get_icon(filename, nil, { default = true })
+
+    return color
+end
+
+local function set_icon_highlight(color)
+    if not color then
+        return nil
+    end
+
+    local hl_name = "XplrrIcon" .. color:gsub("#", "")
+    local ok = pcall(vim.api.nvim_get_hl, 0, { name = hl_name })
+    if not ok then
+        vim.api.nvim_set_hl(0, hl_name, { fg = color, default = true })
+    end
+    return hl_name
+end
+
+local function set_match_highlight()
+    vim.api.nvim_set_hl(0, "XplrrMatch", { bg = "#473826", bold = true, default = true })
+    return "XplrrMatch"
+end
+
+local function find_match_positions(term, str)
+    if #term == 0 then
+        return {}
+    end
+
+    local positions = {}
+    local lower_term = term:lower()
+    local lower_str = str:lower()
+
+    local substring_start = lower_str:find(lower_term, 1, true)
+    if substring_start then
+        for i = substring_start, substring_start + #term - 1 do
+            table.insert(positions, i)
+        end
+        return positions
+    end
+
+    local j = 1
+    for i = 1, #lower_term do
+        local c = lower_term:sub(i, i)
+        while j <= #lower_str do
+            if lower_str:sub(j, j) == c then
+                table.insert(positions, j)
+                j = j + 1
+                break
+            end
+            j = j + 1
+        end
+    end
+
+    return positions
+end
+
 local function load_ignore_patterns()
-    if state.ignore_patterns then return state.ignore_patterns end
+    if state.ignore_patterns then
+        return state.ignore_patterns
+    end
 
     local ignore_file = state.cwd .. "/.nvimignore"
     local patterns = {}
@@ -156,11 +241,15 @@ local function scan_directory_async(dir, use_ignore, on_file_found, on_complete)
 
     local function scan_one_dir(current_dir)
         local handle = vim.loop.fs_scandir(current_dir)
-        if not handle then return false end
+        if not handle then
+            return false
+        end
 
         while true do
             local name, fs_type = vim.loop.fs_scandir_next(handle)
-            if not name then break end
+            if not name then
+                break
+            end
 
             if state.files_discovered >= config.max_results then
                 return true
@@ -242,19 +331,18 @@ local function get_open_buffers(use_ignore)
 end
 
 local function fuzzy_match_with_score(term, str)
-    if #term == 0 then return true, 0 end
+    if #term == 0 then
+        return true, 0
+    end
 
     term = term:lower()
     str = str:lower()
 
-    -- check if term exists as substring (best match)
     local substring_start = str:find(term, 1, true)
     if substring_start then
-        -- substring match: score by position (lower = better)
         return true, substring_start
     end
 
-    -- fuzzy match: find each character
     local score = 0
     local first_char_score = 0
     local j = 1
@@ -286,12 +374,13 @@ local function fuzzy_match_with_score(term, str)
         score = score + char_pos
     end
 
-    -- prioritize: first char position > total spread
     return true, (first_char_score * 100) + (score - first_char_score)
 end
 
 local function update_display()
-    if not is_valid_buf(state.buf) then return end
+    if not is_valid_buf(state.buf) then
+        return
+    end
 
     local display_cwd = shorten_path(state.cwd)
     local title = "XPLRR"
@@ -306,18 +395,119 @@ local function update_display()
     local loading_indicator = state.is_loading and " (loading...)" or ""
     local display_lines = {
         title .. loading_indicator,
-        "> "..state.search_term
+        "> " .. state.search_term
     }
 
     state.header_lines = #display_lines
 
+    if config.enable_icons and state.devicons_get_icon then
+        pcall(vim.api.nvim_buf_clear_namespace, state.buf, config.icon_ns, 0, -1)
+    end
+    pcall(vim.api.nvim_buf_clear_namespace, state.buf, config.match_ns, 0, -1)
+
     local render_limit = math.min(#state.filtered_results, config.max_display)
+    local icon_data = {}
+    local match_data = {}
+
     for i = 1, render_limit do
         local prefix = (state.selected_index == i) and "➤ " or "  "
-        table.insert(display_lines, prefix..state.filtered_results[i])
+        local filepath = state.filtered_results[i]
+        local icon_str = ""
+
+        if config.enable_icons and state.devicons_get_icon then
+            icon_str = get_file_icon(filepath)
+        end
+
+        table.insert(display_lines, prefix .. icon_str .. filepath)
+
+        if config.enable_icons and state.devicons_get_icon and icon_str ~= "" then
+            local icon_color = get_file_icon_color(filepath)
+            icon_data[i] = {
+                prefix_len = #prefix,
+                icon_len = #icon_str,
+                color = icon_color
+            }
+        end
+
+        if #state.search_term > 0 then
+            local positions = find_match_positions(state.search_term, filepath)
+            if #positions > 0 then
+                match_data[i] = {
+                    prefix_len = #prefix,
+                    icon_len = #icon_str,
+                    positions = positions
+                }
+            end
+        end
     end
 
     vim.api.nvim_buf_set_lines(state.buf, 0, -1, false, display_lines)
+
+    if #state.search_term > 0 then
+        local hl_name = set_match_highlight()
+        for i = 1, render_limit do
+            local data = match_data[i]
+            if data and data.positions then
+                local line_index = state.header_lines + i - 1
+                local line_count = vim.api.nvim_buf_line_count(state.buf)
+                if line_index < line_count then
+                    local line = vim.api.nvim_buf_get_lines(state.buf, line_index, line_index + 1, false)[1] or ""
+                    local line_len = #line
+                    local content_start = data.prefix_len + data.icon_len
+
+                    for _, pos in ipairs(data.positions) do
+                        local col = content_start + pos - 1
+                        if col >= 0 and col < line_len then
+                            vim.api.nvim_buf_set_extmark(
+                                state.buf,
+                                config.match_ns,
+                                line_index,
+                                col,
+                                {
+                                    hl_group = hl_name,
+                                    end_col = col + 1,
+                                    priority = 150,
+                                }
+                            )
+                        end
+                    end
+                end
+            end
+        end
+    end
+
+    if config.enable_icons and state.devicons_get_icon then
+        for i = 1, render_limit do
+            local data = icon_data[i]
+            if data and data.color then
+                local line_index = state.header_lines + i - 1
+                local line_count = vim.api.nvim_buf_line_count(state.buf)
+                if line_index < line_count then
+                    local line = vim.api.nvim_buf_get_lines(state.buf, line_index, line_index + 1, false)[1] or ""
+                    local line_len = #line
+                    local start_col = data.prefix_len
+                    local end_col = math.min(data.prefix_len + data.icon_len, line_len)
+
+                    if start_col < line_len then
+                        local hl_name = set_icon_highlight(data.color)
+                        if hl_name then
+                            pcall(vim.api.nvim_buf_set_extmark,
+                                state.buf,
+                                config.icon_ns,
+                                line_index,
+                                start_col,
+                                {
+                                    hl_group = hl_name,
+                                    end_col = end_col,
+                                    priority = 100,
+                                }
+                            )
+                        end
+                    end
+                end
+            end
+        end
+    end
 
     if state.extmark_id then
         pcall(vim.api.nvim_buf_del_extmark, state.buf, config.highlight_ns, state.extmark_id)
@@ -328,16 +518,25 @@ local function update_display()
         local line_index = state.header_lines + state.selected_index - 1
         local line_count = vim.api.nvim_buf_line_count(state.buf)
         if line_index < line_count then
+            local line = vim.api.nvim_buf_get_lines(state.buf, line_index, line_index + 1, false)[1] or ""
+            local line_len = #line
+            local prefix = "➤ "
+            local icon_offset = 0
+            if icon_data[state.selected_index] then
+                icon_offset = icon_data[state.selected_index].icon_len
+            end
+            local start_col = math.min(#prefix + icon_offset, line_len)
+
             state.extmark_id = vim.api.nvim_buf_set_extmark(
                 state.buf,
                 config.highlight_ns,
                 line_index,
-                0,
+                start_col,
                 {
                     hl_group = "visual",
                     end_line = line_index + 1,
                     end_col = 0,
-                    priority = 100,
+                    priority = 200,
                 }
             )
         end
@@ -348,21 +547,18 @@ local function filter_and_update()
     local term = state.search_term
 
     if #term == 0 then
-        -- no search term, show all discovered files (already sorted)
         state.filtered_results = {}
         local limit = math.min(#state.all_files, config.max_results)
         for i = 1, limit do
             table.insert(state.filtered_results, state.all_files[i])
         end
     else
-        -- filter and score each file
         local matches = {}
         local lower_term = term:lower()
 
         for _, file in ipairs(state.all_files) do
             local is_match, score = fuzzy_match_with_score(lower_term, file)
             if is_match then
-                -- add filename length as tiebreaker (shorter = better)
                 local final_score = score + (#file * 0.001)
                 table.insert(matches, { file = file, score = final_score })
 
@@ -372,7 +568,6 @@ local function filter_and_update()
             end
         end
 
-        -- sort by score (lower = better match)
         table.sort(matches, function(a, b)
             if a.score == b.score then
                 return a.file < b.file
@@ -380,14 +575,12 @@ local function filter_and_update()
             return a.score < b.score
         end)
 
-        -- extract sorted filenames
         state.filtered_results = {}
         for i, match in ipairs(matches) do
             state.filtered_results[i] = match.file
         end
     end
 
-    -- adjustment
     if #state.filtered_results > 0 then
         if state.selected_index > #state.filtered_results then
             state.selected_index = #state.filtered_results
@@ -419,7 +612,6 @@ end
 local function on_file_discovered(filepath)
     table.insert(state.all_files, filepath)
 
-    -- update UI incrementally every `n` files
     if #state.all_files % config.update_interval == 0 then
         vim.schedule(filter_and_update)
     end
@@ -430,7 +622,7 @@ local function open_file(filepath)
     if filepath:match("^/") or (is_windows() and filepath:match("^%a:\\")) then
         full_path = filepath
     else
-        full_path = state.cwd.."/"..filepath
+        full_path = state.cwd .. "/" .. filepath
     end
     full_path = full_path:gsub("/+", "/")
 
@@ -489,7 +681,6 @@ end
 local function setup_keymaps_and_ui()
     local function move_up()
         if state.selected_index == 0 then
-            -- at search input
         elseif state.selected_index == 1 then
             state.selected_index = 0
             update_display()
@@ -540,17 +731,25 @@ local function setup_keymaps_and_ui()
     local mappings = {
         {"n", "<CR>", function()
             if state.selected_index == 0 and #state.filtered_results > 0 then
-                if open_file(state.filtered_results[1]) then close_window() end
+                if open_file(state.filtered_results[1]) then
+                    close_window()
+                end
             elseif state.selected_index > 0 then
-                if open_file(state.filtered_results[state.selected_index]) then close_window() end
+                if open_file(state.filtered_results[state.selected_index]) then
+                    close_window()
+                end
             end
         end, {buffer = state.buf}},
 
         {"i", "<CR>", function()
             if state.selected_index == 0 and #state.filtered_results > 0 then
-                if open_file(state.filtered_results[1]) then close_window() end
+                if open_file(state.filtered_results[1]) then
+                    close_window()
+                end
             elseif state.selected_index > 0 then
-                if open_file(state.filtered_results[state.selected_index]) then close_window() end
+                if open_file(state.filtered_results[state.selected_index]) then
+                    close_window()
+                end
             end
         end, {buffer = state.buf}},
 
@@ -560,16 +759,28 @@ local function setup_keymaps_and_ui()
         {"i", "<C-q>", close_window, {buffer = state.buf}},
 
         {"n", "<Up>", move_up, {buffer = state.buf}},
-        {"i", "<Up>", function() vim.api.nvim_command("stopinsert"); move_up() end, {buffer = state.buf}},
+        {"i", "<Up>", function()
+            vim.api.nvim_command("stopinsert")
+            move_up()
+        end, {buffer = state.buf}},
 
         {"n", "<Down>", move_down, {buffer = state.buf}},
-        {"i", "<Down>", function() vim.api.nvim_command("stopinsert"); move_down() end, {buffer = state.buf}},
+        {"i", "<Down>", function()
+            vim.api.nvim_command("stopinsert")
+            move_down()
+        end, {buffer = state.buf}},
 
         {"n", "<C-n>", move_down, {buffer = state.buf}},
-        {"i", "<C-n>", function() vim.api.nvim_command("stopinsert"); move_down() end, {buffer = state.buf}},
+        {"i", "<C-n>", function()
+            vim.api.nvim_command("stopinsert")
+            move_down()
+        end, {buffer = state.buf}},
 
         {"n", "<C-p>", move_up, {buffer = state.buf}},
-        {"i", "<C-p>", function() vim.api.nvim_command("stopinsert"); move_up() end, {buffer = state.buf}},
+        {"i", "<C-p>", function()
+            vim.api.nvim_command("stopinsert")
+            move_up()
+        end, {buffer = state.buf}},
 
         {"n", "<Left>", "<Nop>", {buffer = state.buf}},
         {"n", "<Right>", "<Nop>", {buffer = state.buf}},
@@ -585,14 +796,20 @@ local function setup_keymaps_and_ui()
     end
 
     local function restrict_cursor()
-        if not is_valid_buf(state.buf) or not vim.api.nvim_win_is_valid(state.win) then return end
+        if not is_valid_buf(state.buf) or not vim.api.nvim_win_is_valid(state.win) then
+            return
+        end
 
         local cursor = vim.api.nvim_win_get_cursor(state.win)
         local line, col = cursor[1], cursor[2]
         local line_count = vim.api.nvim_buf_line_count(state.buf)
 
-        if line < 1 then line = 1 end
-        if line > line_count then line = line_count end
+        if line < 1 then
+            line = 1
+        end
+        if line > line_count then
+            line = line_count
+        end
 
         if line == 1 and col < 2 then
             if line_count >= 2 then
@@ -766,8 +983,6 @@ local function create_window(mode)
     end
 end
 
----
-
 M.cmd = {
     xplrr = "Xplrr",
     xplrr_all = "XplrrAll",
@@ -798,7 +1013,24 @@ function M.toggle_buffers()
     end
 end
 
-function M.setup()
+function M.setup(opts)
+    opts = opts or {}
+    if opts.enable_icons ~= nil then
+        config.enable_icons = opts.enable_icons
+    end
+
+    if config.enable_icons then
+        local ok, devicons = pcall(require, "nvim-web-devicons")
+        if ok then
+            devicons.setup()
+            state.devicons = devicons
+            state.devicons_get_icon = devicons.get_icon
+        else
+            config.enable_icons = false
+            state.devicons_get_icon = nil
+        end
+    end
+
     vim.api.nvim_create_user_command(M.cmd.xplrr, M.toggle, { desc = "XPLRR: search files" })
     vim.api.nvim_create_user_command(M.cmd.xplrr_all, M.toggle_all, { desc = "XPLRR: search all files" })
     vim.api.nvim_create_user_command(M.cmd.xplrr_buffers, M.toggle_buffers, { desc = "XPLRR: search buffers" })
