@@ -17,6 +17,7 @@ __*NOTE:*__
 - [fzf-lua](./lua/plugins/fzf-lua.lua)
 - [gitsigns](./lua/plugins/gitsigns.lua)
 - [hlchunk](./lua/plugins/hlchunk.lua)
+- [netrw-nvim](./lua/plugins/netrw.lua)
 - [smear-cursor](./lua/plugins/smear-cursor.lua)
 - [typst-preview](./lua/plugins/typst-preview.lua)
 - [markdown-render](./lua/plugins/markdown-render.lua)
