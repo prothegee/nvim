@@ -9,14 +9,14 @@
         "prefix": "_random_int_math_v1",
         "body": [
             "// math/rand",
-            "rand.Intn($1) + $2"
+            "rand.Intn(${1:1}) + ${2:2}"
         ]
     },
     "random int math v2": {
         "prefix": "_random_int_math_v2",
         "body": [
             "// math/rand/v2",
-            "rand.IntN($1) + $2"
+            "rand.IntN(${1:1}) + ${2:2}"
         ]
     },
     "generate generic random signed number": {
