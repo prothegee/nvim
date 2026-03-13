@@ -9,7 +9,7 @@
         "prefix": "!html",
         "body": [
             "<!DOCTYPE html>",
-            "<html lang=\"$1\">",
+            "<html lang=\"${1:en}\">",
             "<head>",
             "    <meta charset=\"utf-8\">",
             "    <meta name=\"viewport\" content=\"width=device-width,initial-scale=1\">",

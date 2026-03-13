@@ -37,3 +37,7 @@ vim.cmd([[
     syntax enable
     syntax on
 ]])
+
+---
+
+vim.opt.guicursor = "n-v-c:block,i:block-blinkwait300-blinkoff600-blinkon900-Cursor"

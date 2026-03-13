@@ -13,6 +13,38 @@
             "}"
         ]
     },
+    "try catch": {
+        "prefix": "_try_catch",
+        "body": [
+            "try {",
+            "    // try",
+            "} catch (...) {",
+            "    // catch",
+            "}"
+        ]
+    },
+    "try catch exception": {
+        "prefix": "_try_catch_exception",
+        "body": [
+            "try {",
+            "    // try",
+            "} catch (const std::exception &e) {",
+            "    // catch e",
+            "}"
+        ]
+    },
+    "try catch exception finally": {
+        "prefix": "_try_catch_exception_finally",
+        "body": [
+            "try {",
+            "    // try",
+            "} catch (const std::exception &e) {",
+            "    // catch e",
+            "} catch (...) {",
+            "    // catch f",
+            "}"
+        ]
+    },
     "struct": {
         "prefix": "_struct",
         "body": [
