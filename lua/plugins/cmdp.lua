@@ -114,9 +114,22 @@ local commands = {
     --     vim.cmd("FzfLua quickfix_stack")
     -- end,
     --
-    ["XPLRR"] = function() vim.cmd("Xplrr") end,
-    ["XPLRR: All"] = function() vim.cmd("XplrrAll") end,
-    ["XPLRR: Buffers"] = function() vim.cmd("XplrrBuffers") end,
+    ["XPLRR"] = function()
+        vim.cmd("Xplrr")
+    end,
+    ["XPLRR: All"] = function()
+        vim.cmd("XplrrAll")
+    end,
+    ["XPLRR: Buffers"] = function()
+        vim.cmd("XplrrBuffers")
+    end,
+    --
+    ["SWTCH: Indent 2"] = function()
+        require"prt.swtch".global_indent(2)
+    end,
+    ["SWTCH: Indent 4"] = function()
+        require"prt.swtch".global_indent(4)
+    end,
 }
 
 this.setup({
