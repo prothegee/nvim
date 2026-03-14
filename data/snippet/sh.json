@@ -1,6 +1,6 @@
 {
     "comment spacer": {
-		"prefix": "_comment_spacer",
+		"prefix": "comment spacer",
 		"body": [
 			"# --------------------------------------------------------- #"
 		]

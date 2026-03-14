@@ -40,4 +40,4 @@ vim.cmd([[
 
 ---
 
-vim.opt.guicursor = "n-v-c:block,i:block-blinkwait300-blinkoff600-blinkon900-Cursor"
+vim.opt.guicursor = "i:block-blinkwait300-blinkoff600-blinkon900-Cursor"

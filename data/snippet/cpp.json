@@ -1,12 +1,12 @@
 {
 	"comment spacer": {
-		"prefix": "_comment_spacer",
+		"prefix": "comment spacer",
 		"body": [
 			"// --------------------------------------------------------- //"
 		]
 	},
-    "for loop i": {
-        "prefix": "_for_loop_i",
+    "for loop": {
+        "prefix": "for loop",
         "body": [
             "for (${1:int} ${2:i} = ${3:0}; ${2:i} < ${4:10}; ${2:i}++) {",
             "    // todo",
@@ -14,7 +14,7 @@
         ]
     },
     "try catch": {
-        "prefix": "_try_catch",
+        "prefix": "try catch",
         "body": [
             "try {",
             "    // try",
@@ -24,7 +24,7 @@
         ]
     },
     "try catch exception": {
-        "prefix": "_try_catch_exception",
+        "prefix": "try catch exception",
         "body": [
             "try {",
             "    // try",
@@ -34,7 +34,7 @@
         ]
     },
     "try catch exception finally": {
-        "prefix": "_try_catch_exception_finally",
+        "prefix": "try catch exception finally",
         "body": [
             "try {",
             "    // try",
@@ -46,7 +46,7 @@
         ]
     },
     "struct": {
-        "prefix": "_struct",
+        "prefix": "struct",
         "body": [
             "struct ${1:Struct_s} {",
             "    // data",
@@ -54,7 +54,7 @@
         ]
     },
     "struct typedef 1": {
-        "prefix": "_struct_typedef_1",
+        "prefix": "struct typedef 1",
         "body": [
             "typedef struct {",
             "    // data",
@@ -62,7 +62,7 @@
         ]
     },
 	"struct typedef 2": {
-        "prefix": "_struct_typedef_2",
+        "prefix": "struct typedef 2",
         "body": [
             "typedef struct ${1:_Struct_typedef_2} {",
             "    // data",
@@ -70,7 +70,7 @@
         ]
     },
 	"class": {
-		"prefix": "_class",
+		"prefix": "class",
 		"body": [
 			"class ${1:Class_c} {",
             "    // data",
@@ -81,7 +81,7 @@
 		]
 	},
 	"namespace": {
-		"prefix": "_namespace",
+		"prefix": "namespace",
 		"body": [
 			"namespace ${1:ns_what} {",
 			"",
@@ -91,7 +91,7 @@
 		]
 	},
 	"if not define define": {
-		"prefix": "_ifndef_def_endif",
+		"prefix": "ifndef def endif",
 		"body": [
 			"#ifndef ${1:REPLACE_ME}",
 			"#define ${1:REPLACE_ME}",
@@ -99,46 +99,56 @@
 		]
 	},
 	"int main": {
-		"prefix": "_int_main",
+		"prefix": "int main",
 		"body": [
 			"int main() {",
+            "    // todo",
             "    return 0;",
             "}"
 		]
 	},
 	"int main argc argv": {
-		"prefix": "_int_main_argc_argv",
+		"prefix": "int main argc argv",
 		"body": [
 			"int main(int argc, char *argv[]) {",
+            "    // todo",
             "    return 0;",
             "}"
 		]
 	},
-	"head file info": {
-		"prefix": "_head_file_info",
+	"head guard": {
+		"prefix": "head guard",
 		"body": [
-			"/// ### file: $TM_FILENAME_BASE",
-            "/// ",
-            "/// ### author: ${1:FULL_NAME}",
-            "/// ",
-            "/// ---------------------------------------------------------",
-            "/// ",
-            "/// ### brief:",
-            "/// n/a",
-            "/// ",
-            "/// ### note:",
-            "/// n/a",
-            "/// ",
-            "/// ---------------------------------------------------------",
-            "/// ",
-            "/// ### copyright:",
-            "/// ",
-            "/// - (c) ${2:YYYYMMDD} ${3:HOLDER} // ${4:USERNAME} // ${5:EMAIL}",
-            "/// ",
-            "/// ### contributors:",
-            "/// ",
-            "/// - ${3:HOLDER} // ${4:USERNAME} // ${5:EMAIL}",
-            "///"
+			"#ifndef ${1:REPLACE_ME}",
+			"#define ${1:REPLACE_ME}",
+			"#endif // ${1:REPLACE_ME}"
+		]
+	},
+	"head file info": {
+		"prefix": "head file info",
+		"body": [
+			"// ### file: $TM_FILENAME",
+            "// ",
+            "// ### author: ${1:FULL_NAME}",
+            "// ",
+            "// ---------------------------------------------------------",
+            "// ",
+            "// ### brief:",
+            "// n/a",
+            "// ",
+            "// ### note:",
+            "// n/a",
+            "// ",
+            "// ---------------------------------------------------------",
+            "// ",
+            "// ### copyright:",
+            "// ",
+            "// - (c) ${2:YYYYMMDD} ${3:HOLDER} // ${4:USERNAME} // ${5:EMAIL}",
+            "// ",
+            "// ### contributors:",
+            "// ",
+            "// - ${3:HOLDER} // ${4:USERNAME} // ${5:EMAIL}",
+            "//"
 		]
 	}
 }

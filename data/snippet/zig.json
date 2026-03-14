@@ -1,17 +1,44 @@
 {
     "comment spacer": {
-		"prefix": "_comment_spacer",
+		"prefix": "comment spacer",
 		"body": [
 			"// --------------------------------------------------------- //"
 		]
 	},
-    "void !main pub": {
-        "prefix": "_void_!main_pub",
+    "void main pub": {
+        "prefix": "void main pub",
         "body": [
             "pub fn main() !void {",
             "    // TODO",
             "}"
         ]
-    }
+    },
+    "head file info": {
+		"prefix": "head file info",
+		"body": [
+			"// ### file: $TM_FILENAME",
+            "// ",
+            "// ### author: ${1:FULL_NAME}",
+            "// ",
+            "// ---------------------------------------------------------",
+            "// ",
+            "// ### brief:",
+            "// n/a",
+            "// ",
+            "// ### note:",
+            "// n/a",
+            "// ",
+            "// ---------------------------------------------------------",
+            "// ",
+            "// ### copyright:",
+            "// ",
+            "// - (c) ${2:YYYYMMDD} ${3:HOLDER} // ${4:USERNAME} // ${5:EMAIL}",
+            "// ",
+            "// ### contributors:",
+            "// ",
+            "// - ${3:HOLDER} // ${4:USERNAME} // ${5:EMAIL}",
+            "//"
+		]
+	}
 }
 

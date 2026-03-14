@@ -1,26 +1,42 @@
 {
     "comment spacer": {
-		"prefix": "_comment_spacer",
+		"prefix": "comment spacer",
 		"body": [
 			"// --------------------------------------------------------- //"
 		]
 	},
+    "for loop": {
+        "prefix": "for loop",
+        "body": [
+            "for ${1:i} := ${2:0}; ${1:i} < ${3:100}; ${1:i}++ {",
+            "    // todo",
+            "}"
+        ]
+    },
+    "for loop range": {
+        "prefix": "for loop range",
+        "body": [
+            "for ${1:i} := range ${2:100} {",
+            "    // todo",
+            "}"
+        ]
+    },
     "random int math v1": {
-        "prefix": "_random_int_math_v1",
+        "prefix": "random int math v1",
         "body": [
             "// math/rand",
             "rand.Intn(${1:1}) + ${2:2}"
         ]
     },
     "random int math v2": {
-        "prefix": "_random_int_math_v2",
+        "prefix": "random int math v2",
         "body": [
             "// math/rand/v2",
             "rand.IntN(${1:1}) + ${2:2}"
         ]
     },
     "generate generic random signed number": {
-        "prefix": "_gen_generic_random_signed_number",
+        "prefix": "gen generic random signed number",
         "body": [
             "type SignedNumber interface {",
             "    ~int8|~int16|~int|~int32|~int64",
@@ -52,6 +68,33 @@
             "    return T(minVal+r.Int63n(maxVal-minVal+1))",
             "}"
         ]
-    }
+    },
+    "head file info": {
+		"prefix": "head file info",
+		"body": [
+			"// ### file: $TM_FILENAME",
+            "// ",
+            "// ### author: ${1:FULL_NAME}",
+            "// ",
+            "// ---------------------------------------------------------",
+            "// ",
+            "// ### brief:",
+            "// n/a",
+            "// ",
+            "// ### note:",
+            "// n/a",
+            "// ",
+            "// ---------------------------------------------------------",
+            "// ",
+            "// ### copyright:",
+            "// ",
+            "// - (c) ${2:YYYYMMDD} ${3:HOLDER} // ${4:USERNAME} // ${5:EMAIL}",
+            "// ",
+            "// ### contributors:",
+            "// ",
+            "// - ${3:HOLDER} // ${4:USERNAME} // ${5:EMAIL}",
+            "//"
+		]
+	}
 }
 

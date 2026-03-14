@@ -65,7 +65,7 @@ local function get_snippet_completion(base, filetype, start_col)
             table.insert(matches, {
                 abbr = snippet.prefix,
                 word = snippet.prefix,
-                menu = "[snip] " .. (snippet.description or ""),
+                menu = " " .. (snippet.description or ""),
                 kind = "Snippet",
                 icase = 1,
                 dup = 0,

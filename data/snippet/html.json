@@ -1,12 +1,12 @@
 {
     "comment spacer": {
-		"prefix": "_comment_spacer",
+		"prefix": "comment spacer",
 		"body": [
 			"<!-- --------------------------------------------------------- -->"
 		]
 	},
     "html init": {
-        "prefix": "!html",
+        "prefix": "html init",
         "body": [
             "<!DOCTYPE html>",
             "<html lang=\"${1:en}\">",
