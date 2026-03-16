@@ -1,4 +1,34 @@
 {
+    "comment brief": {
+        "prefix": "comment brief",
+        "body": [
+            "/**",
+            " * @brief ${1:what?}",
+            " */"
+        ]
+    },
+    "comment brief return": {
+        "prefix": "comment brief return",
+        "body": [
+            "/**",
+            " * @brief ${1:what?}",
+            " * ",
+            " * @returns ${2:void?} - ${3:n/a}",
+            " */"
+        ]
+    },
+    "comment brief param return": {
+        "prefix": "comment brief param return",
+        "body": [
+            "/**",
+            " * @brief ${1:what?}",
+            " * ",
+            " * @param ${2:x} - ${3:n/a}",
+            " * ",
+            " * @returns ${4:void?} - ${5:n/a}",
+            " */"
+        ]
+    },
     "comment spacer": {
 		"prefix": "comment spacer",
 		"body": [
