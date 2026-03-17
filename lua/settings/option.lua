@@ -5,14 +5,14 @@ vim.opt.timeoutlen = 150
 
 vim.opt.number = true
 
-local option_fp = vim.fn.stdpath("config") .. "/option.json"
-local option_read = _G.read_json_file(option_fp)
+local optf = vim.fn.stdpath("config") .. "/options.json"
+local opt = _G.read_json_file(optf)
 local default_indent = 4
 
-if option_read ~= nil then
-    vim.opt.tabstop = option_read.indent
-    vim.opt.shiftwidth = option_read.indent
-    vim.opt.softtabstop = option_read.indent
+if opt ~= nil then
+    vim.opt.tabstop = opt.indent
+    vim.opt.shiftwidth = opt.indent
+    vim.opt.softtabstop = opt.indent
 else
     vim.opt.tabstop = default_indent
     vim.opt.shiftwidth = default_indent
