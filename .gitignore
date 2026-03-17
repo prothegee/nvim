@@ -17,7 +17,7 @@
 /tests/*/main*
 /tests/**
 /nvim-pack-lock.json
-/option.json
+/options.json
 
 ##
 ## file: exclude
