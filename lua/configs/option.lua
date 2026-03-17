@@ -1,9 +1,10 @@
 local M = {}
 
 -- file:
--- ~/.config/nvim/option.json
+-- ~/.config/nvim/options.json
 M.config = {
     indent = 4
 }
 
 return M
+
