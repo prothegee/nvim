@@ -8,3 +8,8 @@ AllowAllParametersOfDeclarationOnNextLine: false
 PointerAlignment: Right
 ReferenceAlignment: Right
 ColumnLimit: 80
+# MaxEmptyLinesToKeep: 3
+SeparateDefinitionBlocks: Leave # Leave,Always
+RemoveEmptyLinesInUnwrappedLines: false
+KeepEmptyLinesAtEOF: true
+
