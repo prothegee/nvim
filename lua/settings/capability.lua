@@ -45,9 +45,6 @@ M.capabilities.textDocument = {
         dynamicRegistration = true
     },
     inlineCompletion = { dynamicRegistration = true },
-    -- semanticTokens = {
-    --     multilineTokenSupport = true,
-    -- }
 }
 M.capabilities.workspace = {
     diagnostics = { refreshSupport = true }
