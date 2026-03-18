@@ -4,26 +4,31 @@ either correct data or nil
 --]]
 _G.read_json_file = function(filepath)
     if not filepath or filepath == "" then
+        vim.notify("read_json_file: No filepath provided", vim.log.levels.WARN)
         return nil
     end
 
     if vim.fn.filereadable(filepath) == 0 then
+        vim.notify("read_json_file: File not readable: " .. filepath, vim.log.levels.WARN)
         return nil
     end
 
     local ok, content = pcall(vim.fn.readfile, filepath)
     if not ok or not content then
+        vim.notify("read_json_file: Failed to read file", vim.log.levels.ERROR)
         return nil
     end
 
     local json_string = table.concat(content, '\n')
 
     if json_string == "" then
+        vim.notify("read_json_file: File is empty", vim.log.levels.WARN)
         return nil
     end
 
     local valid, data = pcall(vim.fn.json_decode, json_string)
     if not valid then
+        vim.notify("read_json_file: JSON decode failed: " .. tostring(data), vim.log.levels.ERROR)
         return nil
     end
 
@@ -157,3 +162,4 @@ _G._json_encode_pretty = function(val, level, indent_count)
         return "null"
     end
 end
+
