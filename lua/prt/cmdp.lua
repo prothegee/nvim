@@ -515,3 +515,4 @@ vim.api.nvim_create_user_command(
 ---
 
 return M
+

@@ -1,6 +1,8 @@
 local ts = require("settings.treesitter")
 local cap = require("settings.capability")
 
+local etn_augroup = vim.api.nvim_create_augroup("EnsureTrailingNewline", { clear = true })
+
 -- BufEnter
 vim.api.nvim_create_autocmd("BufEnter", {
     pattern = "*",
@@ -85,8 +87,18 @@ vim.api.nvim_create_autocmd({"BufNewFile", "BufRead"}, {
 
 -- BufWrite
 vim.api.nvim_create_autocmd("BufWrite", {
+    group = etn_augroup,
     pattern = "*",
     callback = function()
         -- TODO: bffrwrt
+        local optf = vim.fn.stdpath("config") .. "/options.json"
+        local opt = _G.read_json_file(optf)
+
+        if opt ~= nil then
+            if opt.add_new_endline == true then
+                _G.add_empty_line_at_end()
+            end
+        end
     end
 })
+
