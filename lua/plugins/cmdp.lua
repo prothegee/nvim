@@ -130,6 +130,24 @@ local commands = {
     ["SWTCH: Indent 4"] = function()
         require"prt.swtch".global_indent(4)
     end,
+    ["SWTCH: Scroll Vim"] = function()
+        require"prt.swtch".scroll_type("vim")
+    end,
+    ["SWTCH: Scroll Nvim"] = function()
+        require"prt.swtch".scroll_type("nvim")
+    end,
+    ["SWTCH: LineNr 0:None"] = function()
+        require"prt.swtch".line_type(0)
+    end,
+    ["SWTCH: LineNr 1:JustNumber"] = function()
+        require"prt.swtch".line_type(1)
+    end,
+    ["SWTCH: LineNr 2:RelativeNumber"] = function()
+        require"prt.swtch".line_type(2)
+    end,
+    ["SWTCH: LineNr 3:RelativeNumberZeroCurrent"] = function()
+        require"prt.swtch".line_type(3)
+    end,
 }
 
 this.setup({
