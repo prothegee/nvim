@@ -7,6 +7,14 @@ local M = {}
 local state = { active = false }
 local start_col = 0
 
+local function get_offset_encoding(bufnr)
+    local clients = vim.lsp.get_clients({ bufnr = bufnr })
+    if clients and #clients > 0 then
+        return clients[1].offset_encoding or "utf-16"
+    end
+    return "utf-16"
+end
+
 local function get_snippet_text(item)
     if item.insertTextFormat == 2 then
         return item.insertText
@@ -58,15 +66,23 @@ function M.trigger_completion()
                 dup = 0,
             }
 
+            local user_data = {}
+
             if item.insertTextFormat == 2 then
                 local snippet_text = get_snippet_text(item)
                 if snippet_text then
-                    completion_item.user_data = vim.json.encode({
-                        _lsp_snippet = true,
-                        snippet_text = snippet_text,
-                        start_col = start_col,
-                    })
+                    user_data._lsp_snippet = true
+                    user_data.snippet_text = snippet_text
+                    user_data.start_col = start_col
                 end
+            end
+
+            if item.additionalTextEdits and #item.additionalTextEdits > 0 then
+                user_data.additionalTextEdits = item.additionalTextEdits
+            end
+
+            if next(user_data) then
+                completion_item.user_data = vim.json.encode(user_data)
             end
 
             table.insert(completions, completion_item)
@@ -86,12 +102,18 @@ function M.on_complete_done()
 
     local snippet_text = nil
     local sc = start_col
+    local additional_edits = nil
 
     if completed_item.user_data then
         local ok, data = pcall(vim.json.decode, completed_item.user_data)
-        if ok and data and data._lsp_snippet then
-            snippet_text = data.snippet_text
-            sc = data.start_col or start_col
+        if ok and data then
+            if data._lsp_snippet then
+                snippet_text = data.snippet_text
+                sc = data.start_col or start_col
+            end
+            if data.additionalTextEdits then
+                additional_edits = data.additionalTextEdits
+            end
         elseif type(completed_item.user_data) == "table" and
             completed_item.user_data.nvim and
             completed_item.user_data.nvim.lsp and
@@ -103,9 +125,15 @@ function M.on_complete_done()
         end
     end
 
+    local bufnr = vim.api.nvim_get_current_buf()
+    local winid = vim.api.nvim_get_current_win()
+
+    if additional_edits and #additional_edits > 0 then
+        local offset_encoding = get_offset_encoding(bufnr)
+        vim.lsp.util.apply_text_edits(additional_edits, bufnr, offset_encoding)
+    end
+
     if snippet_text then
-        local bufnr = vim.api.nvim_get_current_buf()
-        local winid = vim.api.nvim_get_current_win()
         local cursor = vim.api.nvim_win_get_cursor(winid)
         local row = cursor[1] - 1
         local col = cursor[2]
@@ -165,7 +193,9 @@ function M.setup(opts)
         if caps.textDocument and caps.textDocument.completion then
             caps.textDocument.completion.completionItem =
                 caps.textDocument.completion.completionItem or {}
+
             caps.textDocument.completion.completionItem.snippetSupport = true
+            caps.textDocument.completion.completionItem.additionalTextEditsSupport = true
         end
         if caps.textDocument then
             caps.textDocument.semanticTokens = {
