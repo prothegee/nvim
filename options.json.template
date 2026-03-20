@@ -1,5 +1,7 @@
 {
     "indent": 4,
-    "add_new_endline": true
+    "add_new_endline": true,
+    "scroll_type": "nvim",
+    "line_number": 3
 }
 
