@@ -5,6 +5,62 @@
 			"// --------------------------------------------------------- //"
 		]
 	},
+    "for loop i": {
+		"prefix": "for loop i",
+		"body": [
+			"for (${1:0}..${2:10}) |${3:i}| {",
+            "    // do something with `${3:i}`",
+            "}"
+		]
+	},
+    "for loop vars": {
+		"prefix": "for loop vars",
+		"body": [
+			"for (${1:vars}) |${2:var}| {",
+            "    // do something with `${2:var}`",
+            "}"
+		]
+	},
+    "while loop": {
+		"prefix": "while loop",
+		"body": [
+			"while (${1:true}) {",
+            "    // do something",
+            "}"
+		]
+	},
+    "while loop vars": {
+		"prefix": "while loop vars",
+		"body": [
+			"while (${1:vars}) |${2:var}| {",
+            "    // do something with `${2:var}`",
+            "}"
+		]
+	},
+    "enum": {
+		"prefix": "enum",
+		"body": [
+			"const ${1:EnumName} = enum {",
+            "    // tbd",
+            "};"
+		]
+	},
+    "enum size": {
+		"prefix": "enum size",
+		"body": [
+			"const ${1:EnumName} = enum(${2:u8}) {",
+            "    // tbd",
+            "};"
+		]
+	},
+    "struct": {
+		"prefix": "struct",
+		"body": [
+			"const ${1:Name} = struct {",
+            "    // tba",
+            "};"
+		]
+	},
     "void main pub": {
         "prefix": "void main pub",
         "body": [
