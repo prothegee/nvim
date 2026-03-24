@@ -1,5 +1,7 @@
 # Nvim, Personal Config
 
+<img src="./data/img/current-stats.png" alt="current-stats" style="display: block; margin: 0 auto;" />
+
 __*NOTE:*__
 - using vim.pack
 - no package manager
