@@ -259,3 +259,38 @@ if opt ~= nil and opt.scroll_type == "vim" then
     vim.keymap.set({"v"}, "<ScrollWheelDown>", _j)
 end
 
+-- esc noise
+vim.keymap.set(
+    { "n", "i", "v", "t" },
+    "<Esc>",
+    "<Esc>",
+    {
+        desc = "terminal horizontal (mode: n, i, v, t)",
+        noremap = true
+    }
+)
+
+--[[
+comment/uncomment current line or highlighted
+--]]
+vim.keymap.set(
+    { "n", "v" },
+    "<C-/>",
+    "gcc",
+    {
+        desc = "comment/uncomment current line or highlighted",
+        remap = true,
+    }
+)
+
+--[[
+shift indent tab to left on previous highlighted
+--]]
+vim.keymap.set("n", "<C-[>", "<<", { noremap = true, silent = true})
+vim.keymap.set("v", "<C-[>", "<gv", { noremap = true, silent = true})
+--[[
+shift indent tab to right on previous highlighted
+--]]
+vim.keymap.set("n", "<C-]>", ">>", { noremap = true, silent = true})
+vim.keymap.set("v", "<C-]>", ">gv", { noremap = true, silent = true})
+
