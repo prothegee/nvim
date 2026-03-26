@@ -58,3 +58,8 @@ vim.cmd([[
 
 vim.opt.guicursor = "i:block-blinkwait300-blinkoff600-blinkon900-Cursor"
 
+if vim.fn.executable("rg") == 1 then
+    vim.opt.grepprg = "rg --vimgrep --no-heading --smart-case"
+    vim.opt.grepformat = "%f:%l:%c:%m"
+end
+
