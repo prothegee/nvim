@@ -69,6 +69,13 @@
             "}"
         ]
     },
+    "test expect fail": {
+        "prefix": "test expect fail",
+        "body": [
+            "// expect fail for now",
+            "std.testing.expect(false);"
+        ]
+    },
     "head file info": {
 		"prefix": "head file info",
 		"body": [
