@@ -61,8 +61,14 @@
             "};"
 		]
 	},
-    "void main pub": {
-        "prefix": "void main pub",
+    "std as import std": {
+        "prefix": "std as import std",
+        "body": [
+            "const std = @import(\"std\");"
+        ]
+    },
+    "main init pub void": {
+        "prefix": "main init pub void",
         "body": [
             "pub fn main() !void {",
             "    // TODO",
