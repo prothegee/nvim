@@ -276,12 +276,13 @@ comment/uncomment current line or highlighted
 vim.keymap.set(
     { "n", "v" },
     "<C-/>",
-    "gcc",
+    "gcc<Esc>",
     {
         desc = "comment/uncomment current line or highlighted",
         remap = true,
     }
 )
+-- how bout the insert mode?
 
 --[[
 shift indent tab to left on previous highlighted
