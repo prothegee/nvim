@@ -75,6 +75,14 @@
             "}"
         ]
     },
+    "main init pub void process": {
+        "prefix": "main init pub void process",
+        "body": [
+            "pub fn main(init: std.process.Init) !void {",
+            "    // TODO",
+            "}"
+        ]
+    },
     "test expect fail": {
         "prefix": "test expect fail",
         "body": [
