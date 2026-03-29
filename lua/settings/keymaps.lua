@@ -265,7 +265,7 @@ vim.keymap.set(
     "<Esc>",
     "<Esc>",
     {
-        desc = "terminal horizontal (mode: n, i, v, t)",
+        desc = "escape noise (mode: n, i, v, t)",
         noremap = true
     }
 )
@@ -276,7 +276,7 @@ comment/uncomment current line or highlighted
 vim.keymap.set(
     { "n", "v" },
     "<C-/>",
-    "gcc<Esc>",
+    "gcc<Esc><Esc>",
     {
         desc = "comment/uncomment current line or highlighted",
         remap = true,
