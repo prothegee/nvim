@@ -32,5 +32,5 @@ vim.cmd([[
     colorscheme retrobox
 ]])
 
-vim.opt.statusline = "  %{v:lua.get_active_current_mode()}   %{v:lua.get_trim_path_current_buffer(1)} %=  %{v:lua.get_active_lsp()} 󰊢 %{v:lua.get_git_branch()} %{v:lua.get_git_short()}   %{v:lua.get_diagnostic_hint()}  %{v:lua.get_diagnostic_info()}  %{v:lua.get_diagnostic_warn()}  %{v:lua.get_diagnostic_error()}  󱪶%l:󱪷%c  󱗖 %p%% "
+vim.opt.statusline = "  %{v:lua.get_active_current_mode()}   %{v:lua.get_trim_path_current_buffer(1)} %=  %{v:lua.get_active_lsp()} 󰊢 %{v:lua.get_git_branch()} %{v:lua.get_git_short()}   %{v:lua.get_diagnostic_hint()}  %{v:lua.get_diagnostic_info()}  %{v:lua.get_diagnostic_warn()}  %{v:lua.get_diagnostic_error()}  L%l:C%c  󱗖 %p%% "
 
