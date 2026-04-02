@@ -6,11 +6,12 @@ local path_parser = vim.fn.stdpath("data") .. "/site/parser"
 
 ---
 
+-- for some reason, this not loaded from fresh install
 M.TS = {
     "lua",
     "c", "cpp", "cmake",
     "rust",
-    "ziggy", "ziggy_schema",
+    "zig", "ziggy", "ziggy_schema",
     "c_sharp",
     "go",
     "java", "kotlin",
