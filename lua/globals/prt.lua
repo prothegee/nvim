@@ -26,6 +26,50 @@ local function insert_snippet(snippet_text)
     return true
 end
 
+-- Handle completion done event
+local function on_complete_done()
+    local completed_item = vim.v.completed_item
+    if not completed_item or not completed_item.user_data then
+        return
+    end
+
+    local user_data = completed_item.user_data
+    if not user_data._lsp_item then
+        return
+    end
+
+    local bufnr = vim.api.nvim_get_current_buf()
+    local winid = vim.api.nvim_get_current_win()
+
+    -- Apply additional text edits first (for imports, etc.)
+    if user_data.additionalTextEdits and #user_data.additionalTextEdits > 0 then
+        local offset_encoding = get_offset_encoding(bufnr)
+        vim.lsp.util.apply_text_edits(user_data.additionalTextEdits, bufnr, offset_encoding)
+    end
+
+    -- Handle snippet expansion
+    if user_data._lsp_snippet and user_data.snippet_text then
+        local start_col = user_data.start_char or 0
+        local cursor = vim.api.nvim_win_get_cursor(winid)
+        local row = cursor[1] - 1
+        local col = cursor[2]
+
+        local line = vim.api.nvim_buf_get_lines(bufnr, row, row + 1, false)[1] or ""
+        local before = line:sub(1, start_col)
+        local after = line:sub(col + 1)
+        local cleaned_line = before .. after
+
+        vim.api.nvim_buf_set_lines(bufnr, row, row + 1, false, { cleaned_line })
+        vim.api.nvim_win_set_cursor(winid, { row + 1, start_col })
+
+        vim.schedule(function()
+            insert_snippet(user_data.snippet_text)
+        end)
+    end
+end
+
+---
+
 _G._prt_fuzzy_completion = function(findstart, _)
     if vim.fn.mode() ~= "i" then
         if findstart == 1 then
@@ -175,47 +219,59 @@ _G._prt_fuzzy_completion = function(findstart, _)
     end
 end
 
--- Handle completion done event
-local function on_complete_done()
-    local completed_item = vim.v.completed_item
-    if not completed_item or not completed_item.user_data then
-        return
-    end
+---
 
-    local user_data = completed_item.user_data
-    if not user_data._lsp_item then
-        return
-    end
+-- this config lsp/s
+_G._prt_LSPS = {
+    "lua_ls",
+    "clangd", "neocmake",
+    "rust_analyzer", "taplo",
+    "gopls",
+    "vtsls",
+    -- "ts_ls",
+    "zls",
+    "roslyn_ls",
+    "jdtls", "kotlin_lsp",
+    "ruby_lsp",
+    "protols",
+    "svelte", "vue_ls",
+    "gdscript", "gdshader_lsp",
+    "dartls",
+    "ruff", "basedpyright",
+    "html", "tailwindcss", "cssls", -- "htmx-lsp",
+    "jsonls",
+    "markdown_oxide",
+    "yamlls",
+    "bashls",
+    "sqls",
+    "docker_language_server",
+    "eslint",
+}
 
-    local bufnr = vim.api.nvim_get_current_buf()
-    local winid = vim.api.nvim_get_current_win()
+_G._prt_TS = {
+    "lua",
+    "c", "cpp", "cmake",
+    "rust",
+    "zig", "ziggy", "ziggy_schema",
+    "c_sharp",
+    "go",
+    "java", "kotlin",
+    "ruby",
+    "javascript", "typescript",
+    "svelte", "vue",
+    "gdscript", "gdshader",
+    "dart",
+    "python",
+    "html", "css", "scss", -- "drogon-csp",
+    "json", -- "jsonc", "json5",
+    "markdown", "typst",
+    "yaml", "toml",
+    "bash",
+    "sql",
+    "dockerfile",
+}
 
-    -- Apply additional text edits first (for imports, etc.)
-    if user_data.additionalTextEdits and #user_data.additionalTextEdits > 0 then
-        local offset_encoding = get_offset_encoding(bufnr)
-        vim.lsp.util.apply_text_edits(user_data.additionalTextEdits, bufnr, offset_encoding)
-    end
-
-    -- Handle snippet expansion
-    if user_data._lsp_snippet and user_data.snippet_text then
-        local start_col = user_data.start_char or 0
-        local cursor = vim.api.nvim_win_get_cursor(winid)
-        local row = cursor[1] - 1
-        local col = cursor[2]
-
-        local line = vim.api.nvim_buf_get_lines(bufnr, row, row + 1, false)[1] or ""
-        local before = line:sub(1, start_col)
-        local after = line:sub(col + 1)
-        local cleaned_line = before .. after
-
-        vim.api.nvim_buf_set_lines(bufnr, row, row + 1, false, { cleaned_line })
-        vim.api.nvim_win_set_cursor(winid, { row + 1, start_col })
-
-        vim.schedule(function()
-            insert_snippet(user_data.snippet_text)
-        end)
-    end
-end
+---
 
 vim.api.nvim_create_autocmd("CompleteDone", {
     callback = function()
