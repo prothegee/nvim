@@ -4,35 +4,9 @@ local M = {}
 
 local cap = require"settings.capability"
 
-M.LSPS = {
-    "lua_ls",
-    "clangd", "neocmake",
-    "rust_analyzer", "taplo",
-    "gopls",
-    "vtsls",
-    -- "ts_ls",
-    "zls",
-    "roslyn_ls",
-    "jdtls", "kotlin_lsp",
-    "ruby_lsp",
-    "protols",
-    "svelte", "vue_ls",
-    "gdscript", "gdshader_lsp",
-    "dartls",
-    "ruff", "basedpyright",
-    "html", "tailwindcss", "cssls", -- "htmx-lsp",
-    "jsonls",
-    "markdown_oxide",
-    "yamlls",
-    "bashls",
-    "sqls",
-    "docker_language_server",
-    "eslint",
-}
-
 ---
 
-for _, lsp in pairs(M.LSPS) do
+for _, lsp in pairs(_G._prt_LSPS) do
     -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md
     local opts = {}
 
