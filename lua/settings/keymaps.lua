@@ -295,3 +295,13 @@ shift indent tab to right on previous highlighted
 vim.keymap.set("n", "<C-]>", ">>", { noremap = true, silent = true})
 vim.keymap.set("v", "<C-]>", ">gv", { noremap = true, silent = true})
 
+-- _G._prt_fuzzy_completion
+vim.keymap.set(
+    "i",
+    "<C-x><C-p>",
+    "<cmd>call v:lua._prt_fuzzy_completion(0, '')<CR>",
+    {
+        noremap = true,
+        silent = true
+    }
+)
