@@ -19,6 +19,7 @@ M.TS = {
     "javascript", "typescript",
     "svelte", "vue",
     "gdscript", "gdshader",
+    "dart",
     "python",
     "html", "css", "scss", -- "drogon-csp",
     "json", -- "jsonc", "json5",

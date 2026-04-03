@@ -18,6 +18,7 @@ M.LSPS = {
     "protols",
     "svelte", "vue_ls",
     "gdscript", "gdshader_lsp",
+    "dartls",
     "ruff", "basedpyright",
     "html", "tailwindcss", "cssls", -- "htmx-lsp",
     "jsonls",
