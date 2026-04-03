@@ -1,4 +1,3 @@
-local ts = require("settings.treesitter")
 local cap = require("settings.capability")
 
 local etn_augroup = vim.api.nvim_create_augroup("EnsureTrailingNewline", { clear = true })
@@ -66,7 +65,7 @@ vim.api.nvim_create_autocmd("FileType", {
         if not vim.api.nvim_buf_is_valid(buffer) then return end
 
         local filetype = vim.bo[buffer].filetype
-        for _, lang in ipairs(ts.TS) do
+        for _, lang in ipairs(_G._prt_TS) do
             if lang == filetype then
                 vim.treesitter.start(buffer, lang)
                 break
