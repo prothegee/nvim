@@ -103,22 +103,41 @@ vim.keymap.set(
         desc = "create empty new tab (mode: n, i, v, t)"
     }
 )
--- togle next tab
+-- toggle next tab
 vim.keymap.set(
     { "n", "i", "v", "t" },
-    "<C-tab>",
+    "<C-A-tab>",
     _toggle_next_tab,
     {
         desc = "toggle next tab (mode: n, i, v, t)"
     }
 )
--- togle previous tab
+-- toggle previous tab
 vim.keymap.set(
     {"n", "i", "v", "t"},
-    "<C-S-tab>",
+    "<C-A-S-tab>",
     _toggle_previous_tab,
     {
         desc = "toggle previous tab (mode: n, i, v, t)"
+    }
+)
+
+-- toggle next buffer
+vim.keymap.set(
+    {"n"},
+    "<C-tab>",
+    "<CMD>bnext<CR>",
+    {
+        desc = "toggle next buffer (mode: n)"
+    }
+)
+-- toggle previous buffer
+vim.keymap.set(
+    {"n"},
+    "<C-S-tab>",
+    "<CMD>bprevious<CR>",
+    {
+        desc = "toggle previous buffer (mode: n)"
     }
 )
 
