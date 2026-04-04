@@ -1,6 +1,6 @@
 --[[
--- completion was triggered by typing an identifier (24x7 code
--- complete), manual invocation (e.g ctrl+space) or via api.
+-- Completion was triggered by typing an identifier (24x7 code
+-- Complete), manual invocation (e.g ctrl+p) or via api.
 1:invoked
 2:triggercharacter
 3:triggerforincompletecompletions
