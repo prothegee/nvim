@@ -3,14 +3,14 @@
 <img src="./data/img/current-stats.png" alt="current-stats" style="display: block; margin: 0 auto;" />
 
 __*NOTE:*__
-- using vim.pack
-- no package manager
-- meant to use for 0.12.* or above
+- Using vim.pack
+- No package manager
+- Meant to use for 0.12.* or above
 
 <br>
 
-- check [this file](./lua/settings/lsp.lua) for lsp/s
-- check [this file](./lua/settings/treesitter.lua) for treesitters
+- Check [this file](./lua/globals/prt.lua#L225) for lsp/s
+- Check [this file](./lua/globals/prt.lua#L251) for treesitters
 
 <br>
 
@@ -28,7 +28,7 @@ __*NOTE:*__
 - [nvim-treesitter](./lua/plugins/nvim-treesitter.lua)
 - [nvim-web-devicons](./lua/plugins/nvim-web-devicons.lua)
 
-see `./lua/plugins` directory for more details.
+See `./lua/plugins` directory for more details.
 
 <br>
 
@@ -42,27 +42,7 @@ see `./lua/plugins` directory for more details.
 
 ## Configured/Default Keymap/Shortcut
 
-
-- __*<C-p>*__ e.q. __*ctrl+p*__:
-    - open [xplrr](./lua/prt/xplrr.lua)
-
-- __*<C-`>*__ e.q. __*ctrl+alt+t*__:
-    - open/close common terminal
-    - *any open terminal will be closed
-
-- __*<C-S-p>*__ e.q. __*ctrl+shift+p*__:
-    - open [cmdp](./lua/prt/cmdp.lua)
-
-- __*<C-A-S-t>*__ e.q. __*ctrl+alt+t*__:
-    - create empty new tab
-
-- __*<C-x><C-o>*__ e.q. __*ctrl+x ctrl+o*__:
-    - default completion
-
-- __*<C-x><C-i>*__ e.q. __*ctrl+x ctrl+i*__:
-    - internal snippet
-
-read [this file](./lua/settings/keymaps.lua) for more information
+Read [this file](./lua/settings/keymaps.lua) for more information
 
 <br>
 

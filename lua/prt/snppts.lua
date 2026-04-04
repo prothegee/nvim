@@ -198,14 +198,19 @@ function M.setup()
     -- tabstop navigation
     vim.keymap.set("i", "<Tab>", function()
         if vim.snippet.active({ direction = 1 }) then
-            vim.snippet.jump(1)
+            -- Defer the jump to avoid E565
+            vim.schedule(function()
+                pcall(vim.snippet.jump, 1)
+            end)
             return ""
         end
         return "<Tab>"
     end, { expr = true, desc = "Snippet jump forward" })
     vim.keymap.set("i", "<S-Tab>", function()
         if vim.snippet.active({ direction = -1 }) then
-            vim.snippet.jump(-1)
+            vim.schedule(function()
+                pcall(vim.snippet.jump, -1)
+            end)
             return ""
         end
         return "<S-Tab>"

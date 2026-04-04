@@ -7,13 +7,19 @@ local M = {}
 -- _ - buffer
 --]]
 local _default_completion = function(_)
-    vim.wildmode = "longest:full,full"
+    --[[
+    list:longest,full
+    longest:full,full
+    longest:list,full
+    --]]
+    vim.wildmode = "list:longest,full"
 
     vim.opt.shortmess:append("c")
     vim.opt.completeopt = {"menu", "menuone", "noinsert", "noselect"}
     vim.opt.wildignorecase = true
 
-    vim.bo.omnifunc = "v:lua.vim.lsp.omnifunc"
+    -- vim.bo.omnifunc = "v:lua.vim.lsp.omnifunc"
+    vim.bo.omnifunc = "v:lua._prt_fuzzy_completion(0, '')<CR>"
 end
 
 ---

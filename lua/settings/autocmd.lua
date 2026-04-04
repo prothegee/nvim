@@ -1,7 +1,9 @@
-local ts = require("settings.treesitter")
 local cap = require("settings.capability")
 
 local etn_augroup = vim.api.nvim_create_augroup("EnsureTrailingNewline", { clear = true })
+local ipc_augroup = vim.api.nvim_create_augroup("InsertPumpCompletion", { clear = true })
+
+local COMPLETION_DELAY = 300 -- milliseconds
 
 -- BufEnter
 vim.api.nvim_create_autocmd("BufEnter", {
@@ -63,7 +65,7 @@ vim.api.nvim_create_autocmd("FileType", {
         if not vim.api.nvim_buf_is_valid(buffer) then return end
 
         local filetype = vim.bo[buffer].filetype
-        for _, lang in ipairs(ts.TS) do
+        for _, lang in ipairs(_G._prt_TS) do
             if lang == filetype then
                 vim.treesitter.start(buffer, lang)
                 break
@@ -102,3 +104,26 @@ vim.api.nvim_create_autocmd("BufWrite", {
     end
 })
 
+-- -- TextChangedI and/or InsertCharPre
+-- -- MAYBE: add config to not load this one
+-- vim.api.nvim_create_autocmd({"InsertCharPre"}, {
+--     group = ipc_augroup,
+--     pattern = "*",
+--     callback = function(args)
+--         local buffer = args.buf
+--         local buffer_name = vim.api.nvim_buf_get_name(buffer)
+--
+--         if not vim.api.nvim_buf_is_valid(buffer) then return end
+--         if buffer_name == "" then return end
+--
+--         if vim.fn.mode() == "i" and vim.fn.pumvisible() == 0 then
+--             vim.defer_fn(function()
+--                 vim.fn.feedkeys(vim.api.nvim_replace_termcodes(
+--                     -- "<C-x><C-o>",
+--                     "<cmd>call v:lua._prt_fuzzy_completion(0, '')<CR>",
+--                     true, true, true
+--                 ), "n")
+--             end, COMPLETION_DELAY)
+--         end
+--     end
+-- })
