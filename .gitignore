@@ -8,6 +8,7 @@
 ## extension
 ##
 *.bak*
+*.dump
 *Zone.Identifier
 
 ##

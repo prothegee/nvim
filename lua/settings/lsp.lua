@@ -93,6 +93,13 @@ for _, lsp in pairs(_G._prt_LSPS) do
         }
     end
 
+    if lsp == "elixirls" then
+        opts = {
+            cmd = { os.getenv("DEVELOPMENT") .. "/bin/elixir/language_server.sh" },
+            filetypes = { "elixir", "eelixir", "heex", "surface" }
+        }
+    end
+
     -- check opts before extend ocap
     if next(opts) ~= nil then
         ocap = vim.tbl_deep_extend("force", ocap, opts)
