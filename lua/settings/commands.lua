@@ -70,3 +70,13 @@ vim.api.nvim_create_user_command(cmd.diagnostic_toggle_virt_text_and_line, funct
         virtual_lines = not virt_line
     })
 end, { desc = "Toggle diagnostic virtual text and line" })
+
+-- grep/rg and quickfix
+vim.api.nvim_create_user_command("RgOpen", function(opts)
+    vim.cmd("silent grep! " .. opts.args)
+    vim.cmd("copen")
+end, {
+    nargs = "+", -- allow arguments like -i "pattern"
+    complete = "file",
+    desc = "RUn grep and do :copen"
+})
