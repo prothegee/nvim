@@ -1,9 +1,25 @@
+--[[
+NOTE:
+optiojs for:
+- gui:
+    - underdotted
+    - bold
+    - italic
+    - underline
+    - undercurl
+    - underdouble
+    - underdashed
+    - strikethrough
+    - reverse
+    - inverse
+    - standout
+--]]
+
 vim.cmd([[
     augroup InternalTheme
-        autocmd ColorScheme * highlight Normal guibg=none guifg=none
-        autocmd ColorScheme * highlight NormalNC guibg=none guifg=none
-        "autocmd ColorScheme * highlight Normal guibg=none guifg=#646464 gui=NONE
-        "autocmd ColorScheme * highlight NormalNC guibg=none guifg=#121212 gui=underdotted
+        autocmd!
+        autocmd ColorScheme * highlight Normal guibg=none guifg=none gui=NONE
+        autocmd ColorScheme * highlight NormalNC guibg=none guifg=none gui=italic
 
         autocmd ColorScheme * highlight LineNr guibg=none guifg=none
 
