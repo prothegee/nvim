@@ -17,6 +17,12 @@ end
 
 -- # open horizontal terminal
 local function open_terminal_horizontal()
+    --[[
+    MAYBE:
+    - Adjustment for each one tab only allowed 1 terminal in bottom
+    - Save as unique buffer name?
+    --]]
+
     -- check if we're currently in a terminal buffer
     if vim.api.nvim_get_option_value("buftype", { buf = 0 }) == "terminal" then
         local buf = vim.api.nvim_get_current_buf()

@@ -15,6 +15,12 @@ M.config = {
     3:relative number 0 current
     --]]
     line_number = 3,
+    --[[
+    valid:
+    0:omnifunc
+    1:_prt_fuzzy_completion
+    --]]
+    omnifunc = 0,
 }
 
 return M

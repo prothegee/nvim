@@ -63,14 +63,3 @@ if vim.fn.executable("rg") == 1 then
     vim.opt.grepformat = "%f:%l:%c:%m"
 end
 
----
-
-vim.opt.pumheight = 24
--- vim.opt.pummaxheight = 12
-vim.opt.pumblend = 6
--- vim.opt.pumwidth = 48
-vim.opt.pummaxwidth = 75
--- "single", "double", "rounded", "bold"
-vim.opt.pumborder = "rounded"
-vim.opt.pumborder = ""
-
