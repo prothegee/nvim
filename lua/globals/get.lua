@@ -6,7 +6,7 @@ _G.get_active_lsp = function()
     if #clients > 0 then
         return "" .. table.concat(clients, ", ") .. " "
     end
-    return "n/a "
+    return "n/a lsp "
 end
 
 _G.get_active_current_mode = function()
@@ -128,23 +128,21 @@ _G.get_cwd_and_file_buffer = function()
 end
 
 _G.get_git_branch = function()
-    vim.fn.system("git rev-parse --show-toplevel 2>/dev/null"):gsub("\n$", "")
-    if vim.v.shell_error ~= 0 then return "n/a" end
+    local ret = vim.fn.system("git rev-parse --abbrev-ref HEAD 2>/dev/null"):gsub("\n$", "")
 
-    local ret = vim.fn.system("git rev-parse --abbrev-ref HEAD"):gsub("\n$", "")
-
-    if not ret or ret == "" then return "n/a" end
+    if vim.v.shell_error ~= 0 or ret == "" or ret == "HEAD" then
+        return "n/a branch"
+    end
 
     return ret
 end
 
 _G.get_git_short = function()
-    vim.fn.system("git rev-parse --show-toplevel 2>/dev/null"):gsub("\n$", "")
-    if vim.v.shell_error ~= 0 then return "n/a" end
+    local ret = vim.fn.system("git rev-parse --short HEAD 2>/dev/null"):gsub("\n$", "")
 
-    local ret = vim.fn.system("git rev-parse --short HEAD"):gsub("\n$", "")
-
-    if not ret or ret == "" then return "n/a" end
+    if vim.v.shell_error ~= 0 or ret == "" then
+        return "n/a short"
+    end
 
     return ret
 end
