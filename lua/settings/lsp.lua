@@ -73,6 +73,16 @@ for _, lsp in pairs(_G._prt_LSPS) do
                 "vue"
             },
             settings = {
+                typescript = {
+                    suggest = {
+                        autoImports = true,
+                    },
+                },
+                javascript = {
+                    suggest = {
+                        autoImports = true,
+                    },
+                },
                 vtsls = {
                     tsserver = {
                         globalPlugins = {
