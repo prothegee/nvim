@@ -41,10 +41,25 @@ local function on_complete_done()
     local bufnr = vim.api.nvim_get_current_buf()
     local winid = vim.api.nvim_get_current_win()
 
-    -- Apply additional text edits first (for imports, etc.)
+    local apply_edits = function(edits)
+        if edits and #edits > 0 then
+            local offset_encoding = get_offset_encoding(bufnr)
+            vim.lsp.util.apply_text_edits(edits, bufnr, offset_encoding)
+        end
+    end
+
+    -- Apply additional text edits (for imports, etc.)
     if user_data.additionalTextEdits and #user_data.additionalTextEdits > 0 then
-        local offset_encoding = get_offset_encoding(bufnr)
-        vim.lsp.util.apply_text_edits(user_data.additionalTextEdits, bufnr, offset_encoding)
+        apply_edits(user_data.additionalTextEdits)
+    elseif user_data.client_id then
+        local client = vim.lsp.get_client_by_id(user_data.client_id)
+        if client and client:supports_method("completionItem/resolve") then
+            client:request("completionItem/resolve", user_data._lsp_item, function(err, resolved_item)
+                if not err and resolved_item and resolved_item.additionalTextEdits then
+                    apply_edits(resolved_item.additionalTextEdits)
+                end
+            end)
+        end
     end
 
     -- Handle snippet expansion
@@ -105,7 +120,7 @@ _G._prt_fuzzy_completion = function(findstart, _)
             textDocument = vim.lsp.util.make_text_document_params(),
             position = { line = row, character = col },
             context = { triggerKind = TRIGGER_KIND },
-        }, function(err, result, _)
+        }, function(err, result, ctx)
             if not vim.api.nvim_buf_is_valid(current_buf) or vim.api.nvim_get_current_buf() ~= current_buf or vim.fn.mode() ~= "i" then
                 return
             end
@@ -114,6 +129,7 @@ _G._prt_fuzzy_completion = function(findstart, _)
                 return
             end
 
+            local client_id = ctx and ctx.client_id
             local items = result.items or result
 
             if not items then
@@ -148,6 +164,7 @@ _G._prt_fuzzy_completion = function(findstart, _)
                 local user_data = {
                     _lsp_item = item,
                     start_char = item_start,
+                    client_id = client_id,
                 }
 
                 -- Handle additional text edits (e.g., imports)
