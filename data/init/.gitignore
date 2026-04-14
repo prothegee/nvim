@@ -11,6 +11,9 @@
 .target
 .svelte-kit
 .node_modules
+.zig-cache
+.zig-out
+.zig-pkg
 
 bin
 tmp
@@ -22,6 +25,9 @@ cache
 target
 svelte-kit
 node_modules
+zig-cache
+zig-out
+zig-pkg
 
 ##
 ## extension
