@@ -46,15 +46,7 @@ zig-pkg
 .vscode/*.json
 .zed/*.json
 
-CMakePresets.json
-config/config.*.json
 compile_commands.json
-config.h
-config.hh
-config.hpp
-export*.h
-export*.hh
-export*.hpp
 
 ##
 ## file: exclude
@@ -63,5 +55,3 @@ export*.hpp
 !.nvim/*.json.template
 !.vscode/*.json.tempalte
 !.zed/*.json.template
-
-config/config.*.json.template
