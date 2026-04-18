@@ -42,8 +42,8 @@ vim.cmd([[
     augroup END
 
     set cursorline
-    set list
-    set lcs+=space:·
+    "set list
+    "set lcs+=space:·
 
     colorscheme retrobox
 ]])
