@@ -1,0 +1,38 @@
+{
+    "comment spacer": {
+		"prefix": "comment spacer",
+		"body": [
+			"<!-- --------------------------------------------------------- -->"
+		]
+	},
+    "tag double": {
+        "prefix": "tag double",
+        "body": [
+            "<${1:tag}>${2:content}</${1:tag}>"
+        ]
+    },
+    "tag single": {
+        "prefix": "tag single",
+        "body": [
+            "<${1:tag} />"
+        ]
+    },
+    "html init": {
+        "prefix": "html init",
+        "body": [
+            "<!DOCTYPE html>",
+            "<html lang=\"${1:en}\">",
+            "<head>",
+            "    <meta charset=\"utf-8\">",
+            "    <meta name=\"viewport\" content=\"width=device-width,initial-scale=1\">",
+            "    <title>${2:REPLACE_THE_TITLE}</title>",
+            "</head>",
+            "<body>",
+            "    <!-- ??? -->",
+            "</body>",
+            "</html>",
+            ""
+        ]
+    }
+}
+
