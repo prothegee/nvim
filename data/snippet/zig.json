@@ -5,6 +5,12 @@
 			"// --------------------------------------------------------- //"
 		]
 	},
+    "const import": {
+        "prefix": "const import",
+        "body": [
+            "const ${1:var} = @import(\"${2:who}\")"
+        ]
+    },
     "for loop i": {
 		"prefix": "for loop i",
 		"body": [
