@@ -106,6 +106,8 @@ vim.api.nvim_create_autocmd("BufWrite", {
 
 -- TextChangedI and/or InsertCharPre
 -- MAYBE: add config to not load this one
+local completion_timer = vim.uv.new_timer()
+
 vim.api.nvim_create_autocmd({"InsertCharPre"}, {
     group = ipc_augroup,
     pattern = "*",
@@ -115,15 +117,17 @@ vim.api.nvim_create_autocmd({"InsertCharPre"}, {
 
         if not vim.api.nvim_buf_is_valid(buffer) then return end
         if buffer_name == "" then return end
+        if vim.fn.mode() ~= "i" or vim.fn.pumvisible() == 1 then return end
 
-        if vim.fn.mode() == "i" and vim.fn.pumvisible() == 0 then
-            vim.defer_fn(function()
-                vim.fn.feedkeys(vim.api.nvim_replace_termcodes(
-                    -- "<C-x><C-o>",
-                    "<cmd>call v:lua._prt_fuzzy_completion(0, '')<CR>",
-                    true, true, true
-                ), "n")
-            end, COMPLETION_DELAY)
-        end
+        -- debounce: restart on every keystroke, fires once after typing pauses
+        completion_timer:stop()
+        completion_timer:start(COMPLETION_DELAY, 0, vim.schedule_wrap(function()
+            if vim.fn.mode() ~= "i" or vim.fn.pumvisible() == 1 then return end
+
+            vim.fn.feedkeys(vim.keycode(
+                -- "<C-x><C-o>",
+                "<cmd>call v:lua._prt_fuzzy_completion(0, '')<CR>"
+            ), "n")
+        end))
     end
 })
