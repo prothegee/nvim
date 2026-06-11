@@ -19,7 +19,8 @@ local _default_completion = function(_)
     vim.opt.wildignorecase = true
 
     -- vim.bo.omnifunc = "v:lua.vim.lsp.omnifunc"
-    vim.bo.omnifunc = "v:lua._prt_fuzzy_completion(0, '')<CR>"
+    -- omnifunc must be a function reference, vim appends (findstart, base) itself
+    vim.bo.omnifunc = "v:lua._prt_fuzzy_completion"
 end
 
 ---

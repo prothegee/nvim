@@ -4,8 +4,12 @@
 1:invoked
 2:triggercharacter
 3:triggerforincompletecompletions
+
+Note: 3 is only meant for re-requesting after an isIncomplete
+result. Verified on gopls, zls, and clangd that 1 and 3 return
+identical items, so use the spec-correct 1.
 --]]
-local TRIGGER_KIND = 3
+local TRIGGER_KIND = 1
 
 local function get_offset_encoding(bufnr)
     local clients = vim.lsp.get_clients({ bufnr = bufnr })
@@ -136,10 +140,12 @@ _G._prt_fuzzy_completion = function(findstart, _)
                 return
             end
 
+            local base = line_text:sub(start_char + 1, end_char)
             local all_matches = {}
 
             for _, item in ipairs(items) do
-                local label = item.textEdit and item.textEdit.newText or item.label
+                -- servers like gopls put the snippet in textEdit.newText, not insertText
+                local insert_text = (item.textEdit and item.textEdit.newText) or item.insertText or item.label
                 local kind = item.kind or 0
                 local kind_text = vim.lsp.protocol.CompletionItemKind[kind] or ""
                 local kind_char = kind_text:sub(1, 1):lower()
@@ -173,49 +179,46 @@ _G._prt_fuzzy_completion = function(findstart, _)
                 end
 
                 local is_function = (kind == 3 or kind == 4) -- Function or Method
-                local has_native_snippet = (item.insertTextFormat == 2 and item.insertText)
 
-                if has_native_snippet then
+                if item.insertTextFormat == 2 then
                     user_data._lsp_snippet = true
-                    user_data.snippet_text = item.insertText
+                    user_data.snippet_text = insert_text
                 elseif is_function then
-                    -- Extract function name from label (first word)
-                    local func_name = label:match("^(%w+)") or label
-                    -- Get signature from detail (preferred) or label
-                    local signature = detail ~= "" and detail or label
-                    -- Extract parameters between parentheses
-                    local params_str = signature:match("%((.*)%)")
+                    -- build a snippet when the server sends plain text only.
+                    -- [%w_] keeps snake_case names whole, %w alone cuts at "_"
+                    local func_name = insert_text:match("[%w_]+") or insert_text
+                    local signature = detail ~= "" and detail or item.label
+                    -- first paren group without nested parens, a greedy (.*) would
+                    -- swallow return types like go "(n int, err error)"
+                    local params_str = signature:match("%(([^()]*)%)")
+
                     local params = {}
                     if params_str then
-                        for p in params_str:gmatch("([^,]+)") do
-                            p = p:match("^%s*(.-)%s*$")
-                            table.insert(params, p)
+                        for param in params_str:gmatch("([^,]+)") do
+                            param = param:match("^%s*(.-)%s*$")
+                            table.insert(params, param)
                         end
                     end
-                    if #params > 0 then
-                        local param_placeholders = {}
-                        for i, p in ipairs(params) do
-                            table.insert(param_placeholders, string.format("${%d:%s}", i, p))
-                        end
-                        local snippet_text = func_name .. "(" .. table.concat(param_placeholders, ", ") .. ")"
-                        user_data._lsp_snippet = true
-                        user_data.snippet_text = snippet_text
-                    else
-                        user_data.snippet_text = func_name .. "()"
+
+                    local param_placeholders = {}
+                    for index, param in ipairs(params) do
+                        table.insert(param_placeholders, string.format("${%d:%s}", index, param))
                     end
+
+                    user_data._lsp_snippet = true
+                    user_data.snippet_text = func_name .. "(" .. table.concat(param_placeholders, ", ") .. ")"
                 end
 
                 local word
                 if user_data._lsp_snippet then
-                    local name = label:match("^(%w+)") or label
-                    word = name
+                    word = insert_text:match("[%w_]+") or item.label
                 else
-                    word = item.insertText or label
+                    word = insert_text
                 end
 
                 table.insert(all_matches, {
                     word = word,
-                    abbr = label,
+                    abbr = item.label,
                     kind = kind_char,
                     menu = kind_text,
                     info = item.documentation and (
@@ -223,12 +226,26 @@ _G._prt_fuzzy_completion = function(findstart, _)
                     ) or "",
                     icase = 1,
                     dup = 1,
+                    filter = item.filterText or word,
                     user_data = user_data
                 })
             end
 
+            -- fuzzy filter against what is already typed, vim.fn.complete does
+            -- not filter pre-typed text by itself. Keep everything when nothing
+            -- matches so the menu never turns up empty by surprise
+            local matches = all_matches
+            if base ~= "" then
+                local filtered = vim.fn.matchfuzzy(all_matches, base, { key = "filter" })
+                if #filtered > 0 then matches = filtered end
+            end
+
+            for _, match in ipairs(matches) do
+                match.filter = nil
+            end
+
             if vim.api.nvim_get_current_buf() == current_buf and vim.fn.mode() == "i" then
-                vim.fn.complete(start_char + 1, all_matches)
+                vim.fn.complete(start_char + 1, matches)
             end
         end)
 
