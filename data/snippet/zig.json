@@ -5,6 +5,13 @@
 			"// --------------------------------------------------------- //"
 		]
 	},
+    "allocator arena": {
+        "prefix": "allocator arena",
+        "body": [
+            "var arena = std.heap.ArenaAllocator.init(std.heap.smp_allocator);",
+            "defer arena.deinit();"
+        ]
+    },
     "const import": {
         "prefix": "const import",
         "body": [
