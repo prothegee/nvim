@@ -7,11 +7,11 @@ local this = require"markdown_preview"
 
 M.port = 3333
 M.debounce = 300
-M.open_browser = false
+M.open_browser = true
 
 this.setup({
     port = M.port,
-    debounce = M.debounce,
+    debounce_ms = M.debounce,
     open_browser = M.open_browser
 })
 
