@@ -91,7 +91,7 @@
     "main init pub void process": {
         "prefix": "main init pub void process",
         "body": [
-            "pub fn main(init: std.process.Init) !void {",
+            "pub fn main(process: std.process.Init) !void {",
             "    // TODO",
             "}"
         ]
