@@ -7,6 +7,7 @@ eXPLoReR
 - Can type and search WHILE scanning
 - Async scanning with incremental results
 - Results ranked by match quality (closer = higher priority)
+- Input supports left/right cursor movement and mid-string editing
 
 ## Note
 - Some behaviour is restricted due typing protection
@@ -782,10 +783,14 @@ local function setup_keymaps_and_ui()
             move_up()
         end, {buffer = state.buf}},
 
-        {"n", "<Left>", "<Nop>", {buffer = state.buf}},
-        {"n", "<Right>", "<Nop>", {buffer = state.buf}},
-        {"i", "<Left>", "<Nop>", {buffer = state.buf}},
-        {"i", "<Right>", "<Nop>", {buffer = state.buf}},
+        {"i", "<BS>", function()
+            local col = vim.api.nvim_win_get_cursor(state.win)[2]
+            if col <= 2 then
+                return ""
+            end
+
+            return "<BS>"
+        end, {buffer = state.buf, expr = true}},
     }
 
     state.buf_keymaps = {}
@@ -804,17 +809,16 @@ local function setup_keymaps_and_ui()
         local line, col = cursor[1], cursor[2]
         local line_count = vim.api.nvim_buf_line_count(state.buf)
 
-        if line < 1 then
-            line = 1
-        end
-        if line > line_count then
-            line = line_count
+        if line < state.header_lines then
+            if line_count >= state.header_lines then
+                vim.api.nvim_win_set_cursor(state.win, {state.header_lines, math.max(col, 2)})
+            end
+            return
         end
 
-        if line == 1 and col < 2 then
-            if line_count >= 2 then
-                vim.api.nvim_win_set_cursor(state.win, {2, 2})
-            end
+        if line == state.header_lines and col < 2 then
+            vim.api.nvim_win_set_cursor(state.win, {state.header_lines, 2})
+            return
         end
 
         if line > state.header_lines and state.selected_index == 0 then
@@ -834,14 +838,6 @@ local function setup_keymaps_and_ui()
                 if input ~= state.search_term then
                     state.search_term = input
                     debounced_filter()
-
-                    if state.selected_index == 0 then
-                        local line_count = vim.api.nvim_buf_line_count(state.buf)
-                        if state.header_lines <= line_count then
-                            local line_content = vim.api.nvim_buf_get_lines(state.buf, state.header_lines - 1, state.header_lines, false)[1] or ""
-                            vim.api.nvim_win_set_cursor(state.win, {state.header_lines, math.min(#state.search_term + 2, line_content:len())})
-                        end
-                    end
                 end
             end
         end
@@ -855,14 +851,15 @@ local function setup_keymaps_and_ui()
     vim.api.nvim_create_autocmd("TextChangedI", {
         buffer = state.buf,
         callback = function()
+            local cursor_line = vim.api.nvim_win_get_cursor(state.win)[1]
+            if cursor_line ~= state.header_lines then
+                return
+            end
+
             local line = vim.api.nvim_get_current_line()
             if #line < 2 or line:sub(1,2) ~= "> " then
                 vim.api.nvim_set_current_line("> " .. state.search_term)
-                local line_count = vim.api.nvim_buf_line_count(state.buf)
-                if state.header_lines <= line_count then
-                    local line_content = vim.api.nvim_buf_get_lines(state.buf, state.header_lines - 1, state.header_lines, false)[1] or ""
-                    vim.api.nvim_win_set_cursor(state.win, {state.header_lines, math.min(#state.search_term + 2, line_content:len())})
-                end
+                vim.api.nvim_win_set_cursor(state.win, {state.header_lines, 2})
             end
         end
     })
