@@ -8,8 +8,8 @@
     "allocator arena": {
         "prefix": "allocator arena",
         "body": [
-            "var arena = std.heap.ArenaAllocator.init(std.heap.smp_allocator);",
-            "defer arena.deinit();"
+            "var ${1:allocator} = std.heap.ArenaAllocator.init(std.heap.smp_allocator);",
+            "defer ${1:allocator}.deinit();"
         ]
     },
     "const import": {
