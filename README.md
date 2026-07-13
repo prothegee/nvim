@@ -35,6 +35,8 @@ See `./lua/plugins` directory for more details.
 ## [internal plugins](./lua/prt/README.md)
 
 - [cmdp](./lua/prt/cmdp.lua)
+- [dmmr](./lua/prt/dmmr.lua)
+- [xplrr](./lua/prt/xplrr.lua)
 - [snppts](./lua/prt/snppts.lua)
 - [cmpltn](./lua/prt/cmpltn.lua)
 
