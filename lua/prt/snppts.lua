@@ -83,6 +83,13 @@ end
 
 ---
 
+-- expose snippet items so other completion sources (e.g. the insert-mode
+-- auto popup) can list snippets without duplicating the loading logic.
+-- expansion still runs through M.on_complete_done via the _snippet_source tag.
+function M.get_completions(base, filetype, start_col)
+    return get_snippet_completion(base, filetype, start_col)
+end
+
 function M.load_filetype(filetype)
     if M.snippet_store[filetype] then
         return

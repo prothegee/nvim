@@ -120,6 +120,28 @@ _G._prt_fuzzy_completion = function(findstart, _)
         start_char = (line_text:sub(1, col):find("[%w_]*$") or col) - 1
         end_char = col
 
+        local base = line_text:sub(start_char + 1, end_char)
+        local filetype = vim.bo[buf].filetype
+
+        -- snippet items from prt.snppts, shown in the same popup while typing.
+        -- start_col must equal start_char so the accept cleanup lines up.
+        local snippet_matches = {}
+        local ok_snippets, snppts = pcall(require, "prt.snppts")
+        if ok_snippets then
+            snippet_matches = snppts.get_completions(base, filetype, start_char)
+        end
+
+        -- with no completion server attached the request handler never fires,
+        -- so surface snippets on their own here.
+        local completion_clients = vim.lsp.get_clients({ bufnr = buf, method = "textDocument/completion" })
+        if #completion_clients == 0 then
+            if #snippet_matches > 0 and vim.api.nvim_get_current_buf() == current_buf and vim.fn.mode() == "i" then
+                vim.fn.complete(start_char + 1, snippet_matches)
+            end
+
+            return {}
+        end
+
         vim.lsp.buf_request(buf, "textDocument/completion", {
             textDocument = vim.lsp.util.make_text_document_params(),
             position = { line = row, character = col },
@@ -140,7 +162,6 @@ _G._prt_fuzzy_completion = function(findstart, _)
                 return
             end
 
-            local base = line_text:sub(start_char + 1, end_char)
             local all_matches = {}
 
             for _, item in ipairs(items) do
@@ -242,6 +263,12 @@ _G._prt_fuzzy_completion = function(findstart, _)
 
             for _, match in ipairs(matches) do
                 match.filter = nil
+            end
+
+            -- append snippet items after the LSP results so both share the popup.
+            -- they are already prefix filtered and carry their own start_col.
+            for _, snippet_match in ipairs(snippet_matches) do
+                table.insert(matches, snippet_match)
             end
 
             if vim.api.nvim_get_current_buf() == current_buf and vim.fn.mode() == "i" then
