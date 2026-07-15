@@ -2,6 +2,9 @@
 # CMDP
 CoMmanD Palette
 
+## Behavior
+- Input supports left/right cursor movement and mid-string editing
+
 ---
 TODO:
 - need to be able add command task inside cwd of .nvim dir, where:
@@ -357,10 +360,14 @@ local function create_window()
             move_up()
         end, {buffer = M.state.buf}},
 
-        {"n", "<Left>", "<Nop>", {buffer = M.state.buf}},
-        {"n", "<Right>", "<Nop>", {buffer = M.state.buf}},
-        {"i", "<Left>", "<Nop>", {buffer = M.state.buf}},
-        {"i", "<Right>", "<Nop>", {buffer = M.state.buf}},
+        {"i", "<BS>", function()
+            local col = vim.api.nvim_win_get_cursor(M.state.win)[2]
+            if col <= 2 then
+                return ""
+            end
+
+            return "<BS>"
+        end, {buffer = M.state.buf, expr = true}},
     }
 
     -- store and set keymaps
@@ -401,15 +408,29 @@ local function create_window()
     end
 
     local function restrict_cursor()
-        local cursor = vim.api.nvim_win_get_cursor(M.state.win)
-        local line = cursor[1]
-
-        if line == 1 then
-            vim.api.nvim_win_set_cursor(M.state.win, {2, 2})
+        if not is_valid_buf(M.state.buf) or not vim.api.nvim_win_is_valid(M.state.win) then
+            return
         end
 
-        if line > 1 and M.state.selected_index == 0 then
-            vim.api.nvim_win_set_cursor(M.state.win, {2, #M.state.search_term + 2})
+        local cursor = vim.api.nvim_win_get_cursor(M.state.win)
+        local line, col = cursor[1], cursor[2]
+        local line_count = vim.api.nvim_buf_line_count(M.state.buf)
+
+        if line < M.state.header_lines then
+            if line_count >= M.state.header_lines then
+                vim.api.nvim_win_set_cursor(M.state.win, {M.state.header_lines, math.max(col, 2)})
+            end
+            return
+        end
+
+        if line == M.state.header_lines and col < 2 then
+            vim.api.nvim_win_set_cursor(M.state.win, {M.state.header_lines, 2})
+            return
+        end
+
+        if line > M.state.header_lines and M.state.selected_index == 0 then
+            local search_line_content = vim.api.nvim_buf_get_lines(M.state.buf, M.state.header_lines - 1, M.state.header_lines, false)[1] or ""
+            vim.api.nvim_win_set_cursor(M.state.win, {M.state.header_lines, math.min(#M.state.search_term + 2, search_line_content:len())})
         end
     end
 
@@ -417,6 +438,7 @@ local function create_window()
     vim.api.nvim_create_autocmd({"TextChanged", "TextChangedI"}, {
         buffer = M.state.buf,
         callback = function()
+            local cursor = vim.api.nvim_win_get_cursor(M.state.win)
             local lines = vim.api.nvim_buf_get_lines(M.state.buf, 0, M.state.header_lines, false)
             if #lines >= M.state.header_lines then
                 local input = lines[M.state.header_lines]:sub(3)
@@ -424,8 +446,9 @@ local function create_window()
                     M.state.search_term = input
                     update_results()
                     update_display()
-                    if M.state.selected_index == 0 then
-                        vim.api.nvim_win_set_cursor(M.state.win, {M.state.header_lines, #M.state.search_term + 2})
+                    if cursor[1] == M.state.header_lines then
+                        local line_content = vim.api.nvim_buf_get_lines(M.state.buf, M.state.header_lines - 1, M.state.header_lines, false)[1] or ""
+                        vim.api.nvim_win_set_cursor(M.state.win, {M.state.header_lines, math.min(cursor[2], line_content:len())})
                     end
                 end
             end
@@ -442,10 +465,15 @@ local function create_window()
     vim.api.nvim_create_autocmd("TextChangedI", {
         buffer = M.state.buf,
         callback = function()
+            local cursor_line = vim.api.nvim_win_get_cursor(M.state.win)[1]
+            if cursor_line ~= M.state.header_lines then
+                return
+            end
+
             local line = vim.api.nvim_get_current_line()
             if #line < 2 or line:sub(1,2) ~= "> " then
                 vim.api.nvim_set_current_line("> " .. M.state.search_term)
-                vim.api.nvim_win_set_cursor(M.state.win, {M.state.header_lines, #M.state.search_term + 2})
+                vim.api.nvim_win_set_cursor(M.state.win, {M.state.header_lines, 2})
             end
         end
     })
