@@ -123,10 +123,30 @@ _G._prt_fuzzy_completion = function(findstart, _)
         local base = line_text:sub(start_char + 1, end_char)
         local filetype = vim.bo[buf].filetype
 
-        -- snippet items from prt.snppts, shown in the same popup while typing.
+        local ok_snippets, snppts = pcall(require, "prt.snppts")
+
+        -- snippet prefixes may hold spaces (e.g. "allocator arena"), so match
+        -- them against the phrase that spans single spaces, not just the last
+        -- word. once a multi-word phrase matches, the popup can carry only one
+        -- start column and lsp never completes across a space, so show those
+        -- snippets alone at the phrase column.
+        local phrase = line_text:sub(1, col):match("[%w_][%w_ ]*$") or base
+        local phrase_start = col - #phrase
+
+        if ok_snippets and phrase_start < start_char then
+            local phrase_matches = snppts.get_completions(phrase, filetype, phrase_start)
+            if #phrase_matches > 0 then
+                if vim.api.nvim_get_current_buf() == current_buf and vim.fn.mode() == "i" then
+                    vim.fn.complete(phrase_start + 1, phrase_matches)
+                end
+
+                return {}
+            end
+        end
+
+        -- single word: snippets align with the word column and merge with lsp.
         -- start_col must equal start_char so the accept cleanup lines up.
         local snippet_matches = {}
-        local ok_snippets, snppts = pcall(require, "prt.snppts")
         if ok_snippets then
             snippet_matches = snppts.get_completions(base, filetype, start_char)
         end
