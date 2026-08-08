@@ -124,6 +124,16 @@ local commands = {
         vim.cmd("XplrrBuffers")
     end,
     --
+    ["TGGL: Auto-Completion On/Off"] = function()
+        _G._prt_autocompletion = not _G._prt_autocompletion
+
+        local status = _G._prt_autocompletion and "on" or "off"
+
+        vim.schedule(function()
+            vim.notify("auto-completion is now " .. status, vim.log.levels.INFO)
+        end)
+    end,
+    --
     ["SWTCH: Indent 2"] = function()
         require"prt.swtch".global_indent(2)
     end,

@@ -108,6 +108,12 @@ vim.api.nvim_create_autocmd("BufWrite", {
 -- MAYBE: add config to not load this one
 local completion_timer = vim.uv.new_timer()
 
+-- gate for the auto popup, flipped by the cmdp "TGGL: Auto-Completion On/Off"
+-- command. manual completion (ctrl+x ctrl+o) stays usable when this is off.
+if _G._prt_autocompletion == nil then
+    _G._prt_autocompletion = true
+end
+
 vim.api.nvim_create_autocmd({"InsertCharPre"}, {
     group = ipc_augroup,
     pattern = "*",
@@ -115,6 +121,7 @@ vim.api.nvim_create_autocmd({"InsertCharPre"}, {
         local buffer = args.buf
         local buffer_name = vim.api.nvim_buf_get_name(buffer)
 
+        if _G._prt_autocompletion == false then return end
         if not vim.api.nvim_buf_is_valid(buffer) then return end
         if buffer_name == "" then return end
         if vim.fn.mode() ~= "i" or vim.fn.pumvisible() == 1 then return end
