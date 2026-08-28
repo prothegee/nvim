@@ -5,10 +5,29 @@
 			"// --------------------------------------------------------- //"
 		]
 	},
-    "allocator arena": {
+    "allocator smp": {
+        "prefix": "allocator smp",
+        "body": [
+            "var ${1:allocator} = std.heap.smp_allocator;"
+        ]
+    },
+    "allocator page": {
+        "prefix": "allocator page",
+        "body": [
+            "var ${1:allocator} = std.heap.page_allocator;"
+        ]
+    },
+    "allocator arena 1": {
         "prefix": "allocator arena",
         "body": [
             "var ${1:allocator} = std.heap.ArenaAllocator.init(std.heap.smp_allocator);",
+            "defer ${1:allocator}.deinit();"
+        ]
+    },
+    "allocator arena 2": {
+        "prefix": "allocator arena 2",
+        "body": [
+            "var ${1:allocator}: std.heap.ArenaAllocator = .init(std.heap.smp_allocator);",
             "defer ${1:allocator}.deinit();"
         ]
     },
