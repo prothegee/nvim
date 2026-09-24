@@ -54,7 +54,8 @@ M.capabilities.textDocument = {
     inlineCompletion = { dynamicRegistration = true },
 }
 M.capabilities.workspace = {
-    diagnostics = { refreshSupport = true }
+    diagnostics = { refreshSupport = true },
+    configuration = true,
 }
 
 function M.default_completion(client, buffer)
