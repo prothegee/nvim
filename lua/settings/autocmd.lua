@@ -38,6 +38,11 @@ vim.api.nvim_create_autocmd("LspAttach", {
         if not client then return end
         if buffer_name == "" then return end
 
+        -- workaround roslyn_ls
+        if client and client.name == "roslyn_ls" then
+            client.server_capabilities.completionProvider.resolveProvider = false
+        end
+
         cap.default_completion(buffer)
         cap.on_attach(client, buffer)
     end
