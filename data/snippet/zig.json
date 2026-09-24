@@ -17,6 +17,12 @@
             "var ${1:allocator} = std.heap.page_allocator;"
         ]
     },
+    "allocator test": {
+        "prefix": "allocator test",
+        "body": [
+            "var ${1:allocator} = std.testing.allocator;"
+        ]
+    },
     "allocator arena 1": {
         "prefix": "allocator arena",
         "body": [
@@ -35,6 +41,42 @@
         "prefix": "const import",
         "body": [
             "const ${1:var} = @import(\"${2:who}\")"
+        ]
+    },
+    "log debug": {
+        "prefix": "log debug",
+        "body": [
+            "std.log.debug(\"${1}\\n\", .{${2}});"
+        ]
+    },
+    "log info": {
+        "prefix": "log info",
+        "body": [
+            "std.log.info(\"${1}\\n\", .{${2}});"
+        ]
+    },
+    "log warn": {
+        "prefix": "log warn",
+        "body": [
+            "std.log.warn(\"${1}\\n\", .{${2}});"
+        ]
+    },
+    "log error": {
+        "prefix": "log error",
+        "body": [
+            "std.log.err(\"${1}\\n\", .{${2}});"
+        ]
+    },
+    "debug print": {
+        "prefix": "debug print",
+        "body": [
+            "std.debug.print(\"${1}\\n\", .{${2}});"
+        ]
+    },
+    "const import std": {
+        "prefix": "const import std",
+        "body": [
+            "const std = @import(\"std\");"
         ]
     },
     "for loop i": {
@@ -93,12 +135,6 @@
             "};"
 		]
 	},
-    "std as import std": {
-        "prefix": "std as import std",
-        "body": [
-            "const std = @import(\"std\");"
-        ]
-    },
     "main init pub void": {
         "prefix": "main init pub void",
         "body": [
@@ -115,11 +151,39 @@
             "}"
         ]
     },
-    "test expect fail": {
-        "prefix": "test expect fail",
+    "main init pub void init": {
+        "prefix": "main init pub void init",
         "body": [
-            "// expect fail for now",
-            "std.testing.expect(false);"
+            "pub fn main(init: std.process.Init) !void {",
+            "    // TODO",
+            "}"
+        ]
+    },
+    "test define": {
+        "prefix": "test define",
+        "body": [
+            "test \"${1:label}: ${2:description}\" {",
+            "    ${3:// TODO}",
+            "}"
+        ]
+    },
+    "test expect bool": {
+        "prefix": "test expect bool",
+        "body": [
+            "// false will fail",
+            "try std.testing.expect(${1:false});"
+        ]
+    },
+    "test expect equal": {
+        "prefix": "test expect equal",
+        "body": [
+            "try std.testing.expectEqual(@as(${1:T}, ${2:expected}), ${3:actual});"
+        ]
+    },
+    "test expect equal string": {
+        "prefix": "test expect equal string",
+        "body": [
+            "try std.testing.expectEqualStrings(\"${1:expected}\", ${2:actual});"
         ]
     },
     "head file info": {
