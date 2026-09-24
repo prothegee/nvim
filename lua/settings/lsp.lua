@@ -41,29 +41,38 @@ for _, lsp in pairs(_G._prt_LSPS) do
                 },
                 diagnostics = {
                     globals = { "vim" }
-                }
+                },
             }
         }
     end
 
-    -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md#roslyn_ls
-    if lsp == "roslyn_ls" then
-        opts = {
-            cmd = {
-                "dotnet",
-                -- please adjust bellow
-                os.getenv("DOTNET_ROOT") .. "/.nuget/content/LanguageServer/linux-x64/Microsoft.CodeAnalysis.LanguageServer.dll",
-                "--logLevel",
-                "Information",
-                "--extensionLogDirectory",
-                vim.fs.joinpath(vim.uv.os_tmpdir(), "roslyn_ls/logs"),
-                "--stdio",
-            },
-            filetypes = {
-                "cs", "vb"
-            }
-        }
-    end
+    -- -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md#roslyn_ls
+    -- if lsp == "roslyn_ls" then
+    --     opts = {
+    --         cmd = {
+    --             "dotnet",
+    --             -- please adjust bellow
+    --             os.getenv("DOTNET_ROOT") .. "/lsp/content/LanguageServer/linux-x64/Microsoft.CodeAnalysis.LanguageServer.dll",
+    --             os.getenv("DOTNET_ROOT") .. "/lsp/content/LanguageServer/linux-x64/Microsoft.CodeAnalysis.LanguageServer.dll",
+    --             "--logLevel",
+    --             "Information",
+    --             "--extensionLogDirectory",
+    --             vim.fs.joinpath(vim.uv.os_tmpdir(), "roslyn_ls/logs"),
+    --             "--stdio",
+    --         },
+    --         filetypes = {
+    --             "cs", "vb", "razor"
+    --         },
+    --         root_markers = { "*.sln", "*.csproj", "*.cs", "*.fsproj" },
+    --         single_file_support = true,
+    --         settings = {
+    --             ["csharp|background_analysis"] = {
+    --                 dotnet_analyzer_diagnostics_scope = "openFiles",
+    --                 dotnet_compiler_diagnostics_scope = "openFiles",
+    --             },
+    --         },
+    --     }
+    -- end
 
     if lsp == "vtsls" then
         opts = {
@@ -115,7 +124,11 @@ for _, lsp in pairs(_G._prt_LSPS) do
         ocap = vim.tbl_deep_extend("force", ocap, opts)
     end
 
-    vim.lsp.config(lsp, ocap)
+    if lsp == "roslyn_ls" then
+        vim.lsp.config(lsp, {})
+    else
+        vim.lsp.config(lsp, ocap)
+    end
 
     vim.lsp.enable(lsp)
 end
