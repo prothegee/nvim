@@ -45,8 +45,8 @@
             "}"
         ]
     },
-    "struct": {
-        "prefix": "struct",
+    "struct default": {
+        "prefix": "struct default",
         "body": [
             "struct ${1:Struct_s} {",
             "    // data",
@@ -69,8 +69,8 @@
             "} ${2:Struct_typedef_2};"
         ]
     },
-	"class": {
-		"prefix": "class",
+	"class default": {
+		"prefix": "class default",
 		"body": [
 			"class ${1:Class_c} {",
             "    // data",
