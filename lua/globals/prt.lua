@@ -315,7 +315,7 @@ _G._prt_LSPS = {
     "jdtls", "kotlin_lsp",
     "ruby_lsp",
     "protols",
-    "svelte", "vue_ls",
+    "svelte", "vue_ls", "angularls",
     "gdscript", "gdshader_lsp",
     "dartls",
     "elixirls",
