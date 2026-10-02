@@ -6,27 +6,34 @@ local commands = {
     end,
     --
     ["MARKDOWN: Browser Run"] = function()
-        vim.cmd("MarkdownPreview")
+        vim.cmd("MdKite")
 
         -- actual plugin config
-        local m = require"plugins.markdown-preview"
+        local m = require"plugins.mdkite"
 
         vim.schedule(function()
-            vim.print("markdown-preview has start at: http://localhost:" .. m.port)
+            vim.print("mdkite has start at: http://localhost:" .. m.port)
         end)
     end,
     ["MARKDOWN: Browser Stop"] = function()
-        vim.cmd("MarkdownPreviewStop")
+        vim.cmd("MdKite stop")
 
         vim.schedule(function()
-            vim.print("markdown-preview has stop")
+            vim.print("mdkite has stop")
         end)
     end,
     ["MARKDOWN: Browser Refresh"] = function()
-        vim.cmd("MarkdownPreviewRefresh")
+        vim.cmd("MdKite refresh")
 
         vim.schedule(function()
-            vim.print("markdown-preview has stop")
+            vim.print("mdkite has refreshed")
+        end)
+    end,
+    ["MARKDOWN: Browser Toggle"] = function()
+        vim.cmd("MdKite toggle")
+
+        vim.schedule(function()
+            vim.print("mdkite has toggled")
         end)
     end,
     --
