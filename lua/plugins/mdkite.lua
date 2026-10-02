@@ -1,9 +1,11 @@
 vim.pack.add({"git@github.com:selimacerbas/live-server.nvim.git"})
-vim.pack.add({"git@github.com:selimacerbas/markdown-preview.nvim.git"})
+-- replacement for markdown-previw
+vim.pack.add({"git@github.com:selimacerbas/mdkite.nvim.git"})
+-- vim.pack.add({"git@github.com:selimacerbas/markdown-preview.nvim.git"})
 
 local M = {}
 
-local this = require"markdown_preview"
+local this = require"mdkite"
 
 M.port = 3333
 M.debounce = 300
