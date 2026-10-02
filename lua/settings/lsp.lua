@@ -6,6 +6,60 @@ local cap = require"settings.capability"
 
 ---
 
+local function find_root(bufnr, markers)
+    return vim.fs.root(bufnr, markers)
+end
+
+local function find_angular_root(bufnr)
+    local filename = vim.api.nvim_buf_get_name(bufnr)
+
+    if filename == "" then
+        return nil
+    end
+
+    local dir = vim.fs.dirname(filename)
+
+    while dir do
+        if vim.uv.fs_stat(vim.fs.joinpath(dir, "angular.json")) or vim.uv.fs_stat(vim.fs.joinpath(dir, "nx.json")) then
+            return dir
+        end
+
+        -- A package.json establishes the project boundary.
+        --
+        -- Angular workspaces normally have angular.json and package.json
+        -- at the same root, so this still detects normal Angular projects.
+        if vim.uv.fs_stat(vim.fs.joinpath(dir, "package.json")) then
+            return nil
+        end
+
+        local parent = vim.fs.dirname(dir)
+
+        if parent == dir then
+            break
+        end
+
+        dir = parent
+    end
+
+    return nil
+end
+
+local function find_js_root(bufnr)
+    return find_root(bufnr, {
+        "package-lock.json",
+        "yarn.lock",
+        "pnpm-lock.yaml",
+        "bun.lockb",
+        "bun.lock",
+        "tsconfig.json",
+        "jsconfig.json",
+        "package.json",
+        ".git",
+    })
+end
+
+---
+
 for _, lsp in pairs(_G._prt_LSPS) do
     -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md
     local opts = {}
@@ -81,17 +135,36 @@ for _, lsp in pairs(_G._prt_LSPS) do
                 "typescript", "typescriptreact",
                 "vue"
             },
+
+            root_dir = function(bufnr, on_dir)
+                local angular_root = find_angular_root(bufnr)
+
+                if angular_root then
+                    return
+                end
+
+                local root = find_js_root(bufnr)
+
+                if not root then
+                    return
+                end
+
+                on_dir(root)
+            end,
+
             settings = {
                 typescript = {
                     suggest = {
                         autoImports = true,
                     },
                 },
+
                 javascript = {
                     suggest = {
                         autoImports = true,
                     },
                 },
+
                 vtsls = {
                     tsserver = {
                         globalPlugins = {
@@ -109,6 +182,20 @@ for _, lsp in pairs(_G._prt_LSPS) do
                     },
                 },
             },
+        }
+    end
+
+    if lsp == "angularls" then
+        opts = {
+            root_dir = function(bufnr, on_dir)
+                local root = find_angular_root(bufnr)
+
+                if not root then
+                    return
+                end
+
+                on_dir(root)
+            end,
         }
     end
 
