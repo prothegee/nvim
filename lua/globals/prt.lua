@@ -309,7 +309,7 @@ _G._prt_LSPS = {
     "rust_analyzer", "taplo",
     "gopls",
     "vtsls",
-    "ts_ls",
+    -- "ts_ls",
     "zls",
     "roslyn_ls", -- "csharp_ls",
     "jdtls", "kotlin_lsp",
