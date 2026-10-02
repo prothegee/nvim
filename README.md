@@ -5,7 +5,7 @@
 __*NOTE:*__
 - Using vim.pack
 - No package manager
-- Meant to use for 0.12.* or above
+- Meant to use for 0.12.* and above
 
 <br>
 
