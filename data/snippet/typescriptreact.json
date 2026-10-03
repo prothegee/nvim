@@ -4,5 +4,684 @@
 		"body": [
 			"// --------------------------------------------------------- //"
 		]
-	}
+	},
+    "comment tsx": {
+        "prefix": "comment tsx",
+        "body": [
+            "{/* ${1:comment} */}"
+        ]
+    },
+    "fragment": {
+        "prefix": "fragment",
+        "body": [
+            "<>",
+            "    ${1}",
+            "</>"
+        ]
+    },
+    "div": {
+        "prefix": "div",
+        "body": [
+            "<div${1}>",
+            "    ${2}",
+            "</div>"
+        ]
+    },
+    "span": {
+        "prefix": "span",
+        "body": [
+            "<span${1}>${2:text}</span>"
+        ]
+    },
+    "p": {
+        "prefix": "p",
+        "body": [
+            "<p${1}>${2:Paragraph}</p>"
+        ]
+    },
+    "h1": {
+        "prefix": "h1",
+        "body": [
+            "<h1${1}>${2:Heading}</h1>"
+        ]
+    },
+    "h2": {
+        "prefix": "h2",
+        "body": [
+            "<h2${1}>${2:Heading}</h2>"
+        ]
+    },
+    "h3": {
+        "prefix": "h3",
+        "body": [
+            "<h3${1}>${2:Heading}</h3>"
+        ]
+    },
+    "h4": {
+        "prefix": "h4",
+        "body": [
+            "<h4${1}>${2:Heading}</h4>"
+        ]
+    },
+    "h5": {
+        "prefix": "h5",
+        "body": [
+            "<h5${1}>${2:Heading}</h5>"
+        ]
+    },
+    "h6": {
+        "prefix": "h6",
+        "body": [
+            "<h6${1}>${2:Heading}</h6>"
+        ]
+    },
+    "header": {
+        "prefix": "header",
+        "body": [
+            "<header${1}>",
+            "    ${2}",
+            "</header>"
+        ]
+    },
+    "nav": {
+        "prefix": "nav",
+        "body": [
+            "<nav${1}>",
+            "    ${2}",
+            "</nav>"
+        ]
+    },
+    "main": {
+        "prefix": "main",
+        "body": [
+            "<main${1}>",
+            "    ${2}",
+            "</main>"
+        ]
+    },
+    "section": {
+        "prefix": "section",
+        "body": [
+            "<section${1}>",
+            "    ${2}",
+            "</section>"
+        ]
+    },
+    "article": {
+        "prefix": "article",
+        "body": [
+            "<article${1}>",
+            "    ${2}",
+            "</article>"
+        ]
+    },
+    "aside": {
+        "prefix": "aside",
+        "body": [
+            "<aside${1}>",
+            "    ${2}",
+            "</aside>"
+        ]
+    },
+    "footer": {
+        "prefix": "footer",
+        "body": [
+            "<footer${1}>",
+            "    ${2}",
+            "</footer>"
+        ]
+    },
+    "address": {
+        "prefix": "address",
+        "body": [
+            "<address${1}>",
+            "    ${2}",
+            "</address>"
+        ]
+    },
+    "hgroup": {
+        "prefix": "hgroup",
+        "body": [
+            "<hgroup${1}>",
+            "    ${2}",
+            "</hgroup>"
+        ]
+    },
+    "search": {
+        "prefix": "search",
+        "body": [
+            "<search${1}>",
+            "    ${2}",
+            "</search>"
+        ]
+    },
+    "a": {
+        "prefix": "a",
+        "body": [
+            "<a href=\"${1:#}\"${2}>${3:Link}</a>"
+        ]
+    },
+    "abbr": {
+        "prefix": "abbr",
+        "body": [
+            "<abbr title=\"${1:description}\"${2}>${3:ABBR}</abbr>"
+        ]
+    },
+    "b": {
+        "prefix": "b",
+        "body": [
+            "<b${1}>${2:text}</b>"
+        ]
+    },
+    "strong": {
+        "prefix": "strong",
+        "body": [
+            "<strong${1}>${2:Important}</strong>"
+        ]
+    },
+    "i": {
+        "prefix": "i",
+        "body": [
+            "<i${1}>${2:text}</i>"
+        ]
+    },
+    "em": {
+        "prefix": "em",
+        "body": [
+            "<em${1}>${2:emphasis}</em>"
+        ]
+    },
+    "mark": {
+        "prefix": "mark",
+        "body": [
+            "<mark${1}>${2:highlighted}</mark>"
+        ]
+    },
+    "small": {
+        "prefix": "small",
+        "body": [
+            "<small${1}>${2:Small text}</small>"
+        ]
+    },
+    "s": {
+        "prefix": "s",
+        "body": [
+            "<s${1}>${2:Text}</s>"
+        ]
+    },
+    "u": {
+        "prefix": "u",
+        "body": [
+            "<u${1}>${2:Text}</u>"
+        ]
+    },
+    "del": {
+        "prefix": "del",
+        "body": [
+            "<del${1}>${2:Deleted text}</del>"
+        ]
+    },
+    "ins": {
+        "prefix": "ins",
+        "body": [
+            "<ins${1}>${2:Inserted text}</ins>"
+        ]
+    },
+    "sub": {
+        "prefix": "sub",
+        "body": [
+            "<sub${1}>${2:subscript}</sub>"
+        ]
+    },
+    "sup": {
+        "prefix": "sup",
+        "body": [
+            "<sup${1}>${2:superscript}</sup>"
+        ]
+    },
+    "code": {
+        "prefix": "code",
+        "body": [
+            "<code${1}>${2:code}</code>"
+        ]
+    },
+    "kbd": {
+        "prefix": "kbd",
+        "body": [
+            "<kbd${1}>${2:Ctrl+C}</kbd>"
+        ]
+    },
+    "samp": {
+        "prefix": "samp",
+        "body": [
+            "<samp${1}>${2:output}</samp>"
+        ]
+    },
+    "var": {
+        "prefix": "var",
+        "body": [
+            "<var${1}>${2:x}</var>"
+        ]
+    },
+    "pre": {
+        "prefix": "pre",
+        "body": [
+            "<pre${1}>",
+            "    ${2:content}",
+            "</pre>"
+        ]
+    },
+    "blockquote": {
+        "prefix": "blockquote",
+        "body": [
+            "<blockquote cite=\"${1}\"${2}>",
+            "    ${3:Quote}",
+            "</blockquote>"
+        ]
+    },
+    "q": {
+        "prefix": "q",
+        "body": [
+            "<q${1}>${2:Quote}</q>"
+        ]
+    },
+    "cite": {
+        "prefix": "cite",
+        "body": [
+            "<cite${1}>${2:Title}</cite>"
+        ]
+    },
+    "time": {
+        "prefix": "time",
+        "body": [
+            "<time dateTime=\"${1:2026-01-01}\"${2}>${3:Date}</time>"
+        ]
+    },
+    "br": {
+        "prefix": "br",
+        "body": [
+            "<br />"
+        ]
+    },
+    "hr": {
+        "prefix": "hr",
+        "body": [
+            "<hr />"
+        ]
+    },
+    "wbr": {
+        "prefix": "wbr",
+        "body": [
+            "<wbr />"
+        ]
+    },
+    "ul": {
+        "prefix": "ul",
+        "body": [
+            "<ul${1}>",
+            "    <li>${2:Item}</li>",
+            "    <li>${3:Item}</li>",
+            "</ul>"
+        ]
+    },
+    "ol": {
+        "prefix": "ol",
+        "body": [
+            "<ol${1}>",
+            "    <li>${2:Item}</li>",
+            "    <li>${3:Item}</li>",
+            "</ol>"
+        ]
+    },
+    "li": {
+        "prefix": "li",
+        "body": [
+            "<li${1}>${2:Item}</li>"
+        ]
+    },
+    "menu": {
+        "prefix": "menu",
+        "body": [
+            "<menu${1}>",
+            "    ${2}",
+            "</menu>"
+        ]
+    },
+    "dl": {
+        "prefix": "dl",
+        "body": [
+            "<dl${1}>",
+            "    <dt>${2:Term}</dt>",
+            "    <dd>${3:Description}</dd>",
+            "</dl>"
+        ]
+    },
+    "dt": {
+        "prefix": "dt",
+        "body": [
+            "<dt${1}>${2:Term}</dt>"
+        ]
+    },
+    "dd": {
+        "prefix": "dd",
+        "body": [
+            "<dd${1}>${2:Description}</dd>"
+        ]
+    },
+    "figure": {
+        "prefix": "figure",
+        "body": [
+            "<figure${1}>",
+            "    ${2}",
+            "</figure>"
+        ]
+    },
+    "figcaption": {
+        "prefix": "figcaption",
+        "body": [
+            "<figcaption${1}>${2:Caption}</figcaption>"
+        ]
+    },
+    "img": {
+        "prefix": "img",
+        "body": [
+            "<img src=\"${1:image.jpg}\" alt=\"${2:Description}\"${3} />"
+        ]
+    },
+    "picture": {
+        "prefix": "picture",
+        "body": [
+            "<picture${1}>",
+            "    <source srcSet=\"${2:image.webp}\" type=\"${3:image/webp}\" />",
+            "    <img src=\"${4:image.jpg}\" alt=\"${5:Description}\" />",
+            "</picture>"
+        ]
+    },
+    "source": {
+        "prefix": "source",
+        "body": [
+            "<source src=\"${1:media.mp4}\" type=\"${2:video/mp4}\"${3} />"
+        ]
+    },
+    "audio": {
+        "prefix": "audio",
+        "body": [
+            "<audio controls${1}>",
+            "    <source src=\"${2:audio.mp3}\" type=\"${3:audio/mpeg}\" />",
+            "</audio>"
+        ]
+    },
+    "video": {
+        "prefix": "video",
+        "body": [
+            "<video controls${1}>",
+            "    <source src=\"${2:video.mp4}\" type=\"${3:video/mp4}\" />",
+            "</video>"
+        ]
+    },
+    "track": {
+        "prefix": "track",
+        "body": [
+            "<track kind=\"${1:subtitles}\" src=\"${2:captions.vtt}\" srcLang=\"${3:en}\" label=\"${4:English}\" />"
+        ]
+    },
+    "iframe": {
+        "prefix": "iframe",
+        "body": [
+            "<iframe src=\"${1:https://example.com}\" title=\"${2:Embedded content}\"${3}></iframe>"
+        ]
+    },
+    "embed": {
+        "prefix": "embed",
+        "body": [
+            "<embed src=\"${1:file.pdf}\" type=\"${2:application/pdf}\"${3} />"
+        ]
+    },
+    "object": {
+        "prefix": "object",
+        "body": [
+            "<object data=\"${1:file.pdf}\" type=\"${2:application/pdf}\"${3}>",
+            "    ${4:Fallback content}",
+            "</object>"
+        ]
+    },
+    "canvas": {
+        "prefix": "canvas",
+        "body": [
+            "<canvas width={${1:800}} height={${2:600}}${3}>",
+            "    ${4:Canvas is not supported.}",
+            "</canvas>"
+        ]
+    },
+    "svg": {
+        "prefix": "svg",
+        "body": [
+            "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"${1:0 0 100 100}\"${2}>",
+            "    ${3}",
+            "</svg>"
+        ]
+    },
+    "table": {
+        "prefix": "table",
+        "body": [
+            "<table${1}>",
+            "    <caption>${2:Table title}</caption>",
+            "    <thead>",
+            "        <tr>",
+            "            <th>${3:Header}</th>",
+            "            <th>${4:Header}</th>",
+            "        </tr>",
+            "    </thead>",
+            "    <tbody>",
+            "        <tr>",
+            "            <td>${5:Data}</td>",
+            "            <td>${6:Data}</td>",
+            "        </tr>",
+            "    </tbody>",
+            "</table>"
+        ]
+    },
+    "caption": {
+        "prefix": "caption",
+        "body": [
+            "<caption>${1:Table title}</caption>"
+        ]
+    },
+    "thead": {
+        "prefix": "thead",
+        "body": [
+            "<thead${1}>",
+            "    ${2}",
+            "</thead>"
+        ]
+    },
+    "tbody": {
+        "prefix": "tbody",
+        "body": [
+            "<tbody${1}>",
+            "    ${2}",
+            "</tbody>"
+        ]
+    },
+    "tfoot": {
+        "prefix": "tfoot",
+        "body": [
+            "<tfoot${1}>",
+            "    ${2}",
+            "</tfoot>"
+        ]
+    },
+    "tr": {
+        "prefix": "tr",
+        "body": [
+            "<tr${1}>",
+            "    ${2}",
+            "</tr>"
+        ]
+    },
+    "th": {
+        "prefix": "th",
+        "body": [
+            "<th${1}>${2:Header}</th>"
+        ]
+    },
+    "td": {
+        "prefix": "td",
+        "body": [
+            "<td${1}>${2:Data}</td>"
+        ]
+    },
+    "colgroup": {
+        "prefix": "colgroup",
+        "body": [
+            "<colgroup${1}>",
+            "    ${2}",
+            "</colgroup>"
+        ]
+    },
+    "col": {
+        "prefix": "col",
+        "body": [
+            "<col span={${1:1}}${2} />"
+        ]
+    },
+    "form": {
+        "prefix": "form",
+        "body": [
+            "<form onSubmit={${1:handleSubmit}}${2}>",
+            "    ${3}",
+            "</form>"
+        ]
+    },
+    "label": {
+        "prefix": "label",
+        "body": [
+            "<label htmlFor=\"${1:input-id}\"${2}>${3:Label}</label>"
+        ]
+    },
+    "input": {
+        "prefix": "input",
+        "body": [
+            "<input type=\"${1:text}\" id=\"${2:input-id}\" name=\"${3:name}\" placeholder=\"${4:Placeholder}\"${5} />"
+        ]
+    },
+    "textarea": {
+        "prefix": "textarea",
+        "body": [
+            "<textarea id=\"${1:textarea-id}\" name=\"${2:name}\" rows={${3:4}} cols={${4:50}}${5}>",
+            "    ${6}",
+            "</textarea>"
+        ]
+    },
+    "button": {
+        "prefix": "button",
+        "body": [
+            "<button type=\"${1:button}\"${2}>${3:Button}</button>"
+        ]
+    },
+    "select": {
+        "prefix": "select",
+        "body": [
+            "<select id=\"${1:select-id}\" name=\"${2:name}\"${3}>",
+            "    <option value=\"${4:value}\">${5:Option}</option>",
+            "    <option value=\"${6:value}\">${7:Option}</option>",
+            "</select>"
+        ]
+    },
+    "option": {
+        "prefix": "option",
+        "body": [
+            "<option value=\"${1:value}\"${2}>${3:Option}</option>"
+        ]
+    },
+    "optgroup": {
+        "prefix": "optgroup",
+        "body": [
+            "<optgroup label=\"${1:Group}\"${2}>",
+            "    <option value=\"${3:value}\">${4:Option}</option>",
+            "</optgroup>"
+        ]
+    },
+    "datalist": {
+        "prefix": "datalist",
+        "body": [
+            "<datalist id=\"${1:options}\">",
+            "    <option value=\"${2:Option}\" />",
+            "</datalist>"
+        ]
+    },
+    "fieldset": {
+        "prefix": "fieldset",
+        "body": [
+            "<fieldset${1}>",
+            "    <legend>${2:Legend}</legend>",
+            "    ${3}",
+            "</fieldset>"
+        ]
+    },
+    "legend": {
+        "prefix": "legend",
+        "body": [
+            "<legend>${1:Legend}</legend>"
+        ]
+    },
+    "output": {
+        "prefix": "output",
+        "body": [
+            "<output name=\"${1:result}\"${2}>{${3:result}}</output>"
+        ]
+    },
+    "progress": {
+        "prefix": "progress",
+        "body": [
+            "<progress value={${1:0}} max={${2:100}}${3}>",
+            "    ${4}",
+            "</progress>"
+        ]
+    },
+    "meter": {
+        "prefix": "meter",
+        "body": [
+            "<meter min={${1:0}} max={${2:100}} value={${3:50}}${4}>",
+            "    ${5:50}",
+            "</meter>"
+        ]
+    },
+    "details": {
+        "prefix": "details",
+        "body": [
+            "<details${1}>",
+            "    <summary>${2:Details}</summary>",
+            "    ${3}",
+            "</details>"
+        ]
+    },
+    "summary": {
+        "prefix": "summary",
+        "body": [
+            "<summary>${1:Summary}</summary>"
+        ]
+    },
+    "dialog": {
+        "prefix": "dialog",
+        "body": [
+            "<dialog${1}>",
+            "    ${2:Dialog content}",
+            "</dialog>"
+        ]
+    },
+    "template": {
+        "prefix": "template",
+        "body": [
+            "<template>",
+            "    ${1}",
+            "</template>"
+        ]
+    },
+    "slot": {
+        "prefix": "slot",
+        "body": [
+            "<slot name=\"${1:content}\">${2}</slot>"
+        ]
+    }
 }
