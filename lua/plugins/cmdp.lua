@@ -79,6 +79,13 @@ local commands = {
 
         _G.copy_file(source, target)
     end,
+    ["INIT: .editorconfig"] = function()
+        local file = ".editorconfig"
+        local source = vim.fn.stdpath("config") .. "/data/init/" .. file
+        local target = vim.loop.cwd() .. "/" .. file
+
+        _G.copy_file(source, target)
+    end,
     ["INIT: License APACHE 2.0"] = function()
         local file = "LICENSE-APACHE"
         local source = vim.fn.stdpath("config") .. "/data/init/" .. file
