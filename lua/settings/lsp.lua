@@ -137,11 +137,12 @@ for _, lsp in pairs(_G._prt_LSPS) do
             },
 
             root_dir = function(bufnr, on_dir)
-                local angular_root = find_angular_root(bufnr)
-
-                if angular_root then
-                    return
-                end
+                -- -- vtsls si required for angular project
+                -- local angular_root = find_angular_root(bufnr)
+                --
+                -- if angular_root then
+                --     return
+                -- end
 
                 local root = find_js_root(bufnr)
 
