@@ -328,6 +328,7 @@ _G._prt_LSPS = {
     "sqls",
     "docker_language_server",
     "eslint",
+    "protols",
 }
 
 _G._prt_TS = {
@@ -340,7 +341,7 @@ _G._prt_TS = {
     "java", "kotlin",
     "ruby",
     "javascript", "typescript",
-    "svelte", "vue",
+     "svelte", "angular", "vue",
     "gdscript", "gdshader",
     "dart",
     "elixir", "heex", "surface",
@@ -352,6 +353,7 @@ _G._prt_TS = {
     "bash",
     "sql",
     "dockerfile",
+    "proto",
 }
 
 ---
