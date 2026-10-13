@@ -341,7 +341,7 @@ _G._prt_TS = {
     "java", "kotlin",
     "ruby",
     "javascript", "typescript",
-     "svelte", "angular", "vue",
+    "svelte", "angular", "vue",
     "gdscript", "gdshader",
     "dart",
     "elixir", "heex", "surface",
@@ -354,6 +354,7 @@ _G._prt_TS = {
     "sql",
     "dockerfile",
     "proto",
+    "mermaid",
 }
 
 ---
