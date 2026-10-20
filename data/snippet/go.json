@@ -5,6 +5,14 @@
 			"// --------------------------------------------------------- //"
 		]
 	},
+    "if err not nil": {
+        "prefix": "if err not nil",
+        "body": [
+            "if err != nil {",
+            "    // ${1:todo}",
+            "}"
+        ]
+    },
     "for loop": {
         "prefix": "for loop",
         "body": [
