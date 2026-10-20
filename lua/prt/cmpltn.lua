@@ -4,6 +4,9 @@ CoMPLeTion
 --]]
 local M = {}
 
+local cmpltn_edit = require("prt.cmpltn_edit")
+local cmpltn_display = require("prt.cmpltn_display")
+
 local state = { active = false }
 local start_col = 0
 
@@ -13,13 +16,6 @@ local function get_offset_encoding(bufnr)
         return clients[1].offset_encoding or "utf-16"
     end
     return "utf-16"
-end
-
-local function get_snippet_text(item)
-    if item.insertTextFormat == 2 then
-        return item.insertText
-    end
-    return nil
 end
 
 local function insert_snippet(snippet_text)
@@ -57,11 +53,14 @@ function M.trigger_completion()
         local completions = {}
 
         for _, item in ipairs(items) do
-            local word = item.insertText or item.label
+            local resolved = cmpltn_edit.resolve(item, line, start_col)
+            local display = cmpltn_display.fields(item)
+            local word = resolved.text
             local completion_item = {
-                abbr = item.label,
+                abbr = display.abbr,
                 word = word,
-                menu = item.detail or "",
+                kind = display.kind,
+                menu = display.menu,
                 icase = 1,
                 dup = 0,
             }
@@ -69,12 +68,9 @@ function M.trigger_completion()
             local user_data = {}
 
             if item.insertTextFormat == 2 then
-                local snippet_text = get_snippet_text(item)
-                if snippet_text then
-                    user_data._lsp_snippet = true
-                    user_data.snippet_text = snippet_text
-                    user_data.start_col = start_col
-                end
+                user_data._lsp_snippet = true
+                user_data.snippet_text = word
+                user_data.start_col = start_col
             end
 
             if item.additionalTextEdits and #item.additionalTextEdits > 0 then
