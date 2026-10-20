@@ -11,19 +11,19 @@ end
 
 _G.get_active_current_mode = function()
     local mode_map = {
-        n = "NORMAL",
-        i = "INSERT",
-        v = "VISUAL",
-        V = "V-LINE",
-        [""] = "V-BLOCK",  -- Ctrl-V
-        c = "COMMAND",
-        s = "SELECT",
-        S = "S-LINE",
-        [""] = "S-BLOCK",
-        t = "TERMINAL",
-        R = "REPLACE",
-        ["!"] = "SHELL",
-        r = "PROMPT",
+        n = "NORMAL", -- NORMAL
+        i = "INSERT", -- INSERT
+        v = "VISUAL", -- VISUAL
+        V = "V-LINE", -- VISUAL LINE
+        [""] = "V-BLOCK",  -- VISUAL BLOCK
+        c = "COMMAND", -- COMMAND
+        s = "SELECT", -- SELECT
+        S = "S-LINE", -- SELECT LINE
+        [""] = "S-BLOCK", -- SELECT BLOCK
+        t = "TERMINAL", -- TERMINAL
+        R = "REPLACE", -- REPLACE
+        ["!"] = "SHELL", -- SHELL
+        r = "PROMPT", -- PROMPT
     }
     local mode_code = vim.api.nvim_get_mode().mode
     return mode_map[mode_code] or string.upper(mode_code)
