@@ -50,11 +50,15 @@ vim.cmd([[
 
 vim.opt.statusline = "  %{v:lua.get_active_current_mode()}   %{v:lua.get_trim_path_current_buffer(1)} %=  %{v:lua.get_active_lsp()} 󰊢 %{v:lua.get_git_branch()} %{v:lua.get_git_short()}   %{v:lua.get_diagnostic_hint()}  %{v:lua.get_diagnostic_info()}  %{v:lua.get_diagnostic_warn()}  %{v:lua.get_diagnostic_error()}  L%l:C%c  󱗖 %p%% "
 
+-- Match pumwidth and pummaxwidth. A wide minimum width makes the popup move
+-- left instead of truncating the kind and menu columns near the right edge.
+local pum_width = 75
+
 vim.opt.pumheight = 24
 -- vim.opt.pummaxheight = 12
 vim.opt.pumblend = 0
--- vim.opt.pumwidth = 48
-vim.opt.pummaxwidth = 75
+vim.opt.pumwidth = pum_width
+vim.opt.pummaxwidth = pum_width
 -- "single", "double", "rounded", "bold"
 vim.opt.pumborder = "rounded"
 
