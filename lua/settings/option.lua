@@ -35,7 +35,7 @@ else
     vim.opt.number = true
 end
 
-vim.smartindent = true
+vim.opt.smartindent = true
 vim.opt.expandtab = true
 
 vim.opt.fillchars = { eob = " " }
@@ -64,3 +64,70 @@ if vim.fn.executable("rg") == 1 then
     vim.opt.grepformat = "%f:%l:%c:%m"
 end
 
+---
+
+-- vim.keymap.set("n", "p", function()
+--     local txt = vim.fn.getreg("+")
+--     -- Strip any trailing carriage returns or newlines
+--     txt = txt:gsub("[\r\n]+$", "")
+--     if txt == "" then return end
+--     -- Put the cleaned text into the unnamed register as characterwise
+--     vim.fn.setreg('"', txt, "v")
+--     -- Paste it
+--     vim.cmd('normal! ""p')
+-- end, { desc = "Paste cleanly without trailing newlines" })
+
+vim.keymap.set("i", "<C-p>", function()
+    local txt = vim.fn.getreg("+")
+    -- Strip trailing newlines
+    txt = txt:gsub("[\r\n]+$", "")
+    -- Insert the clean text at the cursor position
+    vim.api.nvim_paste(txt, true, -1)
+end, { desc = "Paste cleanly from clipboard in insert mode" })
+
+-- vim.keymap.set("x", "p", function()
+--     local txt = vim.fn.getreg("+")
+--     txt = txt:gsub("%s+$", "")
+--     if txt == "" then return end
+--     -- Get the start and end marks of your visual selection
+--     local start = vim.fn.getpos("'<")
+--     local end_ = vim.fn.getpos("'>")
+--     -- Exit visual mode
+--     vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Esc>", true, false, true), "nx", false)
+--     -- Replace exactly what you highlighted using Neovim's native buffer API
+--     vim.api.nvim_buf_set_text(0,
+--         start[2] - 1, start[3] - 1,
+--         end_[2] - 1, end_[3],
+--         {txt}
+--     )
+-- end, { desc = "Replace visual block perfectly" }) -- has error
+-- vim.keymap.set("x", "p", function()
+--     local txt = vim.fn.getreg("+")
+--     -- Strip trailing newlines and spaces
+--     txt = txt:gsub("%s+$", "")
+--     if txt == "" then return end
+--
+--     -- Put the cleaned text into register 'l' and force it to be characterwise ('v')
+--     -- This guarantees it won't break the lines or push text down
+--     vim.fn.setreg('l', txt, 'v')
+--
+--     -- gv = reselect the exact visual block/line
+--     -- "l = use register 'l'
+--     -- p = replace the selection
+--     vim.api.nvim_feedkeys('gv"lp', 'nx', false)
+-- end, { desc = "Replace visual selection safely" }) -- first visual or visual block not work
+-- vim.keymap.set("x", "p", function()
+--     local txt = vim.fn.getreg("+")
+--     -- Strip trailing newlines and spaces
+--     txt = txt:gsub("%s+$", "")
+--     if txt == "" then return end
+--
+--     -- Put text into register 'l' as strictly characterwise ('v')
+--     vim.fn.setreg('l', txt, 'v')
+--
+--     -- <Esc> exits visual mode (saving the marks)
+--     -- gv reselects it
+--     -- "lp replaces it
+--     local keys = vim.api.nvim_replace_termcodes('<Esc>gv"lp', true, false, true)
+--     vim.api.nvim_feedkeys(keys, 'nx', false)
+-- end, { desc = "Replace visual selection safely" })
