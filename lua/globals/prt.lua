@@ -11,6 +11,9 @@ identical items, so use the spec-correct 1.
 --]]
 local TRIGGER_KIND = 1
 
+local cmpltn_edit = require("prt.cmpltn_edit")
+local cmpltn_display = require("prt.cmpltn_display")
+
 local function get_offset_encoding(bufnr)
     local clients = vim.lsp.get_clients({ bufnr = bufnr })
     if clients and #clients > 0 then
@@ -186,31 +189,23 @@ _G._prt_fuzzy_completion = function(findstart, _)
 
             for _, item in ipairs(items) do
                 -- servers like gopls put the snippet in textEdit.newText, not insertText
-                local insert_text = (item.textEdit and item.textEdit.newText) or item.insertText or item.label
+                local resolved = cmpltn_edit.resolve(item, line_text, start_char)
+                local insert_text = resolved.text
                 local kind = item.kind or 0
-                local kind_text = vim.lsp.protocol.CompletionItemKind[kind] or ""
-                local kind_char = kind_text:sub(1, 1):lower()
-                local detail = item.detail or ""
+                local detail = type(item.detail) == "string" and item.detail or ""
+                local display = cmpltn_display.fields(item)
+                local documentation = item.documentation
+                local info = ""
 
-                local default_start = start_char
-                local default_end = end_char
-
-                local item_start, item_end
-                if item.textEdit and item.textEdit.range then
-                    item_start = item.textEdit.range.start.character
-                    item_end = item.textEdit.range["end"].character
-                else
-                    item_start = default_start
-                    item_end = default_end
+                if type(documentation) == "string" then
+                    info = documentation
+                elseif type(documentation) == "table" then
+                    info = documentation.value or ""
                 end
-                if type(item_start) ~= "number" then item_start = default_start end
-                if type(item_end) ~= "number" then item_end = default_end end
-                item_start = math.max(0, item_start)
-                item_end = math.min(#line_text, item_end)
 
                 local user_data = {
                     _lsp_item = item,
-                    start_char = item_start,
+                    start_char = start_char,
                     client_id = client_id,
                 }
 
@@ -259,15 +254,13 @@ _G._prt_fuzzy_completion = function(findstart, _)
 
                 table.insert(all_matches, {
                     word = word,
-                    abbr = item.label,
-                    kind = kind_char,
-                    menu = kind_text,
-                    info = item.documentation and (
-                        type(item.documentation) == "string" and item.documentation or (item.documentation.value or "")
-                    ) or "",
+                    abbr = display.abbr,
+                    kind = display.kind,
+                    menu = display.menu,
+                    info = info,
                     icase = 1,
                     dup = 1,
-                    filter = item.filterText or word,
+                    filter = resolved.filter,
                     user_data = user_data
                 })
             end
